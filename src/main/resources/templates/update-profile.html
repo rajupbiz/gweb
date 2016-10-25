@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Gomaie^</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+	<div id="wrapper" class="container-fluid">
+		
+		<div th:replace="fragments/f-common :: g-header"></div>
+
+		<div id="content">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10 g-content-main-row">
+					<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+						<div class="row">
+							<div class="col-md-3" id="leftCol">
+								<ul class="nav nav-pills nav-stacked affix" id="sidebar">
+									<li><a href="#PersonalDetailSection">Personal Information</a></li>
+									<li><a href="#FamilySection">Family</a></li>
+									<li><a href="#ContactSection">Contact & Address</a></li>
+									<li><a href="#EducationSection">Education & Occupation</a></li>
+									<li><a href="#PhotosSection">Photos</a></li>
+								</ul>
+							</div>
+							<div class="col-md-9" style="padding-left: 0px;">
+								
+								<section id="PersonalDetailSection" style="padding-top: 30px;">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="alert alert-warning" role="alert">
+												<span class="fa fa-info-circle" aria-hidden="true" style="padding-right: 5px;"></span><b>Some of the fields are auto populated based on inputs, please update the values if required or not correct.</b>
+											</div>		
+										</div>
+									</div>
+									
+									<div class="panel panel-info">
+										<div class="panel-heading"><b>Personal Information</b></div>
+										<span th:if="${!isNewCandidate}"><div id="personalInfoSectionBody" th:replace="fragments/f-personal-info :: personalInfoView"></div></span> 
+										<span th:if="${isNewCandidate}" ><div id="personalInfoSectionBody" th:replace="fragments/f-personal-info :: personalInfoEdit"></div></span>
+									</div>
+								</section>
+
+								<section id="FamilySection" style="padding-top: 5px;">
+									<div class="panel panel-info">
+										<div class="panel-heading"><b>Family Information</b></div>
+		  								<div id="familyInfoSectionBody" th:replace="fragments/f-family-info :: familyInfoView"></div>
+									</div>
+								</section>
+				
+								<section id="ContactSection" style="padding-top: 5px;">
+									<div class="panel panel-info">
+										<div class="panel-heading"><b>Contact & Address</b></div>
+		  								<div id="contactInfoSectionBody" th:replace="fragments/f-contact-info :: contactInfoView"></div>
+									</div>
+								</section>
+				
+								<section id="EducationSection" style="padding-top: 5px;">
+									<div class="panel panel-info">
+										<div class="panel-heading"><b>Education & Occupation</b></div>
+		  								<div id="educationInfoSectionBody" th:replace="fragments/f-education-info :: educationInfoView"></div>
+									</div>
+								</section>
+				
+								<section id="PhotosSection" style="padding-top: 5px;">
+									<div class="panel panel-info">
+										<div class="panel-heading"><b>Photo(s)</b></div>
+		  								<div id="photoInfoSectionBody" th:replace="fragments/f-photo-info :: photoInfoView"></div>
+									</div>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+
+		<div th:replace="fragments/f-common :: g-footer"></div>
+
+	</div>
+	<!-- Required on this page only, do not add in footer fragment otherwise these files will be loaded on other pages unnecessarily. -->
+	<script src="assets/components/moment/min/moment.min.js"></script>
+	<script src="assets/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+	<script src="assets/components/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js"></script>
+	<script src="assets/components/bootstrap-fileinput/js/plugins/sortable.min.js"></script>
+	<script src="assets/components/bootstrap-fileinput/js/plugins/purify.min.js"></script>
+	<script src="assets/components/bootstrap-fileinput/js/fileinput.min.js"></script>
+	<script src="assets/components/bootstrap-fileinput/js/locales/fa.js"></script>
+	
+	<script type="text/javascript" src="js/app/update-profile.js"></script>
+</body>
+</html>

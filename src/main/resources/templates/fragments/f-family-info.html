@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<b>Family Information</b>
+	</div>
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="familyInfoView" id="familyInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form action="#" method="post" role="form" class="form-horizontal" th:object="${familyInfo}">
+					<fieldset>
+						<legend style="font-size: 13px;">Parents Information</legend>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Father's Full Name:</div>
+							<div class="col-md-9 g-view-text-profile">
+								<span th:text="*{fatherFirstName}"></span> <span th:text="*{fatherMiddleName}"></span> <span th:text="*{fatherLastName}"></span>
+							</div>
+						</div>
+						<div class="row" style="padding-bottom: 10px;">
+							<div class="col-md-3 g-view-label-profile">Mother's First Name:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{motherFirstName}"></span>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Other Family Information</legend>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Family Occupation:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{familyOccupation}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Family Wealth:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{familyWealth}"></span>
+							</div>
+						</div>
+						<div class="row" style="padding-bottom: 10px;">
+							<div class="col-md-3 g-view-label-profile">About Family:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{aboutFamily}"></span>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Sibling(s) Information</legend>
+						<div class="row">
+							<div class="col-md-2 g-view-text-profile"></div>
+							<div class="col-md-10 g-view-text-profile">
+								<div class="row">
+									<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">No. of Brother's</div>
+									<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">No. of Married Brother's</div>
+									<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">No. of Sister's</div>
+									<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">No. of Married Sister's</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-2 g-view-text-profile"></div>
+							<div class="col-md-10 g-view-text-profile">
+								<div class="row">
+									<div class="col-md-3 g-view-text-profile"><span th:text="*{noOfBrother}"></span></div>
+									<div class="col-md-3 g-view-text-profile"><span th:text="*{noOfMarriedBrother}"></span></div>
+									<div class="col-md-3 g-view-text-profile"><span th:text="*{noOfSister}"></span></div>
+									<div class="col-md-3 g-view-text-profile"><span th:text="*{noOfMarriedSister}"></span></div>
+								</div>
+							</div>
+						</div>
+						
+							<!-- <div class="col-md-3 g-view-label-profile">:</div>
+							
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{noOfBrother}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{noOfMarriedBrother}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{noOfSister}"></span>
+							</div>
+						</div>
+						<div class="row" style="padding-bottom: 10px;">
+							<div class="col-md-3 g-view-label-profile">:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{noOfMarriedSister}"></span>
+							</div>
+						</div> -->
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Mama's Information</legend>
+						<div class="row">
+							<div class="col-md-2 g-view-text-profile"></div>
+							<div class="col-md-10 g-view-text-profile">
+								<div class="row">
+									<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Full Name</div>
+									<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Native Place</div>
+									<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Current Place</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-2 g-view-text-profile"></div>
+							<div class="col-md-10 g-view-text-profile">
+								<div class="row">
+									<div class="col-md-3 g-view-text-profile"><span th:text="*{mamasFirstName}"></span> <span th:text="*{mamasMiddleName}"></span> <span th:text="*{mamasLastName}"></span></div>
+									<div class="col-md-3 g-view-text-profile"><span th:text="*{mamasNativePlace}"></span></div>
+									<div class="col-md-3 g-view-text-profile"><span th:text="*{mamasCurrentPlace}"></span></div>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="row">
+							<div class="col-md-3 g-view-label-profile">Mama's Full Name:</div>
+							<div class="col-md-9 g-view-text-profile">
+								<span th:text="*{mamasFirstName}"></span> <span th:text="*{mamasMiddleName}"></span> <span th:text="*{mamasLastName}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Mama's Native Place::</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{mamasNativePlace}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Mama's Current Place:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{mamasCurrentPlace}"></span>
+							</div>
+						</div> -->
+					</fieldset>
+					<div class="row" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="personal-info-edit-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="editInfo('Family')">
+								<span class="text-uppercase g-btn-text">Edit</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="familyInfoEdit" id="familyInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form role="form" id="editFamilyInfoForm" class="form-horizontal" th:action="@{/sFamilyInfo}" th:object="${familyInfo}"  method="post">
+					<fieldset>
+						<legend style="font-size: 13px;">Parents Information</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="father-first-name">Father's Full Name:</label>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" id="father-first-name" placeholder="First Name" th:field="*{fatherFirstName}">
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" id="father-middle-name" placeholder="Middle Name" th:field="*{fatherMiddleName}">
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" id="father-last-name" placeholder="Last Name" th:field="*{fatherLastName}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="mother-first-name">Mother's First Name:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="mother-first-name" placeholder="First Name" th:field="*{motherFirstName}">
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Sibling(s) Information</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="no-of-brother">No. of Brother's:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="number" min="0" max="20" id="no-of-brother" placeholder="No. of Brother's"  th:field="*{noOfBrother}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="no-of-sister">No. of Married Brother's:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="number" min="0" max="20"  id="no-of-married-sister" placeholder="No. of Married Brother's" th:field="*{noOfMarriedBrother}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="no-of-sister">No. of Sister's:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="number" min="0" max="20" id="no-of-sister" placeholder="No. of Sister's" th:field="*{noOfSister}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="no-of-sister">No. of Married Sister's:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="number" min="0" max="20" id="no-of-married-sister" placeholder="No. of Married Sister's" th:field="*{noOfMarriedSister}">
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Other Family Information</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="family-occupation">Family Occupation:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="family-occupation" placeholder="Family Occupation" th:field="*{familyOccupation}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="family-wealth">Family Wealth:</label>
+							<div class="col-md-9">
+								<textarea class="form-control input-sm" id="family-wealth" placeholder="Family Wealth" rows="2" th:field="*{familyWealth}"></textarea>
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="about-family">About Family:</label>
+							<div class="col-md-9">
+								<textarea class="form-control input-sm" id="about-family" placeholder="About Family" rows="2" th:field="*{aboutFamily}"></textarea>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Mama's Information</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="mama-full-name">Full Name:</label>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" id="mama-first-name" placeholder="First Name" th:field="*{mamasFirstName}">
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" id="mama-middle-name" placeholder="Middle Name" th:field="*{mamasMiddleName}">
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" id="mama-last-name" placeholder="Last Name" th:field="*{mamasLastName}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="mother-native-place">Native Place:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="mother-native-place" placeholder="Mama's Native Place" th:field="*{mamasNativePlace}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="mama-current-place">Current Place:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="mama-current-place" placeholder="Mama's Current Place" th:field="*{mamasCurrentPlace}">
+							</div>
+						</div>
+					</fieldset>
+					<div class="form-group form-group-sm" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="family-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="saveInfo('Family')">
+								<span class="text-uppercase g-btn-text">Save</span>
+							</button>
+							<button id="personal-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="cancelEdit('Family')">
+								<span class="text-uppercase g-btn-text">Cancel</span>
+							</button>
+						</div>
+					</div>
+					<script type="text/javascript" src="js/app/update-profile.js"></script>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

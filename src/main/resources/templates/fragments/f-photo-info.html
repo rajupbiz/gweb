@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body onload="onloadFoo()">
+<div class="panel panel-info">
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="photoInfoView" id="photoInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form action="#" method="post" role="form" class="form-horizontal">
+					<fieldset>
+						<div class="form-group form-group-sm">
+							<div class="row" style="padding-bottom: 10px;">
+								<div class="col-md-1"></div>
+								<div class="col-md-2" style="text-align: center;">
+									<div class="row">
+										<div class="col-md-12">
+											<a class="thumbnail" href="assets/img/p1.jpg" data-lightbox="example-set" data-title="p1">
+												<img class="g-img img-rounded img-responsive" src="assets/img/p1.jpg" alt="p1">
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2" style="text-align: center;">
+									<div class="row">
+										<div class="col-md-12">
+											<a class="thumbnail" href="assets/img/p2.jpg" data-lightbox="example-set" data-title="p2">
+												<img class="g-img img-rounded img-responsive" src="assets/img/p2.jpg" alt="p2">
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="row" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="personal-info-edit-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="editInfo('Photo')">
+								<span class="text-uppercase g-btn-text">Edit</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="photoInfoEdit" id="photoInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<fieldset>
+					<legend style="font-size: 13px;">Upload Photo(s):</legend>
+					<div class="row" style="padding-bottom: 10px;">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+							<form id="upload-file-form">
+								<input id="uploadfile" name="uploadfile" type="file" class="file-loading form-control input-xs" accept="*"> <!-- class="file-loading form-control input-xs" -->
+								
+								<script th:inline="javascript">
+								      /*<![CDATA[*/
+							      		$("#uploadfile").fileinput({
+							      		// setup initial preview with data keys
+							      			initialPreview: [
+							      			    "<img src='img/1_Sagai_4.jpg' class='file-preview-image' alt='Desert' title='Desert'>",
+							      			    "<img src='img/1_Sagai_3.jpg' title='Jelly Fish'>"
+							      			],
+							      			// initial preview configuration
+							      			initialPreviewConfig: [
+							      			    {
+							      			        caption: 'desert.jpg',
+							      			        width: '120px',
+							      			        url: 'removeFile',
+							      			        key: 100,
+							      			        extra: {id: 100}
+							      			    },
+							      			    {
+							      			        caption: 'jellyfish.jpg', 
+							      			        width: '120px', 
+							      			        url: 'removeFile', 
+							      			        key: 101, 
+							      			        frameClass: 'my-custom-frame-css',
+							      			        frameAttr: {
+							      			            style: 'height:80px',
+							      			            title: 'My Custom Title',
+							      			        },
+							      			        extra: function() { 
+							      			            return {id: $("#id").val()};
+							      			        }
+							      			    }
+							      			],
+							      		    initialPreviewAsData: true,
+							      		    /*initialPreviewConfig: [
+							      		    ], */
+							      		  	showUpload: true,
+							      		    uploadUrl: "uploadFile",
+							      		    deleteUrl: "removeFile",
+							      		    overwriteInitial: false,
+							      		    maxFileSize: 10,
+							      		  	
+							      		    allowedFileExtensions: ["jpg"],
+							      		    initialCaption: "No file selected"
+							      		});
+								      
+							      		//$("#uploadfile").on("change", uploadFile);
+							      		
+							      		/**
+							      		 * Upload the file sending it via Ajax at the Spring Boot server.
+							      		 */
+							      		function uploadFile() {
+							      		  
+							      			alert(" uploadfile 486 ");
+							      			$.ajax({
+							      			    url: "uploadFile",
+							      			    type: "POST",
+							      			    data: new FormData($("#upload-file-form")[0]),
+							      			    enctype: 'multipart/form-data',
+							      			    processData: false,
+							      			    contentType: false,
+							      			    cache: false,
+							      			    success: function () {
+							      			      // Handle upload success
+							      			      // ...
+							      			    	alert(" uploadfile 486 ");
+							      			    },
+							      			    error: function () {
+							      			      // Handle upload error
+							      			    	alert(" uploadfile 486 ");
+							      			    }
+							      			});
+							      		} // function uploadFile
+							      		
+								       /*]]>*/
+								</script> 
+								
+							</form>
+			         	</div>
+			         	<div class="col-md-1"></div>
+				   	</div>
+				</fieldset>
+				<form action="#" method="post" role="form" class="form-horizontal">
+					<fieldset>
+						<legend style="font-size: 13px;">Select Primary Photo</legend>
+						<div class="form-group form-group-sm">
+							<div class="row" style="padding-bottom: 10px;">
+								<div class="col-md-1"></div>
+								<div class="col-md-2" style="text-align: center;">
+									<div class="row">
+										<div class="col-md-12">
+											<label>
+											  <input type="radio" name="pic" id="p1" value="p1">
+											</label>
+										</div>
+										<div class="col-md-12">
+											<a class="thumbnail" href="assets/img/p1.jpg" data-lightbox="example-set" data-title="p1">
+												<img class="g-img img-rounded img-responsive" src="assets/img/p1.jpg" alt="p1">
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-2" style="text-align: center;">
+									<div class="row">
+										<div class="col-md-12">
+											<label>
+											  <input type="radio" name="pic" id="p2" value="p2">
+											</label>
+										</div>
+										<div class="col-md-12">
+											<a class="thumbnail" href="assets/img/p2.jpg" data-lightbox="example-set" data-title="p2">
+												<img class="g-img img-rounded img-responsive" src="assets/img/p2.jpg" alt="p2">
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-1"></div>
+							</div>
+						</div>
+					</fieldset>
+					<div class="form-group form-group-sm" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="photo-info-save-btn" class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="saveInfo('Photo')">
+								<span class="text-uppercase g-btn-text">Save</span>
+							</button>
+							<button id="photo-info-save-btn" class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="cancelEdit('Photo')">
+								<span class="text-uppercase g-btn-text">Cancel</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+/* $(document).ready(function() {
+	console.log(  "  120 ");	
+});
+
+
+function onloadFoo(){
+	console.log(" 124 ");
+	$("#photo-upload").fileinput({
+	    initialPreview: [
+	    ],
+	    initialPreviewAsData: true,
+	    initialPreviewConfig: [
+	    ],
+	    deleteUrl: "/site/file-delete",
+	    overwriteInitial: false,
+	    maxFileSize: 100,
+	    initialCaption: "No file selected"
+	});
+} */
+
+</script>
+
+</body>
+</html>

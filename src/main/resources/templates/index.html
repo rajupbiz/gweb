@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Gomaie^</title>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+	<div id="wrapper">
+	
+		<div th:replace="fragments/f-common :: g-header"></div>
+		
+		<div id="content">
+			<div class="row" style="width: 100%;">
+				<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-md-1"></div>
+							<div class="col-md-10">
+								<div class="g-welocome-msg"><h1><b>Welcome to Gomaie^</b></h1></div>
+								<div class="row g-welcome-sign-in-gap">
+									<div class="col-md-12"></div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<form action="signin" method="post" role="form" id="signinForm" class="g-sign-in-form">
+											<div class="g-sign-in-label"> 
+												Sign in
+											</div>
+											<div class="g-register-form-field-div">
+												<input type="text"  placeholder="Mobile Number" class="form-control g-input-sign-in" name="signinUserName" id="signinUserName"  required value="9029818183"/>
+											</div>
+											<div>
+												<input type="password" placeholder="Password" class="form-control g-input-sign-in" name="signinPassword" id="signinPassword" required value="asdfg"/>
+											</div>
+											<div class="g-register-form-btn-div">
+												<input type="submit" value="Sign in" class="form-control btn-primary g-sign-in-button"/>
+											</div>
+										</form>
+									</div>
+									<div class="col-md-6 g-vertical-line-left g-register-form-div">
+										<form action="signup" method="post" role="form" id="signupForm" >
+											<div class="g-sign-in-label">
+												Register Now
+											</div>
+											<div class="g-signup-form-field-div">
+												<input type="text"  placeholder="Mobile Number" name="signupUserName" id="signupUserName" class="form-control g-input-sign-in" maxlength="10" required th:value="${userName}" />
+											</div>
+											<div class="g-signup-form-field-div">
+												<input type="email" placeholder="Email Address (optional)" id="signupEmail" name="signupEmail" class="form-control g-input-sign-in" maxlength="40" th:value="${email}" />
+											</div>
+											<div class="g-signup-form-field-div">
+												<input type="password" placeholder="Password" id="signupPassword" name="signupPassword" class="form-control g-input-sign-in" maxlength="20" required th:value="${password}" />
+											</div>
+											<div class="g-signup-form-field-div">
+												<input type="password" placeholder="Confirm Password" id="signupConfirmPassword" name="signupConfirmPassword" class="form-control g-input-sign-in" maxlength="20" required th:value="${password}" />
+											</div>
+											<div class="g-register-form-btn-div">
+												<input type="submit" value="Sign up" class="form-control btn-primary g-sign-in-button"/>
+											</div>
+											<div class="g-signup-form-field-div" style="padding-top: 20px;">
+												<div class="alert alert-danger" role="alert" th:if="${ErrorMsg != null}" th:text="${ErrorMsg}" style="display:inline-block;"></div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-1"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+			
+		<div th:replace="fragments/f-common :: g-footer"></div>
+	 
+	</div>
+ 
+	<script type="text/javascript" src="js/app/index.js"></script>
+	
+</body>
+</html>

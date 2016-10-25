@@ -1,0 +1,251 @@
+/*********************************************************************
+                                IMPORT
+**********************************************************************/
+/* @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600); */
+/* @import url('font-awesome.css'); */
+@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,600,700,800|Roboto:400,500,700,900');
+
+/************** BASIC ********************/
+html {
+	height:100%;
+    margin:0;
+	padding:0;
+}
+
+body {
+    background: #fff;
+    text-align: center;
+    /* font-family: 'Open Sans', sans-serif; */
+    color: #888;
+    font-size: 12px;
+    height:100%;
+    margin:0;
+	padding:0;
+}
+#wrapper {
+	min-height:100%;
+	position:relative;
+}
+#content {
+	padding-bottom:129px;
+}
+#header {
+	bottom:0;
+	left:0;
+	width:100%;
+}
+.one-edge-shadow {
+	box-shadow: 0 7px 7px -7px rgba(0,0,0,0.55);
+}
+#footer {
+	width:100%;
+	height:129px;
+	position:absolute;
+	bottom:0;
+	left:0;
+	
+}
+.g-footer-div{
+	background-color: #1A87D7;
+	color: #FFFFFF;
+	font-family: Calibri;
+	font-size: 12pt;
+}
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:4px; 
+    padding-bottom: 0px;
+    font-size: 12px;
+    font-weight: bold;
+    height: 28px;
+}
+
+.navbar {
+	min-height:28px;
+	border: 0px;
+	background-color: #fff;
+	padding-bottom: 0px;
+	margin-bottom: 0px
+}
+
+.navbar-brand{
+	width: 190px;
+	height: 60px;
+	background: url(../img/gomaee_logo.png) left center no-repeat;
+}
+.g-footer-logo{
+	font-family: Papyrus;
+	font-weight: bold;
+	font-size: 18pt;
+	color: #FFFFFF;
+}
+.g-copyright-text{
+	text-align: right;
+	font-family: Book Antiqua;
+	font-weight: bold;
+	font-size: 10pt;
+	color: #FFFFFF;
+}
+.g-sign-in-form{
+	float: right;
+	padding-right: 50px;
+}
+.g-sign-in-form-email-div{
+	margin-bottom: 20px;
+}
+.g-sign-in-form-btn-div{
+	margin-top: 20px;
+}
+.g-register-form-email-div{
+	margin-bottom: 20px;
+}
+.g-register-form-btn-div{
+	margin-top: 20px;
+}
+.g-footer-div-div{
+	text-align: left
+}
+.g-footer-div-div{
+	text-align: left;
+	padding-top: 5px;
+}
+.g-welcome-sign-in-gap{
+	height: 50px;
+}
+.g-pages-link{
+	color: white;
+	text-decoration: underline;
+}
+.nav>li>a {
+	/* padding-top: 6px;
+	padding-bottom: 6px; 
+	font-weight: bold; */
+	
+	font-family: 'Open Sans', sans-serif;
+	/* font-family: 'Rubik', sans-serif; */
+	/* letter-spacing: 1px; */
+	font-size: 13px;
+	letter-spacing: 1px;
+	color: #666;
+	text-transform: uppercase;
+	font-weight: 700;
+	/* text-transform: uppercase; */
+}
+/*
+.nav-pills{
+	padding: 0px;
+	margin: 0px;
+}
+.nav>li>a {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 14px;
+	text-transform: uppercase;
+} */
+/* .nav>li>ui>li>a {
+	padding-top: 6px;
+	padding-bottom: 6px;
+	font-family: Book Antiqua;
+	font-weight: bold;
+	font-size: small;
+	text-transform: uppercase;
+} */
+
+/************** HEADER ******************/
+
+.g-header-img-div{
+	float: left; 
+	margin-top: 10px;
+	/* float: left;
+	width: 190px;
+	height: 60px;
+	background: url(../img/gomaee_logo.png) left center no-repeat;
+	cursor: pointer; */
+}
+.g-header-date-text{
+	float: left; 
+	padding-top: 5px; 
+	margin-left: 40px;
+}
+.g-header-img{
+	width: 150px;
+	height: 50px;
+	content: url(../img/gomaie_logo.png);
+}
+.g-header-above-menu{
+	height: 50px;
+}
+.g-header-signed-in{
+	text-align: right; 
+	padding-top: 5px;
+}
+.g-register-form-div{
+	padding-left: 50px;
+}
+.g-sub-menu-a{
+	font-family: 'Rubik', sans-serif;
+	font-size: 13px;
+}
+/* .g-brand{
+	margin-top: 8px; 
+	padding: 0px; 
+	padding-bottom: 3px;
+	background: url(../img/gomaee_logo.png) left center no-repeat;
+} */
+.g-menu-container{
+	margin-right: 0px; 
+	padding-right: 0px;
+}
+.g-menu-collapse{
+	margin-right: 0px; 
+	padding-right: 0px;
+}
+.g-welocome-msg{
+	margin-top: 20px;
+	font: bold;
+	/* font-size: 28pt; */
+	font-weight: bold;
+	font-family: cursive;
+}
+.g-sign-in-label{
+	text-align: left;
+	font-weight: normal;
+	font-size: 20pt;
+	font-family: cursive;
+	margin-bottom: 30px;
+}
+.g-input-sign-in{
+	width: 250px;
+	height: 35px;
+}
+.g-sign-in-button{
+	width: 200px; 
+	height: 50px; 
+	font-size: 20pt;
+	font-family: monospace; 
+	text-transform: lowercase;
+}
+.g-footer{
+	height: 60px;
+	border-style: solid;
+	border: 1px;
+}
+@media (min-width: 768px) and (max-width: 979px) {
+	
+}
+@media (max-width:767px) {
+	.g-header-above-menu{
+		height: 70px;
+	}
+}
+@media (max-width:480px) {
+
+}
+@media (max-width:320px) {
+
+}
+
+.g-vertical-line{
+	border-left: thin solid;
+}

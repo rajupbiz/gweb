@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<b>Contact Information</b>
+	</div>
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="contactInfoView" id="contactInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form action="#" method="post" role="form" class="form-horizontal" th:object="${contactInfo}">
+					<fieldset>
+						<legend style="font-size: 13px;">Native Place</legend>
+						<div class="row">
+							<div class="col-md-2 g-view-label-profile"></div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{nativePlace}"></span>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Current Address</legend>
+						<div class="row">
+							<div class="col-md-2 g-view-label-profile"></div>
+							<div class="col-md-6 g-view-text-profile" th:if="*{address != null}">
+								<span th:text="*{address.addressStr}"></span>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Contact(s)</legend>
+						<div class="row">
+							<div class="col-md-2 g-view-label-profile"></div>
+							<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Contact Person</div>
+							<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Relation</div>
+							<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Mobile</div>
+						</div>
+						<div class="row" th:each="currentContact, stat : *{contacts}">
+							<div class="col-md-2 g-view-label-profile"></div>
+							<div class="col-md-3 g-view-text-profile"><span th:text="*{contacts[__${stat.index}__].fullName}"></span></div>
+							<div class="col-md-3 g-view-text-profile" th:if="*{contacts[__${stat.index}__].relationship != null}"><span th:text="*{contacts[__${stat.index}__].relationship.relationship}"></span></div>
+							<div class="col-md-3 g-view-text-profile"><span th:text="*{contacts[__${stat.index}__].mobile}"></span></div>
+						</div>
+					</fieldset>
+					
+					<div class="row" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="personal-info-edit-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="editInfo('Contact')">
+								<span class="text-uppercase g-btn-text">Edit</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="contactInfoEdit" id="contactInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form role="form" id="editContactInfoForm" class="form-horizontal" th:action="@{/sContactInfo}" th:object="${contactInfo}"  method="post">
+					<fieldset>
+						<legend style="font-size: 13px;">Native Place:</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="native-place">Native Place:</label>
+							<div class="col-md-9">
+								<input class="form-control input-sm" type="text" id="native-place" placeholder="Native Place" th:field="*{nativePlace}">
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Current Address:</legend>
+						<input type="hidden" th:field="*{address.id}">
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="address-line">Address Line:</label>
+							<div class="col-md-9">
+								<input class="form-control input-sm" type="text" id="address-line" placeholder="Address Line" th:field="*{address.addressLine}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="address-town">* City or Town: </label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="address-town" placeholder="City or Town" th:field="*{address.cityOrTown}">
+							</div>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="address-tahsil" placeholder="Tahsil" th:field="*{address.tahsil}">
+							</div>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="address-district" placeholder="District" th:field="*{address.district}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="address-state">State:</label>
+							<div class="col-md-3">
+								<select id="address-state" name="address-state" class="form-control selectpicker show-menu-arrow" th:field="*{address.stateId}" onchange="onChangeDropdown('address-state')">
+									<option value="">Select State</option>
+									<option th:each="option:*{stateOptions}" th:value="${option.id}" th:text="${option.state}" ></option>	<!-- th:selected="${option.id} == *{address.stateId}" -->
+								</select>
+							</div>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="address-state-other" placeholder="Specify Other" disabled="disabled"  th:field="*{address.otherState}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="address-country">Country:</label>
+							<div class="col-md-3">
+								<select id="address-country" name="address-country" class="form-control selectpicker show-menu-arrow" th:field="*{address.countryId}" onchange="onChangeDropdown('address-country')">
+									<option th:each="option:*{countryOptions}" th:value="${option.id}" th:text="${option.country}" ></option>	<!-- th:selected="${option.id} == *{address.countryId}" -->
+								</select>
+							</div>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="addess-country-other" placeholder="Specify Other" disabled="disabled" th:field="*{address.otherCountry}">
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Contact(s)</legend>
+						<div class="form-group form-group-sm"  th:each="currentContact, stat : *{contacts}">
+							<input type="hidden" th:field="*{contacts[__${stat.index}__].id}">
+							<label class="col-md-3 control-label" for="first-name">Contact Person Full Name <span th:text="*{__${stat.index}__+1}"></span> : </label>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" placeholder="Contact Person Full Name" th:field="*{contacts[__${stat.index}__].fullName}">
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<select class="form-control selectpicker show-menu-arrow" th:id="contact-relation+*{__${stat.index}__+1}" title="Relationship" th:field="*{contacts[__${stat.index}__].relationshipId}">
+									<option th:each="option:*{relationshipOptions}" th:value="${option.id}" th:text="${option.relationship}" ></option>	<!-- th:selected="${option.id} == *{contacts[__${stat.index}__].relationshipId}" -->
+								</select>
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" placeholder="Mobile Number" th:field="*{contacts[__${stat.index}__].mobile}">
+							</div>
+							<script th:inline="javascript">
+							      /*<![CDATA[*/
+							        var id = /*[[*{__${stat.index}__}]]*/;
+						      		id++;
+							        $("#contact-relation"+id).selectpicker({
+							            style: "btn-default btn-sm"
+							        });
+							       /*]]>*/
+							</script> 
+						</div>
+					</fieldset>
+					<div class="form-group form-group-sm" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<input type="hidden" id="specifyOtherStateId" name="specifyOtherStateId" th:value="*{address.specifyOtherStateId}">
+							<input type="hidden" id="specifyOtherCountryId" name="specifyOtherCountryId" th:value="*{address.specifyOtherCountryId}">
+							<button id="personal-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="saveInfo('Contact')">
+								<span class="text-uppercase g-btn-text">Save</span>
+							</button>
+							<button id="personal-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="cancelEdit('Contact')">
+								<span class="text-uppercase g-btn-text">Cancel</span>
+							</button>
+						</div>
+					</div>
+					<script type="text/javascript" src="js/app/update-profile.js"></script>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

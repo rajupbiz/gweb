@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<b>Education & Occupation</b>
+	</div>
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="educationInfoView" id="educationInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form action="#" method="post" role="form" class="form-horizontal" th:object="${eduOccuInfo}">
+					<fieldset>
+						<legend style="font-size: 13px;">Education</legend>
+						<div th:each="currentEducation1, stat1 : *{educations}">
+							<div class="row" th:if="*{educations[__${stat1.index}__].degreeStr != null && educations[__${stat1.index}__].degreeStr != ''}">
+								<div class="col-md-3 g-view-label-profile">
+									<i class="fa fa-caret-right" aria-hidden="true"></i>
+								</div>
+								<div class="col-md-9 g-view-text-profile">
+									<span th:text="*{educations[__${stat1.index}__].degreeStr}"></span>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<legend style="font-size: 13px;">Occupation</legend>
+						<div th:each="currentOccupation1, stat1 : *{occupations}">
+							<div th:if="*{occupations[__${stat1.index}__].occupationStr != null && occupations[__${stat1.index}__].occupationStr != ''}">
+								<div class="row">
+									<div class="col-md-3 g-view-label-profile">
+										<i class="fa fa-caret-right" aria-hidden="true"></i>
+									</div>
+									<div class="col-md-9 g-view-text-profile">
+										<span th:text="*{occupations[__${stat1.index}__].occupationStr}"></span>
+									</div>
+								</div>
+								<!-- <div class="row">
+									<div class="col-md-3 g-view-label-profile">
+										Description <span th:text="${__${stat1.index}__+1}"></span>:
+									</div>
+									<div class="col-md-9 g-view-text-profile">
+										<span th:text="*{occupations[__${stat1.index}__].description}"></span>
+									</div>
+								</div> -->
+							</div>
+						</div>
+						<!-- <div class="row">
+							<div class="col-md-3 g-view-label-profile">
+								Yearly Income:
+							</div>
+							<div class="col-md-9 g-view-text-profile">
+								<span th:text="*{occupations[__${stat1.index}__].yearlyIncomeStr}"></span>
+							</div>
+						</div> -->
+					</fieldset>
+					
+					<div class="row" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="education-info-edit-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="editInfo('Education')">
+								<span class="text-uppercase g-btn-text">Edit</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="educationInfoEdit" id="educationInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form id="editEducationInfoForm" class="form-horizontal" th:action="@{/sEducationInfo}" th:object="${eduOccuInfo}"  method="post">
+					<fieldset>
+						<div th:each="currentEducation, stat : *{educations}">
+							<legend style="font-size: 13px;">Education <span th:text="${__${stat.index}__+1}"></span></legend>
+							<div class="form-group form-group-sm">
+								<input type="hidden" th:field="*{educations[__${stat.index}__].id}">
+								<label class="col-md-3 control-label" for="degree">Degree: </label>
+								<div class="col-md-3 g-m-bottom-padding-5px">
+									<select class="form-control selectpicker show-menu-arrow" th:id="degree+*{__${stat.index}__+1}" th:field="*{educations[__${stat.index}__].degreeId}">
+										<option value="0">Nothing selected</option>
+										<option th:each="option:*{degreeOptions}" th:value="${option.id}" th:text="${option.degree}" ></option>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<input class="form-control input-sm" type="text" th:id="degree-other+*{__${stat.index}__}" placeholder="Specify Other" disabled="disabled" th:field="*{educations[__${stat.index}__].otherDegree}">
+								</div>
+								<script th:inline="javascript">
+								      /*<![CDATA[*/
+								        var id = /*[[*{__${stat.index}__}]]*/;
+							      		id++;
+								        $("#degree"+id).selectpicker({
+								            style: "btn-default btn-sm"
+								        });
+								       /*]]>*/
+								</script>
+							</div>
+							<div class="form-group form-group-sm">
+								<label class="col-md-3 control-label" for="specialition">Specialization:</label>
+								<div class="col-md-3">
+									<select class="form-control selectpicker show-menu-arrow" th:id="specialization+*{__${stat.index}__+1}" th:field="*{educations[__${stat.index}__].specializationId}">
+										<option value="0">Nothing selected</option>
+										<option th:each="option:*{specializationOptions}" th:value="${option.id}" th:text="${option.specialization}" ></option>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<input class="form-control input-sm" type="text" th:id="specialization-other+*{__${stat.index}__}" placeholder="Specify Other" disabled="disabled" th:field="*{educations[__${stat.index}__].otherSpecialization}">
+								</div>
+								<script th:inline="javascript">
+								      /*<![CDATA[*/
+								        var id = /*[[*{__${stat.index}__}]]*/;
+							      		id++;
+								        $("#specialization"+id).selectpicker({
+								            style: "btn-default btn-sm"
+								        });
+								       /*]]>*/
+								</script>
+							</div>
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<div th:each="currentOccupation, stat : *{occupations}">
+							<legend style="font-size: 13px;">Occupation <span th:text="${__${stat.index}__+1}"></span></legend>
+							<div class="form-group form-group-sm">
+								<input type="hidden" th:field="*{occupations[__${stat.index}__].id}">
+								<label class="col-md-3 control-label" for="occupation">Occupation: </label>
+								<div class="col-md-3 g-m-bottom-padding-5px">
+									<select class="form-control selectpicker show-menu-arrow" th:id="occupation+*{__${stat.index}__+1}" th:field="*{occupations[__${stat.index}__].occupationId}">
+										<option value="0">Nothing selected</option>
+										<option th:each="option:*{occupationOptions}" th:value="${option.id}" th:text="${option.occupation}" ></option>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<input class="form-control input-sm" type="text" th:id="other-occupation+*{__${stat.index}__}" th:field="*{occupations[__${stat.index}__].otherOccupation}" placeholder="Specify Other" disabled="disabled">
+								</div>
+								<script th:inline="javascript">
+								      /*<![CDATA[*/
+								        var id = /*[[*{__${stat.index}__}]]*/;
+							      		id++;
+								        $("#occupation"+id).selectpicker({
+								            style: "btn-default btn-sm"
+								        });
+								       /*]]>*/
+								</script>
+							</div>
+							<div class="form-group form-group-sm">
+								<label class="col-md-3 control-label" for="designation">Designation:</label>
+								<div class="col-md-3">
+									<select class="form-control selectpicker show-menu-arrow" th:id="designation+*{__${stat.index}__+1}" th:field="*{occupations[__${stat.index}__].designationId}">
+										<option value="0">Nothing selected</option>
+										<option th:each="option:*{designationOptions}" th:value="${option.id}" th:text="${option.designation}" ></option>
+									</select>
+								</div>
+								<div class="col-md-3">
+									<input class="form-control input-sm" type="text" th:id="other-designation+*{__${stat.index}__}" th:field="*{occupations[__${stat.index}__].otherDesignation}" placeholder="Specify Other" disabled="disabled">
+								</div>
+								<script th:inline="javascript">
+								      /*<![CDATA[*/
+								        var id = /*[[*{__${stat.index}__}]]*/;
+							      		id++;
+								        $("#designation"+id).selectpicker({
+								            style: "btn-default btn-sm"
+								        });
+								       /*]]>*/
+								</script>
+							</div>
+							<!-- <div class="form-group form-group-sm">
+								<label class="col-md-3 control-label" for="occ-description-1">Description:</label>
+								<div class="col-md-9">
+									<textarea class="form-control input-sm" id="occ-description-+*{__${stat.index}__+1}" placeholder="Description" rows="2" th:field="*{occupations[__${stat.index}__].description}"></textarea>
+								</div>
+							</div> -->
+							<!-- <div class="form-group form-group-sm">
+								<div class="col-md-12" style="text-align: center;">
+									<button id="occ-1-clear-btn"  class="btn btn-primary btn-xs" type="button">
+										<span class="g-btn-text text-uppercase">Clear</span>
+									</button>
+								</div>
+							</div> -->
+						</div>
+						<!-- <div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="yearlyIncome">Yearly Income:</label>
+							<div class="col-md-3">
+								<select class="form-control selectpicker show-menu-arrow" th:id="yearlyIncome+*{__${stat.index}__+1}" title="Yearly Income" th:field="*{occupations[__${stat.index}__].yearlyIncomeId}">
+									<option value="0">Nothing selected</option>
+									<option th:each="option:*{yearlyIncomeOptions}" th:value="${option.id}" th:text="${option.yearlyIncome}" ></option>
+								</select>
+							</div>
+							<script th:inline="javascript">
+							      /*<![CDATA[*/
+							        var id = /*[[*{__${stat.index}__}]]*/;
+						      		id++;
+							        $("#yearlyIncome"+id).selectpicker({
+							            style: "btn-default btn-sm"
+							        });
+							       /*]]>*/
+							</script>
+						</div> -->
+					</fieldset>
+					
+					<div class="form-group form-group-sm" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="education-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="saveInfo('Education')">
+								<span class="text-uppercase g-btn-text">Save</span>
+							</button>
+							<button id="personal-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="cancelEdit('Education')">
+								<span class="text-uppercase g-btn-text">Cancel</span>
+							</button>
+						</div>
+					</div>
+					<script type="text/javascript" src="js/app/update-profile.js"></script>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

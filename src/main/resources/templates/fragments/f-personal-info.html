@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<div class="panel panel-info">
+	<div class="panel-heading">
+		<b>Personal Information</b>
+	</div>
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="personalInfoView" id="personalInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form action="#" method="post" role="form" class="form-horizontal" th:object="${personalInfo}">
+					<fieldset>
+						<legend style="font-size: 13px;">Basic Information</legend>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Full Name:</div>
+							<div class="col-md-9 g-view-text-profile">
+								<span th:text="*{firstName}"></span> <span th:text="*{middleName}"></span> <span th:text="*{lastName}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Gender:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{gender}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Marital Status:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{maritalStatus}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Height:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{heightCms}"></span> cm <span th:text="*{heightFoot}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Weight:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{weight}"></span> kg
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Birth Information</legend>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Birth Name:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{birthName}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Birth Place:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{birthPlace}"></span>
+							</div>
+						</div>
+						<div class="row" style="padding-bottom: 10px;">
+							<div class="col-md-3 g-view-label-profile"><span class="fa fa-birthday-cake" style="padding-right: 5px;"></span>Birth Date & Time:</div>
+							<div class="col-md-2 g-view-text-profile">
+								<span th:text="*{birthDate}"></span>
+							</div>
+							<div class="col-md-2 g-view-text-profile">
+								<span th:text="*{birthTime}"></span>
+							</div>
+							<div class="col-md-2 g-view-text-profile">
+								<span th:text="*{birthDay}"></span>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Other Personal	Information</legend>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Blood Group:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{bloodGroup}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Hobbies:</div>
+							<div class="col-md-9 g-view-text-profile">
+								<span th:text="*{hobby}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">About Me:</div>
+							<div class="col-md-9 g-view-text-profile">
+								<span th:text="*{aboutMe}"></span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Is	Mangal?:</div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{isMangal}"></span>
+							</div>
+						</div>
+					</fieldset>
+					<div class="row" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="personal-info-edit-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="editInfo('Personal')">
+								<span class="text-uppercase g-btn-text">Edit</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<div class="panel-body" style="padding-left: 20px;" th:fragment="personalInfoEdit" id="personalInfoSectionBody">
+		<div class="row" style="padding-left: 30px;">
+			<div class="col-md-12">
+				<form role="form" id="editPersonalInfoForm" class="form-horizontal" th:action="@{/sPersonalInfo}" th:object="${personalInfo}"  method="post">
+					<fieldset>
+						<legend style="font-size: 13px;">Basic Information</legend>
+
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="first-name">Full Name:</label>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" placeholder="First Name" th:field="*{firstName}">
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm" type="text" id="middle-name" placeholder="Middle Name" th:field="*{middleName}">
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input class="form-control input-sm g-m-bottom-padding-5px"	type="text" id="last-name" placeholder="Last Name" th:field="*{lastName}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="gender">Gender:</label>
+							<div class="col-md-6">
+								<label class="radio-inline"> <input type="radio" name="gender" id="gender-m" value="Male" th:field="*{gender}"> Male </label>
+								<label class="radio-inline"> <input type="radio" name="gender" id="gender-f" value="Female" th:field="*{gender}"> Female </label>
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="maritalStatusId">Marital	Status:</label>
+							<div class="col-md-3">
+								<select class="form-control show-menu-arrow selectpicker" id="maritalStatusId" name="maritalStatusId">
+									<option th:each="option:*{maritalStatusOptions}" th:value="${option.id}" th:text="${option.maritalStatus}" th:selected="${option.id} == *{maritalStatusId}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="height">Height:</label>
+							<div class="col-md-2 g-d-right-0px">
+								<input class="form-control input-sm" type="text" id="height" placeholder="Height" th:field="*{heightCms}">
+							</div>
+							<label class="col-md-4 control-label" style="text-align: left;">cm  &nbsp;&nbsp;&nbsp; <span th:text="*{heightFoot}"></span> </label>
+						</div>
+
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="weight">Weight:</label>
+							<div class="col-md-2 g-d-right-0px">
+								<input class="form-control input-sm" type="text" id="weight" placeholder="Weight" maxlength="3" th:field="*{weight}">
+							</div>
+							<label class="col-md-1 control-label" style="text-align: left;">kg</label>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Birth Information</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="birth-name">Birth Name:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="birth-name" placeholder="Birth Name" th:field="*{birthName}" >
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="birth-place">Birth Place:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="birth-place" placeholder="Birth Place" th:field="*{birthPlace}">
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="birth-date"><span class="fa fa-birthday-cake" style="padding-right: 5px;"></span>Birth Date & Time:</label>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<div class='input-group date' id='datetimepicker8'>
+									<input type='text' class="form-control input-sm" id="birth-date" placeholder="Birth Date" th:field="*{birthDate}" /> 
+									<span class="input-group-addon"> <span class="fa fa-calendar"></span></span>
+								</div>
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<div class='input-group date' id='datetimepicker3'>
+									<input type='text' class="form-control input-sm" id="birth-time" placeholder="Birth Time" th:field="*{birthTime}" /> 
+									<span class="input-group-addon"> <span class="glyphicon glyphicon-time"></span> </span>
+								</div>
+							</div>
+							<div class="col-md-3 g-m-bottom-padding-5px">
+								<input type='text' class="form-control input-sm" id="birthDayVisible" placeholder="Birth Day" th:value="*{birthDay}" disabled="disabled" />
+								<input type='hidden' class="form-control input-sm" id="birthDay" placeholder="Birth Day" th:field="*{birthDay}" /> 
+								<!-- <select class="form-control show-menu-arrow selectpicker" id="birthDayId" name="birthDayId" disabled="disabled">
+									<option th:each="option:*{birthDayOptions}" th:value="${option.id}" th:text="${option.dayOfWeek}" th:selected="${option.id} == *{birthDayId}"></option>
+								</select> -->
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Other Personal	Information</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="blood-group">Blood Group:</label>
+							<div class="col-md-3">
+								<select class="form-control show-menu-arrow selectpicker" id="bloodGroupId" name="bloodGroupId">
+									<option th:each="option:*{bloodGroupOptions}" th:value="${option.id}" th:text="${option.bloodGroupName}" th:selected="${option.id} == *{bloodGroupId}"></option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="hobbies">Hobbies:</label>
+							<div class="col-md-9">
+								<textarea class="form-control input-sm" id="hobbies" placeholder="Hobbies" rows="2" th:field="*{hobby}"></textarea>
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="about-me">About Me:</label>
+							<div class="col-md-9">
+								<textarea class="form-control input-sm" id="about-me" placeholder="About Me" rows="2" th:field="*{aboutMe}"></textarea>
+							</div>
+						</div>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="is-mangal">Is Mangal?:</label>
+							<div class="col-md-6">
+								<label class="radio-inline"> <input type="radio" name="is-mangal" id="is-mangal-y" value="Yes" th:field="*{isMangal}" > Yes	</label> 
+								<label class="radio-inline"> <input type="radio" name="is-mangal" id="is-mangal-n" value="No" th:field="*{isMangal}" >	No	</label>
+							</div>
+						</div>
+					</fieldset>
+					<input type="hidden" id="isNewCandidate" name="isNewCandidate" value="${isNewCandidate}">
+					<div class="form-group form-group-sm" style="padding-top: 20px;">
+						<div class="col-md-12" style="text-align: center;">
+							<button id="personal-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="saveInfo('Personal')">
+								<span class="text-uppercase g-btn-text">Save</span>
+							</button>
+							<button id="personal-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="cancelEdit('Personal')">
+								<span class="text-uppercase g-btn-text">Cancel</span>
+							</button>
+						</div>
+					</div>
+					<script type="text/javascript" src="js/app/update-profile.js"></script>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

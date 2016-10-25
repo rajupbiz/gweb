@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>Gomaie^</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+
+<body>
+
+	<div id="wrapper" class="container-fluid">
+		
+	<div th:replace="fragments/f-common :: g-header"></div>
+	
+	<div id="content">
+		<div class="row">
+			<div class="col-md-1"></div>
+				<div class="col-md-10" style="padding-left: 12px;">
+					<div style="padding-left: 10px;">
+						<div class="row">
+							<div class="col-md-3" style="margin-top: 20px; padding-left: 10px; padding-right: 10px;">
+								<div class="row" style="height: 100%;">
+									<div class="col-md-12" style="text-align: left;">
+										<div style="font-family: cursive; font-weight:bolder; font-size: 16pt; color: black;">Welcome</div>
+										<div class="g-home-vertical-line" style="font-family: cursive; font-weight:bolder; font-size: 16pt; color: black; padding-bottom: 20px;"><span th:text="${dashboard.firstName}"></span>!</div>
+										
+										<div class="g-home-vertical-line" ><img alt="img" src="assets/img/p1.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></div>
+										<div class="g-home-vertical-line g-text-bold" style="padding-top: 20px;">G-ID: <span th:text="${dashboard.gid}"></span></div>
+										<div class="g-home-vertical-line" style="text-align: left; padding-left: 5px; padding-top: 30px;">
+											<div class="g-text-header-3" style="margin-bottom: 10px;">Activities:</div>	
+											<div style="margin-bottom: 3px;">Last signed in: <span class="g-text-bold" th:text="${session.LAST_LOGGED_IN}"></span></div>
+											<div style="margin-bottom: 3px;">Last profile updated: <span class="g-text-bold" th:text="${dashboard.lastProfileUpdated}"></span></div>
+											<div style="margin-bottom: 3px;">Profile completion: <span class="g-text-bold">60%</span></div>
+											<div style="margin-bottom: 3px;">Profile privacy level: <span class="g-text-bold">60%</span></div>
+											<div style="margin-bottom: 3px;">Number of profile views: <span class="g-text-bold">42</span></div>	
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-9" style="padding-right: 0px;">
+								<div class="row" style="padding-top: 30px;">
+									<div class="col-md-12">
+									
+										<div class="row">
+											<div class="col-md-12">
+												<!-- <div class="alert alert-info g-alert" role="alert" style="text-align: left; margin-bottom: 3px;"><strong><div class="glyphicon glyphicon-alert" style="padding-right: 5px;"></div> Please verify your mobile number and email id to proceed for search.</div></strong>
+												<div class="alert alert-info g-alert" role="alert" style="text-align: left;"><strong><div class="glyphicon glyphicon-alert" style="padding-right: 5px;"></div> You have 3 unread messages.</div></strong> -->
+												
+												<!-- <div class="well well-sm" style="padding-top: 3px; padding-bottom: 0px; padding-left: 15px; text-align: left;">
+													<div class="g-text-normal g-notification"><span class="glyphicon glyphicon-alert" style="padding-right: 5px;"></span> Please verify your mobile number and email id to proceed for search.</div>
+													<div class="g-text-normal g-notification"><span class="glyphicon glyphicon-alert" style="padding-right: 5px;"></span> You have 2 unread messages.</div>
+												</div> -->
+												
+												<div style="text-align: left;">
+													<div class="g-text-bold g-notification"><!-- <span class="glyphicon glyphicon-alert" style="padding-right: 5px;"></span>  --><span class="fa fa-bullhorn fa-lg" style="padding-right: 5px;"></span>  Please verify your mobile number and email id to proceed for search.</div>
+													<div class="g-text-bold g-notification"><span class="fa fa-bullhorn fa-lg" style="padding-right: 5px;"></span> You have 3 unread messages.</div>
+												</div>
+											</div>
+										</div>
+									
+										<div class="row">
+											<div class="col-md-12">
+											<!-- <div class="row">
+												<div class="col-md-12">
+													<hr style="padding: 5px; margin: 0px;">
+												</div>
+											</div> -->
+											<div class="row" style="padding-bottom: 20px; padding-top: 30px;">
+												<div class="col-md-12">
+													<div class="row">
+														<div class="col-md-6" style="text-align: left;">
+															<div class="g-section-header">Profile Overview</div>
+														</div>
+														<!-- <div class="col-md-6" style="text-align: right;">
+															<button type="button" class="btn btn-primary btn-sm">Preview Profile</button>
+															<button type="button" class="btn btn-primary btn-sm">Update Profile</button>
+														</div> -->
+													</div>
+												</div>
+											</div>
+											<!-- <div class="row">
+												<div class="col-md-12">
+													<hr style="padding: 5px; margin: 0px;">
+												</div>
+											</div> -->
+											<div class="row" style="text-align: left; padding-left: 20px;">
+												<div class="col-md-12">
+													<div class="row" style="padding-bottom: 10px;">
+														<div class="col-md-2">
+															Full Name:
+														</div>
+														<div class="col-md-4 g-text-bold" th:text="${dashboard.fullName}">
+														</div>
+														<div class="col-md-2">
+															Date of Birth:
+														</div>
+														<div class="col-md-4 g-text-bold" th:text="${dashboard.dateOfBirth}">
+														</div>
+													</div>
+													<div class="row" style="padding-bottom: 10px;">
+														<div class="col-md-2">
+															Occupation:
+														</div>
+														<div class="col-md-4 g-text-bold" th:text="${dashboard.occupation}">
+															
+														</div>
+														<div class="col-md-2">
+															Education:
+														</div>
+														<div class="col-md-4 g-text-bold" th:text="${dashboard.education}">
+														</div>
+													</div>
+													<div class="row" style="padding-bottom: 10px;">
+														<div class="col-md-2">
+															Current Location:
+														</div>
+														<div class="col-md-4 g-text-bold" th:text="${dashboard.currentLocation}">
+														</div>
+														<div class="col-md-2">
+															Contact:
+														</div>
+														<div class="col-md-4 g-text-bold" th:text="${dashboard.contact}">
+														</div>
+													</div>
+													<div class="row" style="padding-bottom: 10px;">
+														<div class="col-md-2">
+															Height:
+														</div>
+														<div class="col-md-4 g-text-bold"><span th:text="${dashboard.height}"></span> cm  <span th:if="${dashboard.heightFoot != null && dashboard.heightFoot == ''}">(<span th:text="${dashboard.heightFoot}"></span>)</span> 
+														</div>
+														<div class="col-md-2">
+															Weight:
+														</div>
+														<div class="col-md-4 g-text-bold"><span th:text="${dashboard.weight}"></span> kg
+														</div>
+													</div>
+												</div>
+											</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<hr style="padding: 10px; margin: 5px;">
+											</div>
+										</div>
+										
+										<div class="row" style="margin-bottom: 10px; margin-top: 20px;">
+											<div class="col-md-12">
+												<div class="row">
+													<div class="col-md-6" style="text-align: left;">
+														<div class="g-section-header">Messages <span class="badge" th:if="${session.noOfUnreadMessages > 0}" th:text="${session.noOfUnreadMessages}"></span></div>
+													</div>
+													<div class="col-md-6" style="text-align: right;" th:if="${dashboard.messages != null}">
+														<button type="button" class="btn btn-primary btn-sm">View Detail</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row" style="text-align: left; padding-left: 20px;">
+											<div class="col-md-12">
+												<div class="table-responsive">
+												
+												  <table class="table table-hover">
+												    <thead>
+												      <tr>
+												      	<th></th>
+												        <th>From</th>
+												        <th>Subject</th>
+												        <th>Message</th>
+												      </tr>
+												    </thead>
+												    <tbody th:if="${dashboard.messages != null}">
+												      <tr th:each="msg : ${dashboard.messages}">
+												      	<td><i class="fa fa-envelope" aria-hidden="true"></i></td>
+												        <td th:text="${msg.from}"></td>
+												        <td th:text="${msg.subject}"></td>
+												        <td th:text="${msg.body}"></td>
+												      </tr>
+												    </tbody>
+												    <tbody th:if="${dashboard.messages == null}">
+												      <tr>
+												      	<td></td>
+												      	<td>No records found</td>
+												      </tr>
+											      	</tbody>
+												  </table>
+												  
+												</div>
+												
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col-md-12">
+												<hr style="padding: 10px; margin: 5px;">
+											</div>
+										</div>
+										
+										<div class="row" style="margin-bottom: 10px; margin-top: 20px;">
+											<div class="col-md-12">
+												<div class="row">
+													<div class="col-md-6" style="text-align: left;">
+														<div class="g-section-header">Shortlisted Profiles <span class="badge" th:if="${dashboard.shortlistedProfiles > 0}" th:text="${dashboard.shortlistedProfiles}"></span></div>
+													</div>
+													<div class="col-md-6" style="text-align: right;" th:if="${dashboard.shortlistedProfiles != null}">
+														<button type="button" class="btn btn-primary btn-sm">View Detail</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<div class="row" style="text-align: left; padding-left: 20px;">
+											<div class="col-md-12">
+												<div class="table-responsive">
+												
+												  <table class="table table-hover">
+												    <thead>
+												      <tr>
+												      	<th></th>
+												        <th>Name</th>
+												        <th>Address</th>
+												        <th>Occupation</th>
+												        <th>Date of Birth</th>
+												      </tr>
+												    </thead>
+												    <tbody th:if="${dashboard.shortlistedProfiles != null}">
+												      <tr th:each="profile : ${dashboard.shortlistedProfiles}">
+												      	<td><i class="fa fa-envelope" aria-hidden="true"></i></td>
+												        <td th:text="${profile.fullName}"></td>
+												        <td th:text="${profile.address}"></td>
+												        <td th:text="${profile.occupation}"></td>
+												        <td th:text="${profile.dateOfBirth}"></td>
+												      </tr>
+												    </tbody>
+												    <tbody th:if="${dashboard.shortlistedProfiles == null}">
+												      <tr>
+												      	<td></td>
+												      	<td>No records found</td>
+												      </tr>
+											      	</tbody>
+												  </table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+		
+		<div th:replace="fragments/f-common :: g-footer"></div>
+	</div>
+			
+</body>
+</html>
