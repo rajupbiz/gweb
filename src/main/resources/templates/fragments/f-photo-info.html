@@ -48,95 +48,6 @@
 	<div class="panel-body" style="padding-left: 20px;" th:fragment="photoInfoEdit" id="photoInfoSectionBody">
 		<div class="row" style="padding-left: 30px;">
 			<div class="col-md-12">
-				<fieldset>
-					<legend style="font-size: 13px;">Upload Photo(s):</legend>
-					<div class="row" style="padding-bottom: 10px;">
-						<div class="col-md-1"></div>
-						<div class="col-md-10">
-							<form id="upload-file-form">
-								<input id="uploadfile" name="uploadfile" type="file" class="file-loading form-control input-xs" accept="*"> <!-- class="file-loading form-control input-xs" -->
-								
-								<script th:inline="javascript">
-								      /*<![CDATA[*/
-							      		$("#uploadfile").fileinput({
-							      		// setup initial preview with data keys
-							      			initialPreview: [
-							      			    "<img src='img/1_Sagai_4.jpg' class='file-preview-image' alt='Desert' title='Desert'>",
-							      			    "<img src='img/1_Sagai_3.jpg' title='Jelly Fish'>"
-							      			],
-							      			// initial preview configuration
-							      			initialPreviewConfig: [
-							      			    {
-							      			        caption: 'desert.jpg',
-							      			        width: '120px',
-							      			        url: 'removeFile',
-							      			        key: 100,
-							      			        extra: {id: 100}
-							      			    },
-							      			    {
-							      			        caption: 'jellyfish.jpg', 
-							      			        width: '120px', 
-							      			        url: 'removeFile', 
-							      			        key: 101, 
-							      			        frameClass: 'my-custom-frame-css',
-							      			        frameAttr: {
-							      			            style: 'height:80px',
-							      			            title: 'My Custom Title',
-							      			        },
-							      			        extra: function() { 
-							      			            return {id: $("#id").val()};
-							      			        }
-							      			    }
-							      			],
-							      		    initialPreviewAsData: true,
-							      		    /*initialPreviewConfig: [
-							      		    ], */
-							      		  	showUpload: true,
-							      		    uploadUrl: "uploadFile",
-							      		    deleteUrl: "removeFile",
-							      		    overwriteInitial: false,
-							      		    maxFileSize: 10,
-							      		  	
-							      		    allowedFileExtensions: ["jpg"],
-							      		    initialCaption: "No file selected"
-							      		});
-								      
-							      		//$("#uploadfile").on("change", uploadFile);
-							      		
-							      		/**
-							      		 * Upload the file sending it via Ajax at the Spring Boot server.
-							      		 */
-							      		function uploadFile() {
-							      		  
-							      			alert(" uploadfile 486 ");
-							      			$.ajax({
-							      			    url: "uploadFile",
-							      			    type: "POST",
-							      			    data: new FormData($("#upload-file-form")[0]),
-							      			    enctype: 'multipart/form-data',
-							      			    processData: false,
-							      			    contentType: false,
-							      			    cache: false,
-							      			    success: function () {
-							      			      // Handle upload success
-							      			      // ...
-							      			    	alert(" uploadfile 486 ");
-							      			    },
-							      			    error: function () {
-							      			      // Handle upload error
-							      			    	alert(" uploadfile 486 ");
-							      			    }
-							      			});
-							      		} // function uploadFile
-							      		
-								       /*]]>*/
-								</script> 
-								
-							</form>
-			         	</div>
-			         	<div class="col-md-1"></div>
-				   	</div>
-				</fieldset>
 				<form action="#" method="post" role="form" class="form-horizontal">
 					<fieldset>
 						<legend style="font-size: 13px;">Select Primary Photo</legend>
@@ -186,6 +97,195 @@
 						</div>
 					</div>
 				</form>
+				<fieldset>
+					<legend style="font-size: 13px;">Upload Photo(s):</legend>
+					<div class="row" style="padding-bottom: 10px;">
+						<div class="col-md-1"></div>
+						<div class="col-md-10">
+						
+							<form id="upload-file-form">
+								<div id="kv-avatar-errors-1" class="center-block" style="display:none"></div>
+								<input id="uploadfile" name="uploadfile" type="file" class="file-loading form-control input-xs"  accept="image/x-png, image/jpeg"> <!-- class="file-loading form-control input-xs" -->
+								
+								<script th:inline="javascript">
+								      /*<![CDATA[*/
+								                 
+								       	/* var photoList = [[${photoInfo.photos}]];
+								      	var photos = "";
+										for (i = 0; i < photoList.length; i++) {
+											console.log('"'+photoList[i].path+'",');
+											photos = photos + '"'+photoList[i].path+'",';
+										}
+										if(photoList.length > 0){
+											photos = photos.replace(/,\s*$/, "");
+										}
+								     	console.log(" photoList.length :: "+photoList.length); */
+								     	/* console.log(" photos :: "+[[${photoInfo.photoList}]]);
+								      
+								     	var str = new Array([[${photoInfo.photoList}]]); */
+								     	
+								     	/* str.replace("\'", "\"");
+								     	
+								     	console.log("    str   "+str);
+								     	
+								     	var str1 = "["+ str +"]";
+								     	
+								     	
+								     	console.log(" str1 "+str1); */
+								     	
+								     	$("#uploadfile").fileinput({
+								     		showCaption: true,
+								     		showPreview: false,
+								     		showRemove: false,
+								     		showCancel: false,
+								     		allowedFileExtensions: ["jpg", "png"],
+								     		uploadUrl: "uploadFile",
+								            maxFileSize: 100,
+								            elErrorContainer: '#kv-avatar-errors-1',
+								            msgErrorClass: 'alert alert-block alert-danger'
+								     	});
+								     	
+								     	$('#uploadFile').on('fileerror', function(event, data, msg) {
+								     	   console.log(data.id);
+								     	   console.log(data.index);
+								     	   console.log(data.file);
+								     	   console.log(data.reader);
+								     	   console.log(data.files);
+								     	   // get message
+								     	   alert(msg);
+								     	});
+								     	/* 
+								     	$('#uploadFile').on('fileimageresizeerror', function(event, data, msg) {
+								     	   console.log(data.id);
+								     	   console.log(data.index);
+								     	   // get message
+								     	   alert(msg);
+								     	});
+								     	
+								     	$("#uploadFile").on('filecustomerror', function(event, params, msg) {
+								     	   console.log(params.id);
+								     	   console.log(params.index);
+								     	   console.log(params.data);
+								     	   // get message
+								     	   alert(msg);
+								     	});
+								     	*/
+								     	$('#uploadFile').on('fileuploaderror', function(event, data, msg) {
+								     	   /*  var form = data.form, files = data.files, extra = data.extra,
+								     	        response = data.response, reader = data.reader; */
+								     	    console.log('File upload error');
+								     	   // get message
+								     	   alert(msg);
+								     	});
+								     	
+								     	
+								     	$('#uploadFile').on('fileuploaded', function(event, data, msg) {
+								     	    console.log('File upload success');
+								     	   // get message
+								     	   alert(msg);
+								     	});
+								     	
+								     	/* fileclear
+
+								     	filecleared
+
+								     	filereset
+
+								     	fileerror
+
+								     	fileuploaderror
+
+								     	filebatchuploaderror
+
+								     	filedeleteerror
+
+								     	filefoldererror
+
+								     	filecustomerror
+
+								     	fileuploaded
+
+								     	filebatchuploadcomplete
+
+								     	filebatchuploadsuccess */
+								     	
+							      		/* 
+							      		$("#uploadfile").fileinput({
+							      			
+							      					
+							      			// setup initial preview with data keys
+							      			initialPreview: [],
+							      			// initial preview configuration
+							      			initialPreviewConfig: [
+							      			   {
+							      			        caption: 'desert.jpg',
+							      			        width: '120px',
+							      			        url: 'removeFile',
+							      			        key: 100,
+							      			        extra: {id: 100}
+							      			    },
+							      			    {
+							      			        caption: 'jellyfish.jpg', 
+							      			        width: '120px', 
+							      			        url: 'removeFile', 
+							      			        key: 101, 
+							      			        frameClass: 'my-custom-frame-css',
+							      			        frameAttr: {
+							      			            style: 'height:80px',
+							      			            title: 'My Custom Title',
+							      			        },
+							      			        extra: function() { 
+							      			            return {id: $("#id").val()};
+							      			        }
+							      			    }
+							      			],
+							      		    initialPreviewAsData: false,
+							      		  	showUpload: false,
+							      		    uploadUrl: "uploadFile",
+							      		    deleteUrl: "removeFile",
+							      		    overwriteInitial: false,
+							      		    maxFileSize: 10,
+							      		    allowedFileExtensions: ["jpg"],
+							      		    initialCaption: "No file selected"
+							      		}); */
+								      
+							      		//$("#uploadfile").on("change", uploadFile);
+							      		
+							      		/**
+							      		 * Upload the file sending it via Ajax at the Spring Boot server.
+							      		 */
+							      		function uploadFile() {
+							      		  
+							      			alert(" uploadfile 486 ");
+							      			$.ajax({
+							      			    url: "uploadFile",
+							      			    type: "POST",
+							      			    data: new FormData($("#upload-file-form")[0]),
+							      			    enctype: 'multipart/form-data',
+							      			    processData: false,
+							      			    contentType: false,
+							      			    cache: false,
+							      			    success: function () {
+							      			      // Handle upload success
+							      			      // ...
+							      			    	alert(" uploadfile 486 ");
+							      			    },
+							      			    error: function () {
+							      			      // Handle upload error
+							      			    	alert(" uploadfile 486 ");
+							      			    }
+							      			});
+							      		} // function uploadFile
+							      		
+								       /*]]>*/
+								</script> 
+								
+							</form>
+			         	</div>
+			         	<div class="col-md-1"></div>
+				   	</div>
+				</fieldset>
+				
 			</div>
 		</div>
 	</div>
