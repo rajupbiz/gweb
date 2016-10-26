@@ -770,12 +770,11 @@ public class CandidateUIService {
 		return messages;
 	}
 	
-	public PhotoInfo getPhotoInfoSectionForUI(Candidate candidate, String baseURL){
+	public PhotoInfo getPhotoInfoSectionForUI(Candidate candidate){
 		PhotoInfo pi = new PhotoInfo();
 		if(candidate != null){
 			List<GPhoto> gPhotos = candidateService.getCandidatePhotos(candidate);
 			if(CollectionUtils.isNotEmpty(gPhotos)){
-				List<String> photoLst = new ArrayList<>();
 				List<Photo> photos = new ArrayList<>();
 				for (GPhoto gPhoto : gPhotos) {
 					if(gPhoto != null){
@@ -783,21 +782,14 @@ public class CandidateUIService {
 						p.setPhotoId(gPhoto.getId());
 						p.setIsActive(true);
 						p.setIsPrimary(gPhoto.getIsSagaiPrimary());
-						p.setPath("\""+baseURL+"/loadImage/"+gPhoto.getFileName()+"\",");
-						//photoListSB.append(p.getPath());
-						
-						photoLst.add(baseURL+"/loadImage/"+gPhoto.getFileName());
-						
+						String fileName = "";
+						if (gPhoto.getFileName().indexOf(".") > 0)
+							fileName = gPhoto.getFileName().substring(0, gPhoto.getFileName().lastIndexOf("."));
+						p.setFileName(fileName);
+						p.setTitle(gPhoto.getTitle());
 						photos.add(p);
 					}
 				}
-				/*String photoListStr = photoListSB.toString();
-				if (photoListStr != null && !photoListStr.equals("") && photoListStr.endsWith(",")) {
-					photoListStr = photoListStr.substring(0, photoListStr.length() - 1);
-				}*/
-				
-				String csvWithQuote = photoLst.toString().replace("[", "'").replace("]", "'").replace(", ", "','");
-				pi.setPhotoList(csvWithQuote);
 				pi.setPhotos(photos);
 				pi.setIsUploadAllowed(photos.size() < 2? true:false);
 			}
@@ -820,6 +812,7 @@ public class CandidateUIService {
 					gPhotos.add(gp);
 				}else{
 					gp = new GPhoto();
+					gp.setTitle(user.getCandidates().get(0).getCandidatePersonalDetail().getFirstName()+" "+user.getCandidates().get(0).getCandidatePersonalDetail().getLastName());
 					gp.setUser(user);
 					gp.setCategory(PhotoCategoryEnum.Sagai.toString());
 					gp.setIsSagaiPrimary(p.getIsPrimary());

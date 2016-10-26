@@ -49,9 +49,7 @@ public class FileController extends BaseController {
 	 * @return An http OK status in case of success, an http 4xx status in case of errors.
 	 */
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-	@ResponseBody
-	public FileUploadError uploadFile(@RequestParam("uploadfile") MultipartFile uploadfile) {
-
+	public @ResponseBody FileUploadError uploadFile(@RequestParam("uploadfile") MultipartFile uploadfile) {
 		FileUploadError error = new FileUploadError();
 		try {
 			User user = getLoggedInUser();
@@ -101,8 +99,9 @@ public class FileController extends BaseController {
 	@RequestMapping(value = "loadImage/{fileName}", method = RequestMethod.GET)
 	@ResponseBody
 	public void loadImage(@PathVariable String fileName) throws IOException {
+		//TODO: to encrypt and decrypt filname
 		System.out.println(" filename  "+fileName);
-		org.springframework.core.io.Resource r = resourceLoader.getResource("file:D:\\gomaie\\pics\\sagai\\"+fileName+".jpg");
+		org.springframework.core.io.Resource r = resourceLoader.getResource("file:C:\\Users\\RPATEL\\Google Drive\\00_biz\\gomaie\\pics\\sagai\\"+fileName+".jpg");
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 	    IOUtils.copy(r.getInputStream(), response.getOutputStream());
 	}

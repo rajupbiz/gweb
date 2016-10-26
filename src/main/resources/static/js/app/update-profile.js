@@ -478,3 +478,18 @@ function onChangeDropdown(dropdown){
 	}
 }
 
+function makePrimary(photo1) {
+	console.log(" 336 "+photo1);
+	$.ajax({
+	    url: "makePrimary?photo="+photo1,
+	    type: "GET",
+	    success: function () {
+	    	console.log(" mp 347 ");
+	    	editInfo("Photo");
+	    },
+	    error: function () {
+	    	console.log(" mp 351 ");
+	    }
+	});
+}
+

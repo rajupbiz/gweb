@@ -84,20 +84,30 @@ public class CandidatePhotoService {
 		}
 	}
 	
-	public void setPhotoAsSagaiPrimary(User user, GPhoto gPhoto) throws Exception{
-		if(gPhoto != null && StringUtils.isNotBlank(gPhoto.getStatus()) && gPhoto.getStatus().equalsIgnoreCase(StatusEnum.Active.toString())){
-			List<GPhoto> allActivePhotos = gPhotoDao.findByUserAndCategoryAndStatus(user, PhotoCategoryEnum.Sagai.toString(), StatusEnum.Active.toString());
-			if(CollectionUtils.isNotEmpty(allActivePhotos)){
-				for (GPhoto gPhoto2 : allActivePhotos) {
-					if(gPhoto2.getId().equals(gPhoto.getId())){
-						gPhoto2.setIsSagaiPrimary(true);
-					}else{
-						gPhoto2.setIsSagaiPrimary(false);
+	public Boolean setPhotoAsSagaiPrimary(User user, GPhoto gPhoto) {
+		Boolean resp = false;
+		try {
+			if (gPhoto != null && StringUtils.isNotBlank(gPhoto.getStatus())
+					&& gPhoto.getStatus().equalsIgnoreCase(StatusEnum.Active.toString())) {
+				List<GPhoto> allActivePhotos = gPhotoDao.findByUserAndCategoryAndStatus(user,
+						PhotoCategoryEnum.Sagai.toString(), StatusEnum.Active.toString());
+				if (CollectionUtils.isNotEmpty(allActivePhotos)) {
+					for (GPhoto gPhoto2 : allActivePhotos) {
+						if (gPhoto2.getId().equals(gPhoto.getId())) {
+							gPhoto2.setIsSagaiPrimary(true);
+						} else {
+							gPhoto2.setIsSagaiPrimary(false);
+						}
+						gPhoto2.setUpdateOn(DateUtils.now());
+						gPhotoDao.save(gPhoto2);
 					}
-					gPhoto2.setUpdateOn(DateUtils.now());
-					gPhotoDao.save(gPhoto2);
 				}
-			}
+			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally{
+			resp = true;
 		}
+		return resp;
 	}
 }

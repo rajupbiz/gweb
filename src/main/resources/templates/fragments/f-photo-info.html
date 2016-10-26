@@ -11,21 +11,33 @@
 						<div class="form-group form-group-sm">
 							<div class="row" style="padding-bottom: 10px;">
 								<div class="col-md-1"></div>
-								<div class="col-md-2" style="text-align: center;">
-									<div class="row">
-										<div class="col-md-12">
-											<a class="thumbnail" href="assets/img/p1.jpg" data-lightbox="example-set" data-title="p1">
-												<img class="g-img img-rounded img-responsive" src="assets/img/p1.jpg" alt="p1">
-											</a>
+								<div class="col-md-10" style="text-align: center;" th:if="${photoInfo != null && photoInfo.photos != null && not #lists.isEmpty(photoInfo.photos)}">
+									<div class="row" style="text-align: center;">
+										<div class="col-md-3" style="display: inline-block; float: none; text-align:left; margin-right:-4px;" th:each="photo,photoStat : ${photoInfo.photos}">
+											<div class="card">
+										        <div class="card-header" style="text-align: center;" >
+										        	<span th:if="${photo.isPrimary != null && photo.isPrimary}" style="text-align: center;">
+														Primary
+													</span>
+										        </div>
+										        <a class="thumbnail"  th:attr="href='loadImage/'+${photo.fileName}" data-lightbox="example-set" th:attrappend="data-title=''+${photo.title}" >
+													<img class="g-img img-rounded img-responsive" th:src="'loadImage/'+${photo.fileName}" alt="p1">
+												</a>
+										        <!-- <div class="card-block">
+										            <a href="#" class="card-link" style="display: inline;">c</a>
+										        </div> -->
+										        <div class="card-footer text-muted">
+										            <span th:text="${photo.title}+' Photo '+${photoStat.count}"></span> 
+										        </div>
+											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2" style="text-align: center;">
-									<div class="row">
+								
+								<div class="col-md-10" style="text-align: center;" th:if="${photoInfo == null || photoInfo.photos == null || #lists.isEmpty(photoInfo.photos)}">
+									<div class="row" style="text-align: center;">
 										<div class="col-md-12">
-											<a class="thumbnail" href="assets/img/p2.jpg" data-lightbox="example-set" data-title="p2">
-												<img class="g-img img-rounded img-responsive" src="assets/img/p2.jpg" alt="p2">
-											</a>
+											No photos found.
 										</div>
 									</div>
 								</div>
@@ -54,39 +66,81 @@
 						<div class="form-group form-group-sm">
 							<div class="row" style="padding-bottom: 10px;">
 								<div class="col-md-1"></div>
-								<div class="col-md-2" style="text-align: center;">
-									<div class="row">
+								<div class="col-md-10" style="text-align: center;" th:if="${photoInfo != null && photoInfo.photos != null && not #lists.isEmpty(photoInfo.photos)}">
+									<div class="row" style="text-align: center;">
+										<div class="col-md-3" style="display: inline-block; float: none; text-align:left; margin-right:-4px;" th:each="photo : ${photoInfo.photos}">
+											<!-- <a class="thumbnail"  th:attr="href='loadImage/'+${photo.fileName}" data-lightbox="example-set" th:attrappend="data-title=''+${photo.title}" >
+												<img class="g-img img-rounded img-responsive" th:src="'loadImage/'+${photo.fileName}" alt="p1">
+											</a>
+											 -->
+											
+											<div class="card">
+										        <div class="card-header" style="text-align: center; padding-bottom: 5px;">
+										        	<span th:if="${photo.isPrimary != null && photo.isPrimary}" style="text-align: center;">
+														Primary
+													</span>
+													<a href="javascript:void(0)" class="btn btn-link btn-xs" th:if="${photo.isPrimary == null || !photo.isPrimary}" th:attr="onclick='makePrimary('+${photo.photoId}+'); return false; '" >Make Primary</a>
+										        </div>
+										        <a class="thumbnail"  th:attr="href='loadImage/'+${photo.fileName}" data-lightbox="example-set" th:attrappend="data-title=''+${photo.title}" >
+													<img class="g-img img-rounded img-responsive" th:src="'loadImage/'+${photo.fileName}" alt="p1">
+												</a>
+										        <div class="card-block" style="text-align: center;">
+										            <a href="#" class="btn btn-link btn-xs" th:attr="onclick='removePic('+${photo.photoId}+')'">Remove</a>
+										        </div>
+											</div>
+										</div>
+										<!-- <div class="card-deck-wrapper">
+  										<div class="card-deck"> -->
+											<!-- <div class="card" th:each="photo : ${photoInfo.photos}">
+										        <div class="card-header">
+										        </div>
+										        <img class="g-img img-rounded img-responsive" src="loadImage/1_Sagai_19" alt="p1"> -->
+										        <!-- <div class="card-block">
+										            <a href="#" class="card-link">Card link</a>
+										            <a href="#" class="card-link">Another link</a>
+										        </div> -->
+										        <!-- <div class="card-block">
+										            <h4 class="card-title"></h4>
+										            <h6 class="card-subtitle text-muted"></h6>
+										            <p class="card-text"></p>
+										        </div> -->
+										        <!-- <div class="card-block">
+										            <a href="#" class="btn btn-primary">Button</a>
+										        </div>
+										        <div class="card-footer text-muted">
+										            This is a card footer
+										        </div> -->
+										   <!--  </div>
+										</div> -->
+									<!-- </div>
+									</div> -->
+										<!-- <div class="col-md-12">
+											<label>
+											  <input type="radio" name="pic" id="p1" value="p1">
+											</label>
+										</div>
+										<div class="col-md-12">
+											<a class="thumbnail" href="loadImage/1_Sagai_19" data-lightbox="example-set" data-title="p1">
+												<img class="g-img img-rounded img-responsive" src="loadImage/1_Sagai_19" alt="p1">
+											</a>
+										</div>
 										<div class="col-md-12">
 											<label>
 											  <input type="radio" name="pic" id="p1" value="p1">
 											</label>
 										</div>
 										<div class="col-md-12">
-											<a class="thumbnail" href="assets/img/p1.jpg" data-lightbox="example-set" data-title="p1">
-												<img class="g-img img-rounded img-responsive" src="assets/img/p1.jpg" alt="p1">
+											<a class="thumbnail" href="loadImage/1_Sagai_19" data-lightbox="example-set" data-title="p1">
+												<img class="g-img img-rounded img-responsive" src="loadImage/1_Sagai_19" alt="p1">
 											</a>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2" style="text-align: center;">
-									<div class="row">
-										<div class="col-md-12">
-											<label>
-											  <input type="radio" name="pic" id="p2" value="p2">
-											</label>
-										</div>
-										<div class="col-md-12">
-											<a class="thumbnail" href="assets/img/p2.jpg" data-lightbox="example-set" data-title="p2">
-												<img class="g-img img-rounded img-responsive" src="assets/img/p2.jpg" alt="p2">
-											</a>
-										</div>
+										</div> -->
 									</div>
 								</div>
 								<div class="col-md-1"></div>
 							</div>
 						</div>
 					</fieldset>
-					<div class="form-group form-group-sm" style="padding-top: 20px;">
+					<!-- <div class="form-group form-group-sm" style="padding-top: 20px;">
 						<div class="col-md-12" style="text-align: center;">
 							<button id="photo-info-save-btn" class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="saveInfo('Photo')">
 								<span class="text-uppercase g-btn-text">Save</span>
@@ -95,7 +149,7 @@
 								<span class="text-uppercase g-btn-text">Cancel</span>
 							</button>
 						</div>
-					</div>
+					</div> -->
 				</form>
 				<fieldset>
 					<legend style="font-size: 13px;">Upload Photo(s):</legend>
@@ -103,87 +157,37 @@
 						<div class="col-md-1"></div>
 						<div class="col-md-10">
 						
+							<div th:if="${#lists.size(photoInfo.photos) < 2}" >
 							<form id="upload-file-form">
 								<div id="kv-avatar-errors-1" class="center-block" style="display:none"></div>
-								<input id="uploadfile" name="uploadfile" type="file" class="file-loading form-control input-xs"  accept="image/x-png, image/jpeg"> <!-- class="file-loading form-control input-xs" -->
+								
+								<input id="uploadfile" name="uploadfile" type="file" class="file-loading form-control input-xs"  accept="image/x-png, image/jpeg">
 								
 								<script th:inline="javascript">
 								      /*<![CDATA[*/
 								                 
-								       	/* var photoList = [[${photoInfo.photos}]];
-								      	var photos = "";
-										for (i = 0; i < photoList.length; i++) {
-											console.log('"'+photoList[i].path+'",');
-											photos = photos + '"'+photoList[i].path+'",';
-										}
-										if(photoList.length > 0){
-											photos = photos.replace(/,\s*$/, "");
-										}
-								     	console.log(" photoList.length :: "+photoList.length); */
-								     	/* console.log(" photos :: "+[[${photoInfo.photoList}]]);
-								      
-								     	var str = new Array([[${photoInfo.photoList}]]); */
-								     	
-								     	/* str.replace("\'", "\"");
-								     	
-								     	console.log("    str   "+str);
-								     	
-								     	var str1 = "["+ str +"]";
-								     	
-								     	
-								     	console.log(" str1 "+str1); */
-								     	
 								     	$("#uploadfile").fileinput({
 								     		showCaption: true,
 								     		showPreview: false,
 								     		showRemove: false,
 								     		showCancel: false,
+								     		maxFileCount: 1,
 								     		allowedFileExtensions: ["jpg", "png"],
 								     		uploadUrl: "uploadFile",
 								            maxFileSize: 100,
 								            elErrorContainer: '#kv-avatar-errors-1',
 								            msgErrorClass: 'alert alert-block alert-danger'
-								     	});
-								     	
-								     	$('#uploadFile').on('fileerror', function(event, data, msg) {
-								     	   console.log(data.id);
-								     	   console.log(data.index);
-								     	   console.log(data.file);
-								     	   console.log(data.reader);
-								     	   console.log(data.files);
-								     	   // get message
-								     	   alert(msg);
-								     	});
-								     	/* 
-								     	$('#uploadFile').on('fileimageresizeerror', function(event, data, msg) {
-								     	   console.log(data.id);
-								     	   console.log(data.index);
-								     	   // get message
-								     	   alert(msg);
-								     	});
-								     	
-								     	$("#uploadFile").on('filecustomerror', function(event, params, msg) {
-								     	   console.log(params.id);
-								     	   console.log(params.index);
-								     	   console.log(params.data);
-								     	   // get message
-								     	   alert(msg);
-								     	});
-								     	*/
-								     	$('#uploadFile').on('fileuploaderror', function(event, data, msg) {
-								     	   /*  var form = data.form, files = data.files, extra = data.extra,
-								     	        response = data.response, reader = data.reader; */
-								     	    console.log('File upload error');
-								     	   // get message
-								     	   alert(msg);
-								     	});
-								     	
-								     	
-								     	$('#uploadFile').on('fileuploaded', function(event, data, msg) {
-								     	    console.log('File upload success');
-								     	   // get message
-								     	   alert(msg);
-								     	});
+								     	}).on('fileuploaded', function(event, data, msg) {
+								     	    console.log('File upload success.');
+									     	// get message
+									     	// alert(msg);
+									    }).on('fileuploaderror', function(event, data, msg) {
+									     	   /*  var form = data.form, files = data.files, extra = data.extra,
+									     	        response = data.response, reader = data.reader; */
+									     	   console.log('File upload error');
+									     	   // get message
+									     	   //alert("Problem while uploading file, please try again later.");
+									    });
 								     	
 								     	/* fileclear
 
@@ -254,7 +258,7 @@
 							      		/**
 							      		 * Upload the file sending it via Ajax at the Spring Boot server.
 							      		 */
-							      		function uploadFile() {
+							      		/* function uploadFile() {
 							      		  
 							      			alert(" uploadfile 486 ");
 							      			$.ajax({
@@ -275,17 +279,31 @@
 							      			    	alert(" uploadfile 486 ");
 							      			    }
 							      			});
-							      		} // function uploadFile
+							      		}  */// function uploadFile
 							      		
 								       /*]]>*/
 								</script> 
 								
 							</form>
+							</div>
+							<div th:if="${#lists.size(photoInfo.photos) >= 2}">
+								<div class="alert alert-danger" role="alert">Cannot upload more than 2 photos. Please remove photo to upload another photo.</div>
+							</div>
+							
 			         	</div>
 			         	<div class="col-md-1"></div>
 				   	</div>
 				</fieldset>
-				
+				<div class="form-group form-group-sm" style="padding-top: 20px;">
+					<div class="col-md-12" style="text-align: center;">
+						<!-- <button id="photo-info-save-btn" class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="saveInfo('Photo')">
+							<span class="text-uppercase g-btn-text">Save</span>
+						</button> -->
+						<button id="photo-info-save-btn" class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="cancelEdit('Photo')">
+							<span class="text-uppercase g-btn-text">Done</span>
+						</button>
+					</div>
+				</div> 
 			</div>
 		</div>
 	</div>
@@ -312,6 +330,9 @@ function onloadFoo(){
 	    initialCaption: "No file selected"
 	});
 } */
+
+
+
 
 </script>
 

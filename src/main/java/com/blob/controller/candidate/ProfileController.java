@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blob.controller.BaseController;
@@ -37,6 +38,7 @@ import com.blob.model.ui.FamilyInfo;
 import com.blob.model.ui.PersonalInfo;
 import com.blob.model.ui.PhotoInfo;
 import com.blob.security.SessionService;
+import com.blob.service.candidate.CandidatePhotoService;
 import com.blob.service.candidate.CandidateService;
 import com.blob.service.candidate.CandidateUIService;
 import com.blob.service.candidate.ProfileService;
@@ -75,6 +77,9 @@ public class ProfileController extends BaseController {
 	@Resource
 	private CommonService commonService;
 	
+	@Resource
+	private CandidatePhotoService candidatePhotoService;
+	
 	@RequestMapping(value="/vUpdateProfile", method=RequestMethod.GET)
 	public ModelAndView vUpdateProfile(){
 
@@ -93,6 +98,7 @@ public class ProfileController extends BaseController {
 		m.addAttribute("familyInfo", candidateUIService.getFamilyInfoSectionForUI(c));
 		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c));
 		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c));
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
 		m.addAttribute("isNewCandidate", isNewCandidate);
 		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.update_profile.toString(), user);
 		return new ModelAndView("/update-profile", m.asMap());
@@ -288,9 +294,9 @@ public class ProfileController extends BaseController {
 		Model m = new ExtendedModelMap();
 		User user = getLoggedInUser();
 		Candidate c = candidateService.getCandidateByUser(user);
-		String baseURL = commonService.getURLBase(request);
-		baseURL += request.getContextPath();
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, baseURL));
+//		String baseURL = commonService.getURLBase(request);
+//		baseURL += request.getContextPath();
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoEdit", m.asMap());
 	}
 	
@@ -300,8 +306,8 @@ public class ProfileController extends BaseController {
 		Model m = new ExtendedModelMap();
 		User user = getLoggedInUser();
 		Candidate c = candidateService.getCandidateByUser(user);
-		String baseURL = commonService.getURLBase(request);
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, baseURL));
+//		String baseURL = commonService.getURLBase(request);
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoView", m.asMap());
 	}
 	
@@ -317,8 +323,27 @@ public class ProfileController extends BaseController {
 				gPhotoDao.save(gPhoto);
 			}
 		}
-		String baseURL = commonService.getURLBase(request);
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, baseURL));
+//		String baseURL = commonService.getURLBase(request);
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoView", m.asMap());
 	}
+	
+	@RequestMapping(value="/makePrimary", method=RequestMethod.GET)
+	public ModelAndView makePrimary(@RequestParam("photo") Long photo) throws Exception{
+
+		Model m = new ExtendedModelMap();
+		User user = getLoggedInUser();
+		GPhoto gPhoto = gPhotoDao.findOne(photo);
+		Boolean resp = candidatePhotoService.setPhotoAsSagaiPrimary(user, gPhoto);
+		if(resp){
+			Candidate c = candidateService.getCandidateByUser(user);
+			m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+		}else{
+			// TODO: handle error
+		}
+		return new ModelAndView("fragments/f-photo-info :: photoInfoEdit", m.asMap());
+	}
+	
+	
+	
 }
