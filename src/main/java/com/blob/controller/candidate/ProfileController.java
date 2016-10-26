@@ -40,6 +40,7 @@ import com.blob.security.SessionService;
 import com.blob.service.candidate.CandidateService;
 import com.blob.service.candidate.CandidateUIService;
 import com.blob.service.candidate.ProfileService;
+import com.blob.service.common.CommonService;
 
 @Controller
 public class ProfileController extends BaseController {
@@ -70,6 +71,9 @@ public class ProfileController extends BaseController {
 	
 	@Resource
 	private ProfileService profileService;
+	
+	@Resource
+	private CommonService commonService;
 	
 	@RequestMapping(value="/vUpdateProfile", method=RequestMethod.GET)
 	public ModelAndView vUpdateProfile(){
@@ -279,27 +283,30 @@ public class ProfileController extends BaseController {
 	}
 	
 	@RequestMapping(value="/ePhotoInfo", method=RequestMethod.GET)
-	public ModelAndView ePhotoInfo(){
+	public ModelAndView ePhotoInfo() throws Exception{
 
 		Model m = new ExtendedModelMap();
 		User user = getLoggedInUser();
 		Candidate c = candidateService.getCandidateByUser(user);
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+		String baseURL = commonService.getURLBase(request);
+		baseURL += request.getContextPath();
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, baseURL));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoEdit", m.asMap());
 	}
 	
 	@RequestMapping(value="/vPhotoInfo", method=RequestMethod.GET)
-	public ModelAndView vPhotoInfo(){
+	public ModelAndView vPhotoInfo()  throws Exception{
 
 		Model m = new ExtendedModelMap();
 		User user = getLoggedInUser();
 		Candidate c = candidateService.getCandidateByUser(user);
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+		String baseURL = commonService.getURLBase(request);
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, baseURL));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoView", m.asMap());
 	}
 	
 	@RequestMapping(value="/sPhotoInfo", method=RequestMethod.POST)
-	public ModelAndView sPhotoInfo(@ModelAttribute("photoInfo") PhotoInfo photoInfo, BindingResult result, Model model){
+	public ModelAndView sPhotoInfo(@ModelAttribute("photoInfo") PhotoInfo photoInfo, BindingResult result, Model model) throws Exception{
 
 		Model m = new ExtendedModelMap();
 		User user = getLoggedInUser();
@@ -310,7 +317,8 @@ public class ProfileController extends BaseController {
 				gPhotoDao.save(gPhoto);
 			}
 		}
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+		String baseURL = commonService.getURLBase(request);
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, baseURL));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoView", m.asMap());
 	}
 }

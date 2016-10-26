@@ -1,12 +1,15 @@
 package com.blob.controller.common;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +23,7 @@ import com.blob.controller.BaseController;
 import com.blob.dao.common.SystemPropertyDao;
 import com.blob.enums.ServicesEnum;
 import com.blob.model.common.User;
+import com.blob.model.error.FileUploadError;
 import com.blob.service.candidate.CandidatePhotoService;
 
 @Controller
@@ -46,8 +50,9 @@ public class FileController extends BaseController {
 	 */
 	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<?> uploadFile(@RequestParam("uploadfile") MultipartFile uploadfile) {
+	public FileUploadError uploadFile(@RequestParam("uploadfile") MultipartFile uploadfile) {
 
+		FileUploadError error = new FileUploadError();
 		try {
 			User user = getLoggedInUser();
 			String service = getCurrentService();
@@ -56,9 +61,13 @@ public class FileController extends BaseController {
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			/*String[] keys = null;
+			keys[0] = "";
+			*/
+			error.setError("Unable to upload file. Please try again later.");
+			//error.setErrorkeys(errorkeys);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
+		return error;
 	}
 	
 	/**
@@ -91,26 +100,10 @@ public class FileController extends BaseController {
 	
 	@RequestMapping(value = "loadImage/{fileName}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<InputStreamResource> loadImage(@PathVariable String fileName) {
-		
+	public void loadImage(@PathVariable String fileName) throws IOException {
 		System.out.println(" filename  "+fileName);
-		
-		resourceLoader.getResource("file://C:/Users/RPATEL/Google Drive/00_biz/gomaie/pics/sagai/1_Sagai_3.jpg");
-		
-		
-		return new ResponseEntity<>(HttpStatus.OK);
-		
-		/*SystemProperty systemProperty = systemPropertyDao.findByListNameAndListKeyAndStatus(GConstants.ListName_FILE_UPLOAD_PATH, GConstants.ListKey_SAGAI_PHOTO, StatusEnum.Active.toString());
-		if(systemProperty != null && StringUtils.isNotBlank(systemProperty.getListValue())){
-			String directory = systemProperty.getListValue();
-			String filepath = Paths.get(directory, fileName).toString();
-		}
-		InputStream in = servletContext.getResourceAsStream("/images"+image);
-		
-		
-	    return ResponseEntity.ok()
-	            .contentLength(gridFsFile.getLength())
-	            .contentType(MediaType.parseMediaType(gridFsFile.getContentType()))
-	            .body(new InputStreamResource(gridFsFile.getInputStream()));*/
+		org.springframework.core.io.Resource r = resourceLoader.getResource("file:D:\\gomaie\\pics\\sagai\\"+fileName+".jpg");
+		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+	    IOUtils.copy(r.getInputStream(), response.getOutputStream());
 	}
 }
