@@ -179,6 +179,11 @@ label{
 	text-align: left;
 	padding-bottom: 5px;
 }
+
+.g-small-label{
+	font-size: 10px;
+}
+
 /******** Common Header *************************/
 /************************************************/
 .one-edge-shadow {

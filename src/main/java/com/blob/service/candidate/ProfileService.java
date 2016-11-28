@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blob.dao.candidate.CandidateAddressDao;
@@ -16,6 +19,7 @@ import com.blob.model.candidate.CandidateAddress;
 import com.blob.model.candidate.CandidateContact;
 import com.blob.model.candidate.CandidateEducation;
 import com.blob.model.candidate.CandidateOccupation;
+import com.blob.model.ui.ProfileSummary;
 
 @Service
 public class ProfileService {
@@ -82,6 +86,37 @@ public class ProfileService {
 			}
 		}
 		return resp;
+	}
+	
+	public Page<ProfileSummary> getProfiles(Pageable pageable){
+		
+		//Page<ProfileSummary> page =  new PageImpl<>(content, pageable, total);
+		
+//		Page<CandidateAddress> page = candidateAddressDao.findAll(pageable);
+		
+		
+		
+		List<ProfileSummary> content = new ArrayList<>();
+
+		for (int i = 0; i < 3; i++) {
+			ProfileSummary p = new ProfileSummary();
+			p.setFirstName("Andy_"+i);
+			p.setLastName("Alan_"+i);
+			content.add(p);
+		}
+		
+		ProfileSummary p = new ProfileSummary();
+		p.setFirstName("John");
+		p.setLastName("Nash");
+		content.add(p);
+		
+		p = new ProfileSummary();
+		p.setFirstName("Donald");
+		p.setLastName("Nash");
+		content.add(p);
+		
+		Page<ProfileSummary> page =  new PageImpl<>(content, pageable, 3);
+		return page;
 	}
 	
 }
