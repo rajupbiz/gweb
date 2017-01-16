@@ -2,6 +2,8 @@ package com.blob.controller.candidate;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
@@ -36,11 +38,14 @@ public class HomeController extends BaseController {
 	@Resource
 	private CandidateService candidateService;
 	
-	@RequestMapping("/vHome")
-	public ModelAndView home(){
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@RequestMapping("/profile-home")
+	public ModelAndView profileHome(){
 		Model m = new ExtendedModelMap();
+		logger.debug(" \n profile home .............  ");
+		System.out.println(" \n profile home ............. ");
 		
-		System.out.println(" \n\n\n home ............. ");
 		User user = getLoggedInUser();
 		Candidate c = candidateService.getCandidateByUser(user);
 		m.addAttribute("dashboard", candidateUIService.getDashboardInfoForUI(c));

@@ -20,7 +20,7 @@ public class SettingsController extends BaseController {
 	@Resource
 	private SessionService sessionService;
 
-	@RequestMapping(value="/vPrivacySettings", method=RequestMethod.GET)
+	@RequestMapping(value="/profile-privacy-settings", method=RequestMethod.GET)
 	public ModelAndView vPrivacySettings(){
 
 		Model m = new ExtendedModelMap();
@@ -29,7 +29,7 @@ public class SettingsController extends BaseController {
 		return new ModelAndView("/privacy-settings", m.asMap());
 	}
 	
-	@RequestMapping(value="/vAccountSettings", method=RequestMethod.GET)
+	@RequestMapping(value="/profile-account-settings", method=RequestMethod.GET)
 	public ModelAndView vAccountSettings(){
 
 		Model m = new ExtendedModelMap();

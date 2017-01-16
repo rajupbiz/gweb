@@ -48,7 +48,7 @@ public class FileController extends BaseController {
 	 * 
 	 * @return An http OK status in case of success, an http 4xx status in case of errors.
 	 */
-	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+	@RequestMapping(value = "/upload-file", method = RequestMethod.POST)
 	public @ResponseBody FileUploadError uploadFile(@RequestParam("uploadfile") MultipartFile uploadfile) {
 		FileUploadError error = new FileUploadError();
 		try {
@@ -78,7 +78,7 @@ public class FileController extends BaseController {
 	 * 
 	 * @return An http OK status in case of success, an http 4xx status in case of errors.
 	 */
-	@RequestMapping(value = "/removeFile", method = RequestMethod.POST)
+	@RequestMapping(value = "/remove-file", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> removeFile(@RequestParam("key") String key) {
 
@@ -96,7 +96,7 @@ public class FileController extends BaseController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "loadImage/{fileName}", method = RequestMethod.GET)
+	@RequestMapping(value = "load-image/{fileName}", method = RequestMethod.GET)
 	@ResponseBody
 	public void loadImage(@PathVariable String fileName) throws IOException {
 		//TODO: to encrypt and decrypt filname

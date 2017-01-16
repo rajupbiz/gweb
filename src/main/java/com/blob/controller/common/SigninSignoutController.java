@@ -7,16 +7,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ExtendedModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.blob.controller.BaseController;
 import com.blob.dao.common.UserDao;
-import com.blob.enums.MenuTabEnum;
 import com.blob.model.common.User;
 import com.blob.security.SessionService;
 import com.blob.security.SigninSignoutService;
-import com.blob.util.DateUtils;
 
 @Controller
 public class SigninSignoutController extends BaseController {
@@ -41,26 +42,32 @@ public class SigninSignoutController extends BaseController {
 	}
 	
 	@RequestMapping(value="/signin",method=RequestMethod.POST)
-	public String signIn(){
+	public ModelAndView signIn(Model model){
 		
+		model = new ExtendedModelMap();
 		System.out.println(" \n\n\n signIn ............. ");
 		String signinUserName = request.getParameter("signinUserName");
 		String signinPassword = request.getParameter("signinPassword");
 		User user = null;
 		try{
-			signinSignoutService.autoSignin(signinUserName, signinPassword);
-			user = userDao.findByUsername(signinUserName);
+			user = signinSignoutService.autoSignin(signinUserName, signinPassword, request);
+			/*user = userDao.findByUsername(signinUserName);
 			sessionService.setLoginSessionData(request.getSession(), user);
 			user.setLastLoggedIn(DateUtils.now());
-			user = userDao.save(user);
+			user = userDao.save(user);*/
 		}catch(UsernameNotFoundException ue){
 			ue.printStackTrace();
+			model.addAttribute("signinUserName", signinUserName);
+			model.addAttribute("signinPassword", signinPassword);
+			model.addAttribute("FailureMsg", "User name or password is incorrect.");
+			return new ModelAndView("/index", model.asMap());
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		System.out.println(" \n\n\n signIn 11 ............. ");
-		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.home.toString(), user);
-		return "redirect:/vHome";
+		//sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.home.toString(), user);
+		return new ModelAndView("redirect:/profile-home", model.asMap());
+		//return "redirect:/home";
 	}
 	
 	@RequestMapping("/signout")

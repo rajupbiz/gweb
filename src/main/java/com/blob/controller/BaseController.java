@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import com.blob.dao.common.UserDao;
+import com.blob.enums.SessionParamEnum;
 import com.blob.model.common.User;
 
 @Controller
@@ -49,6 +50,6 @@ public class BaseController {
 	}
 	
 	public String getCurrentService(){
-		return (String) request.getSession().getAttribute("SERVICE");
+		return (String) request.getSession().getAttribute(SessionParamEnum.SERVICE.toString());
 	}
 }
