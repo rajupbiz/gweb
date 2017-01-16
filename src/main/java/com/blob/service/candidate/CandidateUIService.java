@@ -27,7 +27,6 @@ import com.blob.dao.master.MasterRelationshipDao;
 import com.blob.dao.master.MasterStateDao;
 import com.blob.dao.master.MasterYearlyIncomeDao;
 import com.blob.enums.PhotoCategoryEnum;
-import com.blob.enums.StatusEnum;
 import com.blob.model.candidate.Candidate;
 import com.blob.model.candidate.CandidateAddress;
 import com.blob.model.candidate.CandidateAstroDetail;
@@ -151,9 +150,9 @@ public class CandidateUIService {
 			}
 		}
 		
-		pi.setMaritalStatusOptions(masterMaritalStatusDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
-		pi.setBirthDayOptions(masterDayOfWeekDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
-		pi.setBloodGroupOptions(masterBloodGroupDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
+		pi.setMaritalStatusOptions(masterMaritalStatusDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		pi.setBirthDayOptions(masterDayOfWeekDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		pi.setBloodGroupOptions(masterBloodGroupDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
 		return pi;
 	}
 	
@@ -297,9 +296,9 @@ public class CandidateUIService {
 			contactInfo.setAddress(address);
 			contactInfo.setNativePlace(candidate.getCandidatePersonalDetail().getNativePlace());
 		}
-		contactInfo.setRelationshipOptions(masterRelationshipDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
-		contactInfo.setStateOptions(masterStateDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
-		contactInfo.setCountryOptions(masterCountryDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
+		contactInfo.setRelationshipOptions(masterRelationshipDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		contactInfo.setStateOptions(masterStateDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		contactInfo.setCountryOptions(masterCountryDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
 		return contactInfo;
 	}
 
@@ -319,7 +318,7 @@ public class CandidateUIService {
 					if(StringUtils.isNotBlank(cc.getFullName())){
 						cc.setCreateOn(DateUtils.now());
 						cc.setRelationship(masterRelationshipDao.findOne(cc.getRelationshipId()));
-						cc.setStatus(StatusEnum.Active.toString());
+						cc.setStatus(GConstants.Status_Active);
 						cc.setUpdateOn(DateUtils.now());
 						contacts.add(cc);
 					}
@@ -641,17 +640,18 @@ public class CandidateUIService {
 				}
 			}
 		}
-		eduOccuInfo.setOccupationOptions(masterOccupationDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
-		eduOccuInfo.setDegreeOptions(masterDegreeDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
-		eduOccuInfo.setDesignationOptions(masterDesignationDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
-		eduOccuInfo.setSpecializationOptions(masterDegreeSpecializationDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
-		eduOccuInfo.setYearlyIncomeOptions(masterYearlyIncomeDao.findByStatusOrderBySequenceNumber(StatusEnum.Active.toString()));
+		eduOccuInfo.setOccupationOptions(masterOccupationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		eduOccuInfo.setDegreeOptions(masterDegreeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		eduOccuInfo.setDesignationOptions(masterDesignationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		eduOccuInfo.setSpecializationOptions(masterDegreeSpecializationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		eduOccuInfo.setYearlyIncomeOptions(masterYearlyIncomeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
 		return eduOccuInfo;
 	}
 	
 	public List<CandidateEducation> getEducationsInfoFromUI(EduOccuInfo eduOccuInfo){
 		List<CandidateEducation> educations = new ArrayList<>(2);
 		if(eduOccuInfo != null){
+			int eduSequenceNum = 1;
 			for (CandidateEducation cc : eduOccuInfo.getEducations()) {
 				if(cc.getId() != null){
 					CandidateEducation existingCE = candidateEducationDao.findOne(cc.getId());
@@ -676,9 +676,11 @@ public class CandidateUIService {
 						else
 							cc.setSpecialization(null);
 						cc.setCreateOn(DateUtils.now());
-						cc.setStatus(StatusEnum.Active.toString());
+						cc.setStatus(GConstants.Status_Active);
 						cc.setUpdateOn(DateUtils.now());
+						cc.setSequenceNumber(eduSequenceNum);
 						educations.add(cc);
+						eduSequenceNum++;
 					}
 				}
 			}
@@ -689,6 +691,7 @@ public class CandidateUIService {
 	public List<CandidateOccupation> getOccupationsInfoFromUI(EduOccuInfo eduOccuInfo){
 		List<CandidateOccupation> occupations = new ArrayList<>(2);
 		if(eduOccuInfo != null){
+			int occSequenceNum = 1;
 			for (CandidateOccupation cc : eduOccuInfo.getOccupations()) {
 				if(cc.getId() != null){
 					CandidateOccupation existingCO = candidateOccupationDao.findOne(cc.getId());
@@ -718,10 +721,12 @@ public class CandidateUIService {
 							cc.setYearlyIncome(masterYearlyIncomeDao.findOne(cc.getYearlyIncomeId()));
 						else
 							cc.setYearlyIncome(null);
+						cc.setSequenceNumber(occSequenceNum);
 						cc.setCreateOn(DateUtils.now());
-						cc.setStatus(StatusEnum.Active.toString());
+						cc.setStatus(GConstants.Status_Active);
 						cc.setUpdateOn(DateUtils.now());
 						occupations.add(cc);
+						occSequenceNum++;
 					}
 				}
 			}
@@ -806,7 +811,7 @@ public class CandidateUIService {
 					gp = gPhotoDao.findOne(p.getPhotoId());
 					gp.setIsSagaiPrimary(p.getIsPrimary());
 					if(!p.getIsActive()){
-						gp.setStatus(StatusEnum.Inactive.toString());
+						gp.setStatus(GConstants.Status_Inactive);
 					}
 					gp.setUpdateOn(DateUtils.now());
 					gPhotos.add(gp);
@@ -816,7 +821,7 @@ public class CandidateUIService {
 					gp.setUser(user);
 					gp.setCategory(PhotoCategoryEnum.Sagai.toString());
 					gp.setIsSagaiPrimary(p.getIsPrimary());
-					gp.setStatus(StatusEnum.Active.toString());
+					gp.setStatus(GConstants.Status_Active);
 					gp.setPath(p.getPath());
 					gp.setUpdateOn(DateUtils.now());
 					gPhotos.add(gp);

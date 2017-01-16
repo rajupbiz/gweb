@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import com.blob.dao.candidate.CandidateDao;
 import com.blob.enums.MessageCategoryEnum;
 import com.blob.enums.PhotoCategoryEnum;
-import com.blob.enums.StatusEnum;
 import com.blob.model.candidate.Candidate;
 import com.blob.model.common.GMessage;
 import com.blob.model.common.GPhoto;
 import com.blob.model.common.User;
 import com.blob.util.DateUtils;
+import com.blob.util.GConstants;
 import com.blob.util.GUtils;
 
 @Service
@@ -55,7 +55,7 @@ public class CandidateService {
 			c = new Candidate();
 			c.setUser(user);
 			c.setGid(gutils.generateGid());
-			c.setStatus(StatusEnum.Active.toString());
+			c.setStatus(GConstants.Status_Active);
 			c.setCreateOn(DateUtils.toDate(LocalDateTime.now()));
 			c.setUpdateOn(DateUtils.toDate(LocalDateTime.now()));
 			c = candidateDao.save(c);
@@ -70,7 +70,7 @@ public class CandidateService {
 		if(CollectionUtils.isNotEmpty(userMessages)){
 			for (GMessage gMessage : userMessages) {
 				if(gMessage != null 
-						&& gMessage.getStatus().equalsIgnoreCase(StatusEnum.Active.toString())
+						&& gMessage.getStatus().equalsIgnoreCase(GConstants.Status_Active)
 						&& gMessage.getCategory().equalsIgnoreCase(MessageCategoryEnum.Candidate.toString())){
 					messages.add(gMessage);
 				}
@@ -82,17 +82,28 @@ public class CandidateService {
 	public List<GPhoto> getCandidatePhotos(Candidate candidate){
 		
 		List<GPhoto> photos = null;
-		List<GPhoto> userPhotos = candidate.getUser().getPhotos();
-		if(CollectionUtils.isNotEmpty(userPhotos)){
-			photos = new ArrayList<>();
-			for (GPhoto gPhoto : userPhotos) {
-				if(gPhoto != null 
-						&& gPhoto.getStatus().equalsIgnoreCase(StatusEnum.Active.toString()) 
-						&& gPhoto.getCategory().equalsIgnoreCase(PhotoCategoryEnum.Sagai.toString())){
-					photos.add(gPhoto);
+		if(candidate.getUser() != null){
+			List<GPhoto> userPhotos = candidate.getUser().getPhotos();
+			if(CollectionUtils.isNotEmpty(userPhotos)){
+				photos = new ArrayList<>();
+				for (GPhoto gPhoto : userPhotos) {
+					if(gPhoto != null 
+							&& gPhoto.getStatus().equalsIgnoreCase(GConstants.Status_Active) 
+							&& gPhoto.getCategory().equalsIgnoreCase(PhotoCategoryEnum.Sagai.toString())){
+						photos.add(gPhoto);
+					}
 				}
 			}
 		}
 		return photos;
+	}
+	
+	public List<Candidate> searchCandidate(){
+		
+		//List<Candidate> candidates = candidateDao.searchCandidates();
+		/*for (Candidate candidate : candidates) {
+			System.out.println("  Id : "+candidate.getId()+"  Gid : "+candidate.getGid());
+		}*/
+		return null;
 	}
 }

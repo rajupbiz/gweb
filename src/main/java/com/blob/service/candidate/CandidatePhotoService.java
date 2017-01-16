@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.blob.dao.common.GPhotoDao;
 import com.blob.dao.common.SystemPropertyDao;
 import com.blob.enums.PhotoCategoryEnum;
-import com.blob.enums.StatusEnum;
 import com.blob.model.common.GPhoto;
 import com.blob.model.common.SystemProperty;
 import com.blob.model.common.User;
@@ -42,7 +41,7 @@ public class CandidatePhotoService {
 	
 	public void uploadPhoto(User user, MultipartFile uploadfile) throws Exception{
 		
-		SystemProperty systemProperty = systemPropertyDao.findByListNameAndListKeyAndStatus(GConstants.ListName_FILE_UPLOAD_PATH, GConstants.ListKey_SAGAI_PHOTO, StatusEnum.Active.toString());
+		SystemProperty systemProperty = systemPropertyDao.findByListNameAndListKeyAndStatus(GConstants.ListName_FILE_UPLOAD_PATH, GConstants.ListKey_SAGAI_PHOTO, GConstants.Status_Active);
 		if(systemProperty != null && StringUtils.isNotBlank(systemProperty.getListValue())){
 			
 			String origFileName = uploadfile.getOriginalFilename();
@@ -68,7 +67,7 @@ public class CandidatePhotoService {
 				gPhoto.setCreateOn(DateUtils.now());
 				gPhoto.setFileName(fileName);
 				gPhoto.setOriginalFileName(origFileName);
-				gPhoto.setStatus(StatusEnum.Active.toString());
+				gPhoto.setStatus(GConstants.Status_Active);
 				gPhoto.setUpdateOn(DateUtils.now());
 				gPhotoDao.save(gPhoto);
 			}
@@ -76,8 +75,8 @@ public class CandidatePhotoService {
 	}
 	
 	public void removePhoto(User user, GPhoto gPhoto) throws Exception{
-		if(gPhoto != null && StringUtils.isNotBlank(gPhoto.getStatus()) && gPhoto.getStatus().equalsIgnoreCase(StatusEnum.Active.toString())){
-			gPhoto.setStatus(StatusEnum.Inactive.toString());
+		if(gPhoto != null && StringUtils.isNotBlank(gPhoto.getStatus()) && gPhoto.getStatus().equalsIgnoreCase(GConstants.Status_Active)){
+			gPhoto.setStatus(GConstants.Status_Inactive);
 			gPhoto.setIsSagaiPrimary(false);
 			gPhoto.setUpdateOn(DateUtils.now());
 			gPhotoDao.save(gPhoto);
@@ -88,9 +87,9 @@ public class CandidatePhotoService {
 		Boolean resp = false;
 		try {
 			if (gPhoto != null && StringUtils.isNotBlank(gPhoto.getStatus())
-					&& gPhoto.getStatus().equalsIgnoreCase(StatusEnum.Active.toString())) {
+					&& gPhoto.getStatus().equalsIgnoreCase(GConstants.Status_Active)) {
 				List<GPhoto> allActivePhotos = gPhotoDao.findByUserAndCategoryAndStatus(user,
-						PhotoCategoryEnum.Sagai.toString(), StatusEnum.Active.toString());
+						PhotoCategoryEnum.Sagai.toString(), GConstants.Status_Active);
 				if (CollectionUtils.isNotEmpty(allActivePhotos)) {
 					for (GPhoto gPhoto2 : allActivePhotos) {
 						if (gPhoto2.getId().equals(gPhoto.getId())) {

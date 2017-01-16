@@ -13,9 +13,9 @@ import com.blob.dao.common.UserDao;
 import com.blob.dao.common.UserRoleDao;
 import com.blob.dao.master.MasterRoleDao;
 import com.blob.enums.RoleEnum;
-import com.blob.enums.StatusEnum;
 import com.blob.model.common.User;
 import com.blob.model.common.UserRole;
+import com.blob.util.GConstants;
 import com.blob.util.GError;
 import com.blob.util.GResponse;
 
@@ -45,7 +45,7 @@ public class SignupService {
 					UserRole userRole = new UserRole();
 					userRole.setUser(user);
 					userRole.setRole(masterRoleDao.findByRoleName(RoleEnum.User.toString()));
-					userRole.setStatus(StatusEnum.Active.toString());
+					userRole.setStatus(GConstants.Status_Active);
 					userRole.setCreateOn(new Date());
 					userRoleDao.save(userRole);
 				}

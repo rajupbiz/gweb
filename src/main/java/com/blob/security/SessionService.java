@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.blob.dao.common.UserServicesDao;
 import com.blob.enums.ServicesEnum;
 import com.blob.enums.SessionParamEnum;
-import com.blob.enums.StatusEnum;
 import com.blob.model.candidate.Candidate;
 import com.blob.model.common.GMessage;
 import com.blob.model.common.User;
@@ -21,6 +20,7 @@ import com.blob.model.common.UserServices;
 import com.blob.service.candidate.CandidateService;
 import com.blob.service.common.CommonService;
 import com.blob.util.DateUtils;
+import com.blob.util.GConstants;
 
 @Service
 public class SessionService {
@@ -36,8 +36,8 @@ public class SessionService {
 	
 	public void setLoginSessionData(HttpSession session, User user) throws Exception {
 		System.out.println(" set session data ");
-		String currentService = ServicesEnum.IDENTITY.toString();
-		List<UserServices> userServices = userServicesDao.findByUserAndStatus(user, StatusEnum.Active.toString());
+		String currentService = ServicesEnum.SAGAI.toString();
+		List<UserServices> userServices = userServicesDao.findByUserAndStatus(user, GConstants.Status_Active);
 		if(CollectionUtils.isNotEmpty(userServices)){
 			for (UserServices userService : userServices) {
 				if(userService != null && userService.getServices() != null && StringUtils.isNotBlank(userService.getServices().getServiceName())){
@@ -75,4 +75,7 @@ public class SessionService {
 		session.setAttribute(SessionParamEnum.TAB.toString(), tab);
 	}
 	
+	public void addToSession(HttpSession session, String key, Object value){
+		session.setAttribute(key, value);
+	}
 }

@@ -1,24 +1,31 @@
 package com.blob.service.candidate;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.apache.commons.collections.CollectionUtils;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 import com.blob.dao.candidate.CandidateAddressDao;
 import com.blob.dao.candidate.CandidateContactDao;
+import com.blob.dao.candidate.CandidateDao;
 import com.blob.dao.candidate.CandidateEducationDao;
 import com.blob.dao.candidate.CandidateOccupationDao;
+import com.blob.dao.master.MasterDegreeDao;
 import com.blob.model.candidate.Candidate;
 import com.blob.model.candidate.CandidateAddress;
 import com.blob.model.candidate.CandidateContact;
 import com.blob.model.candidate.CandidateEducation;
 import com.blob.model.candidate.CandidateOccupation;
+import com.blob.model.ui.ProfileFilter;
+import com.blob.model.ui.ProfileSearchResult;
 import com.blob.model.ui.ProfileSummary;
 
 @Service
@@ -35,6 +42,15 @@ public class ProfileService {
 	
 	@Resource
 	private CandidateOccupationDao candidateOccupationDao;
+	
+	@Resource
+	private CandidateService candidateService;
+	
+	@Resource
+	private MasterDegreeDao masterDegreeDao;
+	
+	@Resource
+	private CandidateDao candidateDao;
 
 	public List<CandidateContact> saveCandidateContacts(List<CandidateContact> contacts, Candidate c){
 
@@ -79,6 +95,7 @@ public class ProfileService {
 
 		List<CandidateOccupation> resp = new ArrayList<>();
 		if(occupations != null && !occupations.isEmpty()){
+			
 			for (CandidateOccupation candidateOccupation : occupations) {
 				candidateOccupation.setCandidate(c);
 				CandidateOccupation savedOccupation = candidateOccupationDao.save(candidateOccupation);
@@ -88,35 +105,56 @@ public class ProfileService {
 		return resp;
 	}
 	
-	public Page<ProfileSummary> getProfiles(Pageable pageable){
+	public ProfileSearchResult getProfiles(ProfileFilter profileFilter){
 		
-		//Page<ProfileSummary> page =  new PageImpl<>(content, pageable, total);
-		
-//		Page<CandidateAddress> page = candidateAddressDao.findAll(pageable);
-		
-		
-		
-		List<ProfileSummary> content = new ArrayList<>();
-
-		for (int i = 0; i < 3; i++) {
-			ProfileSummary p = new ProfileSummary();
-			p.setFirstName("Andy_"+i);
-			p.setLastName("Alan_"+i);
-			content.add(p);
+		ProfileSearchResult result = new ProfileSearchResult();
+		int pageSize = 5;
+		Long totalRecords = candidateDao.countResult("%"+profileFilter.getName()+"%");
+		result.setTotalRecords(totalRecords);
+		result.setTotalPages(Math.toIntExact((result.getTotalRecords() + pageSize - 1) / pageSize));
+		if(profileFilter.getPageNo() != null && profileFilter.getPageNo() > 1){
+			result.setCurrentPageNo(profileFilter.getPageNo());
+		}else{
+			result.setCurrentPageNo(1);
 		}
-		
-		ProfileSummary p = new ProfileSummary();
-		p.setFirstName("John");
-		p.setLastName("Nash");
-		content.add(p);
-		
-		p = new ProfileSummary();
-		p.setFirstName("Donald");
-		p.setLastName("Nash");
-		content.add(p);
-		
-		Page<ProfileSummary> page =  new PageImpl<>(content, pageable, 3);
-		return page;
+		System.out.println(" totalRecords : "+totalRecords+"  pages : "+result.getTotalPages());
+		final PageRequest page2 = new PageRequest(
+				  result.getCurrentPageNo()-1, pageSize, new Sort(
+				    new Order(Direction.ASC, "id")
+				  )
+				);
+		List<BigInteger> candidateIdsList = candidateDao.searchCandidates("%"+profileFilter.getName()+"%", page2);
+		StringBuffer candidateIdsStr = new StringBuffer();
+		for (BigInteger id : candidateIdsList) {
+			candidateIdsStr.append(id+",");
+			//System.out.println(" id "+id);
+		}
+		List<ProfileSummary> content = new ArrayList<>(pageSize);
+		if(CollectionUtils.isNotEmpty(candidateIdsList)){
+			String candidateIds = candidateIdsStr.substring(0, candidateIdsStr.length() - 1);
+			System.out.println(" candidateIds "+candidateIds);
+			List<Object[]> rows = candidateDao.getCandidatesSummary(candidateIdsList);
+			for (Object[] row : rows) {
+				ProfileSummary p = new ProfileSummary();
+				p.setId(row[0].toString());
+				p.setGid(row[1].toString());
+				p.setName(row[3].toString()+ (row[4] != null ? " "+row[4].toString() : ""));
+				p.setFathersFullName((row[5] != null ? " "+ row[5].toString() : "") + (row[6] != null ? " "+row[6].toString() : "") + (row[7] != null ? " "+row[7].toString() : ""));
+				p.setCurrentLocation((row[10] != null ? " "+ row[10].toString() : "") + (row[11] != null ? " "+row[11].toString() : ""));
+				p.setHomeTown(row[9] != null ? " "+ row[9].toString() : "");
+				p.setMamasTown(row[8] != null ? " "+ row[8].toString() : "");
+				p.setAbout(row[16] != null ? " "+row[16].toString() : "");
+				
+				//p.setDob(row[17].toString());
+				//p.setEducation(row[14].toString() + " " + row[15].toString());
+				//p.setOccupation(row[12].toString() + " " + row[13].toString());
+				
+				System.out.println("  >>  "+p.toString());
+				
+				content.add(p);
+			}
+			result.setProfiles(content);
+		}
+		return result;
 	}
-	
 }

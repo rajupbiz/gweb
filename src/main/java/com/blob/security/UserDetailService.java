@@ -15,8 +15,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.blob.dao.common.UserDao;
+import com.blob.dao.common.UserRoleDao;
 import com.blob.model.common.User;
 import com.blob.model.common.UserRole;
+import com.blob.util.GConstants;
 
 @Component
 @Transactional
@@ -24,6 +26,9 @@ public class UserDetailService implements UserDetailsService {
 	
 	@Resource
 	private UserDao userDao;
+	
+	@Resource
+	private UserRoleDao userRoleDao;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -34,7 +39,8 @@ public class UserDetailService implements UserDetailsService {
 		if(user == null){
 			throw new UsernameNotFoundException("User name or password is incorrect.");
 		}else{
-			userDetails = getUserDetails(user.getUsername(), user.getPassword(), user.getUserRoles());
+			List<UserRole> roles = userRoleDao.findByUserAndStatus(user, GConstants.Status_Active);
+			userDetails = getUserDetails(user.getUsername(), user.getPassword(), roles);
 		}
 		return userDetails;
 	}
