@@ -86,14 +86,13 @@
 
 	</div>
 	<!-- Required on this page only, do not add in footer fragment otherwise these files will be loaded on other pages unnecessarily. -->
-	<script src="assets/components/moment/min/moment.min.js"></script>
-	<script src="assets/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="assets/components/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js"></script>
-	<script src="assets/components/bootstrap-fileinput/js/plugins/sortable.min.js"></script>
-	<script src="assets/components/bootstrap-fileinput/js/plugins/purify.min.js"></script>
-	<script src="assets/components/bootstrap-fileinput/js/fileinput.min.js"></script>
-	<script src="assets/components/bootstrap-fileinput/js/locales/fa.js"></script>
-	
-	<script type="text/javascript" src="js/app/update-profile.js"></script>
+	<script type="text/javascript" th:src="@{/assets/components/moment/min/moment.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/components/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/components/bootstrap-fileinput/js/plugins/sortable.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/components/bootstrap-fileinput/js/plugins/purify.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/components/bootstrap-fileinput/js/fileinput.min.js}"></script>
+	<script type="text/javascript" th:src="@{/assets/components/bootstrap-fileinput/js/locales/fa.js}"></script>
+	<script type="text/javascript" th:src="@{/js/app/update-profile.js}"></script>
 </body>
 </html>

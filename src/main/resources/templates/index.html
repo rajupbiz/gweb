@@ -41,6 +41,9 @@
 											<div class="g-register-form-btn-div">
 												<input type="submit" value="Sign in" class="form-control btn-primary g-sign-in-button"/>
 											</div>
+											<div class="g-signup-form-field-div" style="padding-top: 20px;">
+												<div class="alert alert-danger" role="alert" th:if="${FailureMsg != null}" th:text="${FailureMsg}" style="display:inline-block;"></div>
+											</div>
 										</form>
 									</div>
 									<div class="col-md-6 g-vertical-line-left g-register-form-div">

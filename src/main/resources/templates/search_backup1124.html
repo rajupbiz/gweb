@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>Gomaie^</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+
+<body>
+
+	<div id="wrapper" class="container-fluid">
+		<div th:replace="fragments/f-common :: g-header"></div>
+		
+		<div id="content">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10" style="padding-left: 0px; padding-right: 0px;">
+					<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+						<!-- <div class="row">
+							<div class="col-md-12" > -->
+								<!-- <form action="#"> -->
+									<!-- <div class="row" style="padding-bottom: 30px;">
+										<div class="col-md-12">
+											<div class="g-section-header" style="text-align: left; padding-top: 15px; padding-left: 10px;">Quick Search</div> 
+										</div>
+									</div>-->
+									<!-- <div class="row">
+										<div class="col-md-12">
+											<hr style="margin-bottom: 0px; margin-top: 5px;  margin-right: 20px;">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12"> -->
+									
+										<div class="well well-sm" style="padding-bottom: 15px; padding-top: 15px; padding-left: 15px; padding-right: 15px; margin-top: 30px; margin-bottom: 0px;">
+										<form class="form-inline" action="#">
+											<div class="row">
+												<div class="col-md-12" style="text-align: left;">
+													<div class="form-group" style="padding-right: 20px;"><input type="text" id="quick-search-gid-id" name="quick-search-gid-id" style="width: 120px;" placeholder="G-ID" class="form-control" maxlength="10" autofocus></div>
+													<div class="form-group" style="padding-right: 20px;"><input type="text" id="quick-search-name-id" name="quick-search-name-id" style="width: 180px;" placeholder="Name" class="form-control" maxlength="40"></div>
+													<div class="form-group" style="padding-right: 20px;"><input type="text" id="quick-search-town-id" name="quick-search-town-id" autocomplete="off" placeholder="City or Town" style="width: 180px;" class="form-control typeahead"></div>
+													<div class="form-group" style="padding-right: 20px;">
+													<select id="quick-search-education-id" name="quick-search-education-id" class="selectpicker show-menu-arrow" multiple class="form-control" data-size="5" data-max-options="3" data-width="180px" title="Education">
+														<option>M.C.A.</option>
+														<option>B.Sc.</option>
+														<option>D. Pharmacy</option>
+														<option>B. Pharmacy</option>
+														<option>B.E.</option>
+													</select></div> 
+													<span style="float: right;">
+														<button type="button" class="btn btn-primary btn-sm" style="width: 100px;"><span style="font-weight: 600; font-size: 14px;">Search</span></button> <span style="padding-left: 20px; padding-right: 10px;"> Or go for </span>
+														<button type="button" class="btn btn-primary btn-xs"><span style="font-weight: 600; font-size: 12px;">Advance Search</span></button>
+													</span>
+												</div>
+											</div>
+										</form>
+										</div>
+												<!-- <div class="col-md-2">
+													<div class="row">
+														<div class="form-group">
+														<div class="col-md-4" style="padding-top: 6px; text-align: right; padding-right: 0px;">
+															<label for="quick-search-gid-id">G-ID:</label>
+														</div>
+														<div class="col-md-12" align="center">
+															<input type="text" id="quick-search-gid-id" name="quick-search-gid-id" style="width: 120px;" placeholder="G-ID" class="form-control">
+														</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="row">
+														<div class="form-group">
+														<div class="col-md-4" style="padding-top: 6px; text-align: right; padding-right: 0px;">
+															<label for="quick-search-name-id">Name:</label>
+														</div>
+														<div class="col-md-12" align="center">
+															<input type="text" id="quick-search-name-id" name="quick-search-name-id" style="width: 180px;" placeholder="Name" class="form-control">
+														</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-3">
+													<div class="row">
+														<div class="form-group">
+														<div class="col-md-4" style="padding-top: 6px; text-align: right; padding-right: 0px;">
+															<label for="quick-search-education-id">Education:</label>
+														</div>
+														<div class="col-md-12" align="center">
+															<select id="quick-search-education-id" name="quick-search-education-id" class="selectpicker show-menu-arrow" multiple class="form-control" data-size="5" data-max-options="3" data-width="180px" title="Education">
+																<option>M.C.A.</option>
+																<option>B.Sc.</option>
+																<option>D. Pharmacy</option>
+																<option>B. Pharmacy</option>
+																<option>B.E.</option>
+															</select>
+														</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="row">
+														<div class="form-group">
+														<div class="col-md-4" style="padding-top: 6px; text-align: right; padding-right: 0px;">
+															<label for="quick-search-city-id">City or Town:</label>
+														</div>
+														<div class="col-md-12" align="center">
+															<input type="text" id="quick-search-city-id" name="quick-search-city-id" placeholder="City or Town" style="width: 180px;" class="form-control">
+														</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>-->
+										<!-- <div class="col-md-3">
+											<div class="row">
+												<div class="col-md-12" style="text-align: right; padding-right: 0px;">
+													<button type="button" class="btn btn-primary btn-sm">Search</button> <span> Or go for </span>
+													
+													<button type="button" class="btn btn-primary btn-xs">Advance Search</button>
+												</div>
+											</div>
+										</div> 
+									</div> -->
+									<!-- </form> -->
+
+									<!-- <div class="row" style="padding-top: 15px;">
+										<div class="col-md-7"  style="text-align: right; padding-right: 50px;">
+											<button type="button" class="btn btn-primary btn-sm">Search</button>
+										</div>
+										<div class="col-md-5" style="text-align: right; padding-top: 5px;">
+											<span> Or go for </span>
+											<button type="button" class="btn btn-primary btn-xs">Advance Search</button>
+											<button type="button" class="btn btn-link">Advance Search</button>
+										</div>
+									</div> -->
+								<!-- </div> -->
+								<!-- </form> -->
+							<!-- </div>
+						</div> -->
+						
+						
+						<div id="photoInfoSectionBody" th:replace="fragments/f-search-result :: searchResultFragment"></div>
+						
+						
+						
+						<div class="row" style="text-align: right;">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1"></div>
+									<div class="col-md-10">
+										<nav aria-label="Page navigation">
+										  <ul class="pagination">
+										    <li>
+										      <a href="#" aria-label="Previous">
+										        <span aria-hidden="true">&laquo;</span>
+										      </a>
+										    </li>
+										    <li class="active"><a href="#" >1</a></li>
+										    <li><a href="#">2</a></li>
+										    <li><a href="#">3</a></li>
+										    <li><a href="#">4</a></li>
+										    <li><a href="#">5</a></li>
+										    <li>
+										      <a href="#" aria-label="Next">
+										        <span aria-hidden="true">&raquo;</span>
+										      </a>
+										    </li>
+										  </ul>
+										</nav>
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1"></div>
+									<div class="col-md-10">
+										<div class="panel panel-default">
+											<div class="panel-heading" style="padding: 5px 15px;">
+												<div class="row">
+													<div class="col-md-6 g-section-header" style="text-align: left;">Result</div>
+													<div class="col-md-6 g-search-result-label" style="text-align: right; padding-right: 10px;">35 profiles found</div>
+												</div>
+										  	</div>
+										  	<div class="panel-body">
+												<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;">
+													<div class="col-md-2">
+														<div class="row" style="padding-bottom: 5px; padding-right: 10px;">
+															<div class="col-md-12" style="text-align: center;">
+																<span class="g-text-bold" >VA6745</span>	
+															<!-- </div>
+														</div>
+														<div class="row">
+															<div class="col-md-12"> -->
+																<a data-lightbox="VA6745" href="assets/img/p1.jpg" data-title="Jagdish Patel"><img alt="img" src="assets/img/p1.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
+															</div>
+														</div>
+														<!-- <div class="row">
+															<div class="col-md-12">
+																<div class="g-text-bold">Jagdish Patel</div>	
+															</div>
+														</div> -->
+													</div>
+													<div class="col-md-10">
+														<div class="row" style="text-align: left;">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Name:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Jagdish Patel
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-4  g-search-result-label">
+																		Father's Name:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Kantilalbhai Sudambhai Patel
+																	</div>
+																</div>
+															</div>
+															<!-- <div class="col-md-3">
+																<div class="row">
+																	<div class="col-md-6 g-search-result-label">
+																		G-ID:
+																	</div>
+																	<div class="col-md-6 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		VA6745
+																	</div>
+																</div>
+															</div> -->
+														</div>
+														<div class="row" style="text-align: left; padding-top: 8px;">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Date of Birth:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		1<sup>st</sup> March 1990
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-4  g-search-result-label">
+																		Current Location:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Pune, Maharashtra
+																	</div>
+																</div>
+															</div>
+															<!-- <div class="col-md-3">
+																<div class="row">
+																	<div class="col-md-6 g-search-result-label">
+																		Height:
+																	</div>
+																	<div class="col-md-6 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		160 cms
+																	</div>
+																</div>
+															</div> -->
+														</div>
+														<div class="row" style="text-align: left; padding-top: 8px;">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Home Town:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Varul Kanadi
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-4  g-search-result-label">
+																		Mama's Town:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Lambola
+																	</div>
+																</div>
+															</div>
+															<!-- <div class="col-md-3">
+																<div class="row">
+																	<div class="col-md-6 g-search-result-label">
+																		Weight:
+																	</div>
+																	<div class="col-md-6 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		65 kgs
+																	</div>
+																</div>
+															</div> -->
+														</div>
+														<div class="row" style="text-align: left; padding-top: 8px;">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Occupation:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Salaried, Senior Chemist
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-4  g-search-result-label">
+																		Education:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		D. Pharmacy, B.Sc. (Chemistry)
+																	</div>
+																</div>
+															</div>
+															<!-- <div class="col-md-3">
+																<div class="row">
+																	<div class="col-md-6 g-search-result-label">
+																		Marital Status:
+																	</div>
+																	<div class="col-md-6 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Never Married
+																	</div>
+																</div>
+															</div> -->
+														</div>
+														<div class="row" style="text-align: left; padding-top: 10px;">
+															<div class="col-md-1 g-search-result-label">
+																About:
+															</div>
+															<div class="col-md-11">
+																Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<hr style="padding: 5px;">
+													</div>
+												</div>
+												<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;">
+													<div class="col-md-2">
+														<div class="row">
+															<div class="col-md-12">
+																<a data-lightbox="VA6789" href="assets/img/p2.jpg" data-title="Pramod Patil"><img alt="img" src="assets/img/p2.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div style="padding-right: 20px;" class="g-text-bold">Pramod Patil</div>	
+															</div>
+														</div>
+													</div>
+													<div class="col-md-10">
+														<div class="row" style="text-align: left;">
+															<div class="col-md-3">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		G-ID:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		VA6789
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-5">
+																<div class="row">
+																	<div class="col-md-4  g-search-result-label">
+																		Name:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Pramod Patil
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-4">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Date of Birth:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		4<sup>th</sup> January 1986
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<hr style="padding: 5px; margin: 0px;">
+													</div>
+												</div>
+												<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;">
+													<div class="col-md-2">
+														<div class="row">
+															<div class="col-md-12">
+																<a data-lightbox="SD3456" href="assets/img/p3.jpg" data-title="Ganesh Chaudhari"><img alt="img" src="assets/img/p3.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div style="padding-right: 20px;" class="g-text-bold">Ganesh Chaudhari</div>	
+															</div>
+														</div>
+													</div>
+													<div class="col-md-10">
+														<div class="row">
+															<div class="col-md-3">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		G-ID:
+																	</div>
+																	<div class="col-md-8 g-text-bold g-search-result-text">
+																		SD3456
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-5">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Name:
+																	</div>
+																	<div class="col-md-8 g-text-bold g-search-result-text">
+																		Ganesh Chaudhari
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-4">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Date of Birth:
+																	</div>
+																	<div class="col-md-8 g-text-bold g-search-result-text">
+																		23<sup>rd</sup> November 1988
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<hr style="padding: 5px; margin: 0px;">
+													</div>
+												</div>
+												<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;">
+													<div class="col-md-2">
+														<div class="row">
+															<div class="col-md-12">
+																<a data-lightbox="VA4588" href="assets/img/p4.jpg" data-title="Yogesh Patil"><img alt="img" src="assets/img/p4.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div style="padding-right: 20px;" class="g-text-bold">Yogesh Patil</div>	
+															</div>
+														</div>
+													</div>
+													<div class="col-md-10">
+														<div class="row" style="text-align: left;">
+															<div class="col-md-3">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		G-ID:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		VA4588
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-5">
+																<div class="row">
+																	<div class="col-md-4  g-search-result-label">
+																		Name:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Yogesh Patil
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-4">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Date of Birth:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		4<sup>th</sup> January 1986
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-12">
+														<hr style="padding: 5px; margin: 0px;">
+													</div>
+												</div>
+												<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;">
+													<div class="col-md-2">
+														<div class="row">
+															<div class="col-md-12">
+																<a data-lightbox="VA8977" href="assets/img/p5.jpg" data-title="Jayesh Patel"><img alt="img" src="assets/img/p5.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-12">
+																<div style="padding-right: 20px;" class="g-text-bold">Jayesh Patel</div>	
+															</div>
+														</div>
+													</div>
+													<div class="col-md-10">
+														<div class="row" style="text-align: left;">
+															<div class="col-md-3">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		G-ID:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		VA8977
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-5">
+																<div class="row">
+																	<div class="col-md-4  g-search-result-label">
+																		Name:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		Jayesh Patel
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-4">
+																<div class="row">
+																	<div class="col-md-4 g-search-result-label">
+																		Date of Birth:
+																	</div>
+																	<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																		4<sup>th</sup> January 1986
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+										  	</div>
+										</div>
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="row" style="text-align: right;">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-1"></div>
+									<div class="col-md-10">
+										<nav aria-label="Page navigation">
+										  <ul class="pagination">
+										    <li>
+										      <a href="#" aria-label="Previous">
+										        <span aria-hidden="true">&laquo;</span>
+										      </a>
+										    </li>
+										    <li class="active"><a href="#" >1</a></li>
+										    <li><a href="#">2</a></li>
+										    <li><a href="#">3</a></li>
+										    <li><a href="#">4</a></li>
+										    <li><a href="#">5</a></li>
+										    <li>
+										      <a href="#" aria-label="Next">
+										        <span aria-hidden="true">&raquo;</span>
+										      </a>
+										    </li>
+										  </ul>
+										</nav>
+									</div>
+									<div class="col-md-1"></div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+		
+		<div th:replace="fragments/f-common :: g-footer"></div>
+	</div>
+	
+	<!-- Javascript -->
+   <!--  <script src="assets/components/jquery/dist/jquery.min.js"></script>
+	<script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="assets/components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="assets/components/lightbox2/dist/js/lightbox.js"></script>
+	<script src="assets/components/typeahead.js/dist/typeahead.bundle.js"></script> -->
+	
+	<script type="text/javascript" src="js/app/search.js"></script>
+</body>
+</html>
+								

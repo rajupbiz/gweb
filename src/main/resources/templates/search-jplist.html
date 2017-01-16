@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>Gomaie^</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link href="js/jplist/css/jplist.core.min.css" rel="stylesheet" type="text/css" />
+		<link href="js/jplist/css/jplist.textbox-filter.min.css" rel="stylesheet" type="text/css" />
+	</head>
+
+<body>
+
+	<div id="wrapper" class="container-fluid">
+		<div th:replace="fragments/f-common :: g-header"></div>
+		
+		<div id="content">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10" style="padding-left: 0px; padding-right: 0px;">
+					
+					
+					
+					<div id="demo" class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+					
+					<div class="well well-sm" style="padding-bottom: 15px; padding-top: 15px; padding-left: 15px; padding-right: 15px; margin-top: 30px; margin-bottom: 0px;">
+						<form class="form-inline" action="#">
+							<div class="row">
+								<div class="col-md-12" style="text-align: left;">
+									<div class="form-group" style="padding-right: 20px;"><input type="text" id="quick-search-gid-id" name="quick-search-gid-id" style="width: 120px;" placeholder="G-ID" class="form-control" maxlength="10" autofocus></div>
+									<div class="form-group" style="padding-right: 20px;"><input type="text" id="quick-search-name-id" name="quick-search-name-id" style="width: 180px;" placeholder="Name" class="form-control" maxlength="40"></div>
+									<div class="form-group" style="padding-right: 20px;"><input type="text" id="quick-search-town-id" name="quick-search-town-id" autocomplete="off" placeholder="City or Town" style="width: 180px;" class="form-control typeahead"></div>
+									<div class="form-group" style="padding-right: 20px;">
+									<select id="quick-search-education-id" name="quick-search-education-id" class="selectpicker show-menu-arrow" multiple class="form-control" data-size="5" data-max-options="3" data-width="180px" title="Education">
+										<option>M.C.A.</option>
+										<option>B.Sc.</option>
+										<option>D. Pharmacy</option>
+										<option>B. Pharmacy</option>
+										<option>B.E.</option>
+									</select></div> 
+									<span style="float: right;">
+										<button type="button" class="btn btn-primary btn-sm" style="width: 100px;"><span style="font-weight: 600; font-size: 14px;">Search</span></button> <span style="padding-left: 20px; padding-right: 10px;"> Or go for </span>
+										<button type="button" class="btn btn-primary btn-xs"><span style="font-weight: 600; font-size: 12px;">Advance Search</span></button>
+									</span>
+								</div>
+							</div>
+						</form>
+					</div>
+					
+			           <!-- panel -->
+			           <div class="jplist-panel" style="padding-bottom: 15px; padding-top: 15px; padding-left: 15px; padding-right: 15px; margin-top: 30px; margin-bottom: 0px;">						
+			      
+			                <!-- filter by title -->
+			                <div class="text-filter-box">
+			                   <i class="fa fa-search  jplist-icon"></i>
+			                   <input 
+			                      data-path=".title" 
+			                      type="text" 
+			                      value="" 
+			                      placeholder="Filter by Title" 
+			                      data-control-type="textbox" 
+			                      data-control-name="title-filter" 
+			                      data-control-action="filter"
+			                   />
+			                </div>
+			      
+			           </div>				 
+			   
+			           <!-- HTML data -->   
+			           <div class="list">
+			      
+			                <!-- item 1 -->
+			                <div class="list-item">	
+			                   <p class="title">Architecture</p>
+			                </div>
+			
+			                <!-- item 2 -->
+			                <div class="list-item">	
+			                   <p class="title">Autumn</p>
+			                </div>
+			
+			                <!-- item 3 -->
+			                <div class="list-item">	
+			                   <p class="title">Boats</p>
+			                </div>
+			
+			                <!-- item 4 -->
+			                <div class="list-item">	
+			                   <p class="title">Arch</p>
+			                </div>
+			
+			                <!-- item 5 -->
+			                <div class="list-item">	
+			                   <p class="title">Books</p>
+			                </div>
+			      
+			           </div>
+			   
+			           <!-- no results found -->
+			           <div class="jplist-no-results">
+			              <p>No results found</p>
+			           </div>
+			               
+			        </div>	
+					
+					
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+		
+		<div th:replace="fragments/f-common :: g-footer"></div>
+	</div>
+	
+	<script src="js/app/search.js"></script>
+	
+	<!-- jPList Core -->
+	<script src="js/jplist/js/jplist.core.min.js"></script>
+	
+	
+	<!-- jPList Sort Bundle -->
+	<script src="js/jplist/js/jplist.sort-bundle.min.js"></script>
+	
+	<!-- jPList Pagination Bundle -->
+	<script src="js/jplist/js/jplist.pagination-bundle.min.js"></script>
+	
+	<!-- Textbox Filter Control -->
+	<script src="js/jplist/js/jplist.textbox-filter.min.js"></script>
+	
+	
+	<script>
+        $('document').ready(function(){
+          
+           $('#demo').jplist({				
+              itemsBox: '.list', 
+              itemPath: '.list-item', 
+              panelPath: '.jplist-panel'	
+           });
+   
+        });
+     </script>
+	
+</body>
+</html>
+								
