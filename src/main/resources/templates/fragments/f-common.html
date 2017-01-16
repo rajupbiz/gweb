@@ -71,17 +71,17 @@
 													    
 													    <div class="collapse navbar-collapse g-menu-collapse" id="g-navbar-collapse-id" th:if="${#authentication.name != 'anonymousUser'}">
 													      <ul class="nav navbar-nav navbar-right" style="padding-right: 5px;"> 
-													        <li th:classappend="${session.TAB == 'home'}? 'active'"><a th:href="@{/vHome}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-													        <li th:classappend="${session.TAB == 'search'}? 'active'"><a th:href="@{/vSearch}">Search</a></li>
-													        <li th:classappend="${session.TAB == 'update_profile'}? 'active'"><a th:href="@{/vUpdateProfile}">Update Profile</a></li>
-													        <li th:classappend="${session.TAB == 'preview_profile'}? 'active'"><a th:href="@{/vPreviewProfile}">Preview Profile</a></li>
-													        <li th:classappend="${session.TAB == 'privacy_settings'}? 'active'"><a th:href="@{/vPrivacySettings}">Privacy Settings</a></li>
+													        <li th:classappend="${session.TAB == 'home'}? 'active'"><a th:href="@{/profile-home}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+													        <li th:classappend="${session.TAB == 'search'}? 'active'"><a th:href="@{/search-profile}">Search</a></li>
+													        <li th:classappend="${session.TAB == 'update_profile'}? 'active'"><a th:href="@{/update-profile}">Update Profile</a></li>
+													        <li th:classappend="${session.TAB == 'preview_profile'}? 'active'"><a th:href="@{/preview-profile}">Preview Profile</a></li>
+													        <li th:classappend="${session.TAB == 'privacy_settings'}? 'active'"><a th:href="@{/profile-privacy-settings}">Privacy Settings</a></li>
 													        <li class="dropdown" th:classappend="${session.TAB == 'more'}? 'active'">
 													          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> More <span class="glyphicon glyphicon-triangle-bottom"></span></a>
 													          <ul class="dropdown-menu">
-													            <li><a th:href="@{/vMessages}" class="g-sub-menu-a">Messages <span class="badge" th:if="${session.noOfUnreadMessages > 0}"} th:text="${session.noOfUnreadMessages}"></span></a></li>
-													            <li class="active"><a th:href="@{/vShortlistedProfiles}" class="g-sub-menu-a">Shortlisted Profiles <span class="badge" th:if="${session.noOfShortlistedProfiles > 0}"} th:text="${session.noOfShortlistedProfiles}"></span></a></li>
-													            <li><a th:href="@{/vAccountSettings}" class="g-sub-menu-a">Account Settings</a></li>
+													            <li><a th:href="@{/profile-messages}" class="g-sub-menu-a">Messages <span class="badge" th:if="${session.noOfUnreadMessages > 0}"} th:text="${session.noOfUnreadMessages}"></span></a></li>
+													            <li class="active"><a th:href="@{/shortlisted-profiles}" class="g-sub-menu-a">Shortlisted Profiles <span class="badge" th:if="${session.noOfShortlistedProfiles > 0}"} th:text="${session.noOfShortlistedProfiles}"></span></a></li>
+													            <li><a th:href="@{/profile-account-settings}" class="g-sub-menu-a">Account Settings</a></li>
 													            <li role="separator" class="divider"></li>
 													            <li><a th:href="@{/signout}" class="g-sub-menu-a">Sign out</a></li>
 													          </ul>
@@ -142,13 +142,12 @@
 					<div class="col-md-1"></div>
 				</div>
 				<!-- Javascript -->
-			    <script src="assets/components/jquery/dist/jquery.min.js"></script>
-				<script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
-				<script src="assets/components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-				<script src="assets/components/lightbox2/dist/js/lightbox.js"></script>
-				<script src="assets/components/typeahead.js/dist/typeahead.bundle.js"></script>
-				
-				<script type="text/javascript" src="js/app/g-common.js"></script>
+			    <script type="text/javascript" th:src="@{/assets/components/jquery/dist/jquery.min.js}"></script>
+				<script type="text/javascript" th:src="@{/assets/components/bootstrap/dist/js/bootstrap.min.js}"></script>
+				<script type="text/javascript" th:src="@{/assets/components/bootstrap-select/dist/js/bootstrap-select.min.js}"></script>
+				<script type="text/javascript" th:src="@{/assets/components/lightbox2/dist/js/lightbox.js}"></script>
+				<script type="text/javascript" th:src="@{/assets/components/typeahead.js/dist/typeahead.bundle.js}"></script>
+				<script type="text/javascript" th:src="@{/js/app/g-common.js}"></script>
 			</div>
 	</div>
 

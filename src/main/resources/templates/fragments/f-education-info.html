@@ -70,7 +70,7 @@
 	<div class="panel-body" style="padding-left: 20px;" th:fragment="educationInfoEdit" id="educationInfoSectionBody">
 		<div class="row" style="padding-left: 30px;">
 			<div class="col-md-12">
-				<form id="editEducationInfoForm" class="form-horizontal" th:action="@{/sEducationInfo}" th:object="${eduOccuInfo}"  method="post">
+				<form id="editEducationInfoForm" class="form-horizontal" th:action="@{/save-profile-education}" th:object="${eduOccuInfo}"  method="post">
 					<fieldset>
 						<div th:each="currentEducation, stat : *{educations}">
 							<legend style="font-size: 13px;">Education <span th:text="${__${stat.index}__+1}"></span></legend>

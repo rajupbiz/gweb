@@ -90,7 +90,7 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-3 g-view-label-profile">Is	Mangal?:</div>
+							<div class="col-md-3 g-view-label-profile">Is Mangal?:</div>
 							<div class="col-md-6 g-view-text-profile">
 								<span th:text="*{isMangal}"></span>
 							</div>
@@ -111,7 +111,7 @@
 	<div class="panel-body" style="padding-left: 20px;" th:fragment="personalInfoEdit" id="personalInfoSectionBody">
 		<div class="row" style="padding-left: 30px;">
 			<div class="col-md-12">
-				<form role="form" id="editPersonalInfoForm" class="form-horizontal" th:action="@{/sPersonalInfo}" th:object="${personalInfo}"  method="post">
+				<form role="form" id="editPersonalInfoForm" class="form-horizontal" th:action="@{/save-profile-personal}" th:object="${personalInfo}"  method="post">
 					<fieldset>
 						<legend style="font-size: 13px;">Basic Information</legend>
 
@@ -236,7 +236,7 @@
 							</button>
 						</div>
 					</div>
-					<script type="text/javascript" src="js/app/update-profile.js"></script>
+					<!-- <script type="text/javascript" src="js/app/update-profile.js"></script> -->
 				</form>
 			</div>
 		</div>

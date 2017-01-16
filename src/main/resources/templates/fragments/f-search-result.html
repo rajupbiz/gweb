@@ -1,46 +1,213 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head></head>
-<body onload="onloadFoo()">
-<div class="panel panel-info">
-	<div class="panel-body" style="padding-left: 20px;" th:fragment="searchResultFragment" id="photoInfoSectionBody">
+<body onload="onloadFoo()"> -->
+<!-- <div class="panel panel-info"> -->
+	<!-- <div class="panel-body" style="padding-left: 0px;" th:fragment="searchResultFragment" id="photoInfoSectionBody"> -->
 	
-		<table class="table table-striped table-hover" th:if="${page != null}">
-		    <thead>
-		        <tr>
-		          <th><a class="sorted" sd:pagination-sort="district" >district</a></th>
-		          <th><a class="sorted" sd:pagination-sort="cityOrTown" >cityOrTown</a></th>
-		          <th>Last Name</th>
-		          <th></th>
-		        </tr>
-		    </thead>
-		    <tbody>
-		        <tr th:each="row : ${page}">
-		          <th scope="row" th:text="${row.firstName}">fisrtName</th>
-		          <td th:text="${row.lastName}">lastName</td>
-		          <td th:text="${row.addressLine}">addressLine</td>
-		          <td><a href="#">edit</a></td>
-		        </tr>
-		    </tbody>
-		</table>
-		
-		<div class="row">
-		    <div class="col-sm-6">
-		        <div sd:pagination-summary="">info</div>
-		    </div>
-		    <div class="col-sm-6">
-		        <nav class="pull-right">
-		        <ul class="pagination" sd:pagination="full" sd:pagination-url="@{/profiles}">
-		            <!-- Pagination created by SpringDataDialect, this content is just for mockup -->
-		            <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-		            <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-		        </ul>
-		    </nav>
-		    </div>
+		<div class="row" style="text-align: right;">
+			<!-- <div class="col-md-12">
+				<div class="row">
+					<div class="col-md-1"></div> -->
+					<div class="col-md-12">
+						<nav aria-label="Page navigation">
+						  <ul class="pagination">
+						    <li>
+						      <a href="#" aria-label="Previous">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+						    
+						    <li th:each="pageNo : ${#numbers.sequence( 1, page.totalPages)}" th:class="${pageNo == page.currentPageNo}? 'active' : ''">
+						    	<a href="#" th:onclick="'getSearchResult(\'' + ${pageNo} + '\');'" th:text="${pageNo}" ></a>
+						    </li>
+						    
+						    <li>
+						      <a href="#" aria-label="Next">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+						    </li>
+						  </ul>
+						</nav>
+					</div>
+					<!-- <div class="col-md-1"></div>
+				</div>
+			</div> -->
 		</div>
 		
+		<div class="row">
+			<!-- <div class="col-md-12">
+				<div class="row"> -->
+					<!-- <div class="col-md-1"></div> -->
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-heading" style="padding: 5px 15px;">
+								<div class="row">
+									<div class="col-md-6 g-section-header" style="text-align: left;">Result</div>
+									<div class="col-md-6 g-search-result-label" style="text-align: right; padding-right: 10px;"><span th:text="${page.totalRecords}"></span> profiles found</div>
+								</div>
+						  	</div>
+						  	<div class="panel-body">
+								<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;" th:each="profile : ${page.profiles}">
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-md-2">
+												<div class="row" style="padding-bottom: 5px; padding-right: 10px;">
+													<div class="col-md-12" style="text-align: center;">
+														<span class="g-text-bold" th:text="${profile.gid}"></span>
+														<a th:attr="data-lightbox=${profile.gid},data-title=${profile.name}"  href="assets/img/p1.jpg" ><img alt="img" src="assets/img/p1.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
+													</div>
+												</div>
+											</div>
+											<div class="col-md-10">
+												<div class="row" style="text-align: left;">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4 g-search-result-label">
+																Name:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																<span th:text="${profile.name}"></span>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4  g-search-result-label">
+																Father's Name:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																<span th:text="${profile.fathersFullName}"></span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row" style="text-align: left; padding-top: 8px;">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4 g-search-result-label">
+																Date of Birth:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																1<sup>st</sup> March 1990
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4  g-search-result-label">
+																Current Location:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																<span th:text="${profile.currentLocation}"></span>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row" style="text-align: left; padding-top: 8px;">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4 g-search-result-label">
+																Home Town:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																Varul Kanadi
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4  g-search-result-label">
+																Mama's Town:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																Lambola
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row" style="text-align: left; padding-top: 8px;">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4 g-search-result-label">
+																Occupation:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																Salaried, Senior Chemist
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4  g-search-result-label">
+																Education:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																D. Pharmacy, B.Sc. (Chemistry)
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row" style="text-align: left; padding-top: 10px;">
+													<div class="col-md-1 g-search-result-label">
+														About:
+													</div>
+													<div class="col-md-11">
+														Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<hr style="padding: 5px;">
+											</div>
+										</div>
+									</div>
+								</div>
+						  	</div>
+						</div>
+					</div>
+					<!-- <div class="col-md-1"></div> -->
+				<!-- </div>
+			</div> -->
+		</div>
+		
+		<div class="row" style="text-align: right;">
+			<!-- <div class="col-md-12">
+				<div class="row">
+					<div class="col-md-1"></div> -->
+					<div class="col-md-12">
+						<nav aria-label="Page navigation">
+						  <ul class="pagination">
+						    <li>
+						      <a href="#" aria-label="Previous">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+						    
+						    <li th:each="pageNo : ${#numbers.sequence( 1, page.totalPages)}" th:class="${pageNo == page.currentPageNo}? 'active' : ''">
+						    	<a href="#" th:onclick="'getSearchResult(\'' + ${pageNo} + '\');'" th:text="${pageNo}" ></a>
+						    </li>
+						    
+						    <li>
+						      <a href="#" aria-label="Next">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+						    </li>
+						  </ul>
+						</nav>
+					</div>
+					<!-- <div class="col-md-1"></div>
+				</div>
+			</div> -->
+		</div>
+					<!-- <div class="col-md-1"></div>
+				<!-- </div> -->
+				
+		<!-- </div>
 	</div>
-</div>
+</div> -->
 
 <script type="text/javascript">
 
