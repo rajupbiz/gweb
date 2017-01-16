@@ -1,8 +1,6 @@
 var ctxPath = $("#ctxPath").val();
 $(document).ready(function() {
 	
-	
-	
 	/* activate sidebar */
 	$('#sidebar').affix({
 		offset : {
@@ -313,19 +311,19 @@ $(document).ready(function() {
 function editInfo(section) {
 	switch (section) {
 	case 'Personal':
-		$("#personalInfoSectionBody").load(ctxPath+"ePersonalInfo");
+		$("#personalInfoSectionBody").load(ctxPath+"edit-profile-personal");
 		break;
 	case 'Family':
-		$("#familyInfoSectionBody").load(ctxPath+"eFamilyInfo");
+		$("#familyInfoSectionBody").load(ctxPath+"edit-profile-family");
 		break;
 	case 'Contact':
-		$("#contactInfoSectionBody").load(ctxPath+"eContactInfo");
+		$("#contactInfoSectionBody").load(ctxPath+"edit-profile-contact");
 		break;
 	case 'Education':
-		$("#educationInfoSectionBody").load(ctxPath+"eEducationInfo");
+		$("#educationInfoSectionBody").load(ctxPath+"edit-profile-education");
 		break;
 	case 'Photo':
-		$("#photoInfoSectionBody").load(ctxPath+"ePhotoInfo");
+		$("#photoInfoSectionBody").load(ctxPath+"edit-profile-photo");
 		break;
 	default:
 		break;
@@ -335,19 +333,19 @@ function editInfo(section) {
 function cancelEdit(section) {
 	switch (section) {
 	case 'Personal':
-		$("#personalInfoSectionBody").load(ctxPath+"vPersonalInfo");
+		$("#personalInfoSectionBody").load(ctxPath+"get-profile-personal");
 		break;
 	case 'Family':
-		$("#familyInfoSectionBody").load(ctxPath+"vFamilyInfo");
+		$("#familyInfoSectionBody").load(ctxPath+"get-profile-family");
 		break;
 	case 'Contact':
-		$("#contactInfoSectionBody").load(ctxPath+"vContactInfo");
+		$("#contactInfoSectionBody").load(ctxPath+"get-profile-contact");
 		break;
 	case 'Education':
-		$("#educationInfoSectionBody").load(ctxPath+"vEducationInfo");
+		$("#educationInfoSectionBody").load(ctxPath+"get-profile-education");
 		break;
 	case 'Photo':
-		$("#photoInfoSectionBody").load(ctxPath+"vPhotoInfo");
+		$("#photoInfoSectionBody").load(ctxPath+"get-profile-photo");
 		break;
 	default:
 		break;
@@ -481,7 +479,7 @@ function onChangeDropdown(dropdown){
 function makePrimary(photo1) {
 	console.log(" 336 "+photo1);
 	$.ajax({
-	    url: "makePrimary?photo="+photo1,
+	    url: "make-profile-primary?photo="+photo1,
 	    type: "GET",
 	    success: function () {
 	    	console.log(" mp 347 ");
