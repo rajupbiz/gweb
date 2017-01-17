@@ -7,6 +7,12 @@ $(document).ready(function() {
    
 });
 
+$("#FilterFormId").submit(function( event ) {
+	console.log(" filter form submit ");
+	event.preventDefault();
+	getSearchResult(1);
+});
+
 function getSearchResult(pageNo){
 	$("#pageNo").val(pageNo);
 	$.ajax({

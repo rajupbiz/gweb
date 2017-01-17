@@ -5,12 +5,12 @@
 <!-- <div class="panel panel-info"> -->
 	<!-- <div class="panel-body" style="padding-left: 0px;" th:fragment="searchResultFragment" id="photoInfoSectionBody"> -->
 	
-		<div class="row" style="text-align: right;">
+		<div class="row" style="text-align: right;" th:if="${page.totalPages > 0}">
 			<!-- <div class="col-md-12">
 				<div class="row">
 					<div class="col-md-1"></div> -->
 					<div class="col-md-12">
-						<nav aria-label="Page navigation">
+						<nav aria-label="Page navigation" >
 						  <ul class="pagination">
 						    <li>
 						      <a href="#" aria-label="Previous">
@@ -18,7 +18,7 @@
 						      </a>
 						    </li>
 						    
-						    <li th:each="pageNo : ${#numbers.sequence( 1, page.totalPages)}" th:class="${pageNo == page.currentPageNo}? 'active' : ''">
+						    <li  th:each="pageNo : ${#numbers.sequence( 1, page.totalPages )}" th:class="${pageNo == page.currentPageNo}? 'active' : ''">
 						    	<a href="#" th:onclick="'getSearchResult(\'' + ${pageNo} + '\');'" th:text="${pageNo}" ></a>
 						    </li>
 						    
@@ -35,6 +35,12 @@
 			</div> -->
 		</div>
 		
+		<div class="row" th:if="${page.totalPages <= 0}">
+			<div class="col-md-12" style="height: 60px;">
+				<span style="height: 60px;"></span>
+			</div>
+		</div>
+		
 		<div class="row">
 			<!-- <div class="col-md-12">
 				<div class="row"> -->
@@ -44,22 +50,32 @@
 							<div class="panel-heading" style="padding: 5px 15px;">
 								<div class="row">
 									<div class="col-md-6 g-section-header" style="text-align: left;">Result</div>
-									<div class="col-md-6 g-search-result-label" style="text-align: right; padding-right: 10px;"><span th:text="${page.totalRecords}"></span> profiles found</div>
+									<div class="col-md-6 g-search-result-label" style="text-align: right; padding-right: 10px;"><span th:if="${page.totalPages > 0}"><span th:text="${page.totalRecords}"></span> profiles found</span></div>
 								</div>
 						  	</div>
 						  	<div class="panel-body">
-								<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;" th:each="profile : ${page.profiles}">
+								<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;" th:each="profile : ${page.profiles}" th:if="${page.totalPages > 0}">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-2">
 												<div class="row" style="padding-bottom: 5px; padding-right: 10px;">
 													<div class="col-md-12" style="text-align: center;">
 														<span class="g-text-bold" th:text="${profile.gid}"></span>
-														<a th:attr="data-lightbox=${profile.gid},data-title=${profile.name}"  href="assets/img/p1.jpg" ><img alt="img" src="assets/img/p1.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
+														<a th:attr="data-lightbox=${profile.gid},data-title=${profile.fullName}"  th:href="${profile.primaryPicPath}" ><img alt="Pic Not Available" th:src="${profile.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
 													</div>
 												</div>
 											</div>
 											<div class="col-md-10">
+												<div class="row" style="text-align: left;">
+													<div class="col-md-12">
+														<div class="row">
+															<div class="col-md-4 g-search-result-label">
+																<b th:if="${profile.gender == 'Male'}"><i class="fa fa-male" aria-hidden="true"></i> Var</b>
+																<b th:if="${profile.gender == 'Female'}"><i class="fa fa-female" aria-hidden="true"></i> Vadhu</b>
+															</div>
+														</div>
+													</div>
+												</div>
 												<div class="row" style="text-align: left;">
 													<div class="col-md-6">
 														<div class="row">
@@ -67,11 +83,21 @@
 																Name:
 															</div>
 															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
-																<span th:text="${profile.name}"></span>
+																<span th:text="${profile.fullName}"></span>
 															</div>
 														</div>
 													</div>
 													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-4 g-search-result-label">
+																Native Place:
+															</div>
+															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
+																<span th:text="${profile.homeTown}"></span>
+															</div>
+														</div>
+													</div>
+													<!-- <div class="col-md-6">
 														<div class="row">
 															<div class="col-md-4  g-search-result-label">
 																Father's Name:
@@ -80,9 +106,10 @@
 																<span th:text="${profile.fathersFullName}"></span>
 															</div>
 														</div>
-													</div>
+													</div> -->
 												</div>
 												<div class="row" style="text-align: left; padding-top: 8px;">
+													
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-4 g-search-result-label">
@@ -96,7 +123,7 @@
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-4  g-search-result-label">
-																Current Location:
+																Current Place:
 															</div>
 															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
 																<span th:text="${profile.currentLocation}"></span>
@@ -107,55 +134,46 @@
 												<div class="row" style="text-align: left; padding-top: 8px;">
 													<div class="col-md-6">
 														<div class="row">
-															<div class="col-md-4 g-search-result-label">
-																Home Town:
+															<div class="col-md-4  g-search-result-label">
+																Education:
 															</div>
 															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
-																Varul Kanadi
+																<span th:text="${profile.education}"></span>
 															</div>
 														</div>
 													</div>
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-4  g-search-result-label">
-																Mama's Town:
+																Mama's Place:
 															</div>
 															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
-																Lambola
+																<span th:text="${profile.mamasTown}"></span>
 															</div>
 														</div>
 													</div>
 												</div>
 												<div class="row" style="text-align: left; padding-top: 8px;">
-													<div class="col-md-6">
+													<!-- <div class="col-md-6">
 														<div class="row">
 															<div class="col-md-4 g-search-result-label">
 																Occupation:
 															</div>
 															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
-																Salaried, Senior Chemist
+																<span th:text="${profile.occupation}"></span>
 															</div>
 														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-4  g-search-result-label">
-																Education:
-															</div>
-															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
-																D. Pharmacy, B.Sc. (Chemistry)
-															</div>
-														</div>
-													</div>
+													</div> -->
+													
 												</div>
-												<div class="row" style="text-align: left; padding-top: 10px;">
+												<!-- <div class="row" style="text-align: left; padding-top: 10px;">
 													<div class="col-md-1 g-search-result-label">
 														About:
 													</div>
 													<div class="col-md-11">
-														Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+														<span th:text="${profile.about}"></span>
 													</div>
-												</div>
+												</div> -->
 											</div>
 										</div>
 										<div class="row">
@@ -163,6 +181,12 @@
 												<hr style="padding: 5px;">
 											</div>
 										</div>
+									</div>
+								</div>
+								
+								<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;" th:if="${page.totalPages <= 0}">
+									<div class="col-md-12">
+										No profiles found
 									</div>
 								</div>
 						  	</div>
@@ -173,12 +197,12 @@
 			</div> -->
 		</div>
 		
-		<div class="row" style="text-align: right;">
+		<div class="row" style="text-align: right;" >
 			<!-- <div class="col-md-12">
 				<div class="row">
 					<div class="col-md-1"></div> -->
 					<div class="col-md-12">
-						<nav aria-label="Page navigation">
+						<nav aria-label="Page navigation" th:if="${page.totalPages > 0}">
 						  <ul class="pagination">
 						    <li>
 						      <a href="#" aria-label="Previous">
@@ -186,7 +210,7 @@
 						      </a>
 						    </li>
 						    
-						    <li th:each="pageNo : ${#numbers.sequence( 1, page.totalPages)}" th:class="${pageNo == page.currentPageNo}? 'active' : ''">
+						    <li  th:each="pageNo : ${#numbers.sequence( 1, page.totalPages)}" th:class="${pageNo == page.currentPageNo}? 'active' : ''">
 						    	<a href="#" th:onclick="'getSearchResult(\'' + ${pageNo} + '\');'" th:text="${pageNo}" ></a>
 						    </li>
 						    
