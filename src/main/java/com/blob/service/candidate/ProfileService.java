@@ -129,6 +129,16 @@ public class ProfileService {
 		}else{
 			result.setCurrentPageNo(1);
 		}
+		if(result.getCurrentPageNo() < result.getTotalPages()){
+			result.setNextPageNo(result.getCurrentPageNo() + 1);
+		}else{
+			result.setNextPageNo(0);
+		}
+		if(result.getCurrentPageNo() > 1){
+			result.setPreviousPageNo(result.getCurrentPageNo() - 1);
+		}else{
+			result.setPreviousPageNo(0);
+		}
 		System.out.println(" totalRecords : "+totalRecords+"  pages : "+result.getTotalPages());
 		final PageRequest page2 = new PageRequest(
 				  result.getCurrentPageNo()-1, pageSize, new Sort(

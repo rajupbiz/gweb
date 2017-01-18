@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>Gomaie^</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+
+<body>
+
+	<div id="wrapper" class="container-fluid">
+		<div th:replace="fragments/f-common :: g-header"></div>
+		
+		<div id="content">
+			<div class="row">
+				<div class="col-md-1"></div>
+				<div class="col-md-10" style="padding-left: 0px; padding-right: 0px;">
+					<div class="container-fluid" style="padding-left: 0px; padding-right: 0px;">
+									
+						<div class="row">
+							<div class="col-md-3">
+							
+								<div class="well well-sm" style="margin-top: 30px;">	<!-- panel panel-info   well well-sm style="padding-bottom: 15px; padding-top: 15px; padding-left: 15px; padding-right: 15px; margin-top: 30px; margin-bottom: 0px;" -->
+									<!-- <div class="panel-heading">
+									    <h3 class="panel-title">Filter</h3>
+									</div> -->
+									<div class="panel-body">
+										<form action="#" id="FilterFormId" th:object="${profileFilter}">
+											<input type="hidden" id="pageNo" name="pageNo">
+											<div class="row">
+												<div class="col-md-12" style="text-align: left;">
+													<div class="form-group">
+														<label for="gid" class="g-small-label">G-ID</label>
+														<input type="text" id="gid" name="gid" placeholder="G-ID" class="form-control" maxlength="10" autofocus>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12" style="text-align: left;">
+													<div class="form-group">
+														<label for="name" class="g-small-label">Name</label>
+														<input type="text" id="name" name="name" placeholder="Name" class="form-control" maxlength="40">
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12" style="text-align: left;">
+													<div class="form-group">
+														<label for="city" class="g-small-label">City or Town</label>													
+														<input type="text" id="city" name="city" autocomplete="off" placeholder="City or Town" class="form-control typeahead">
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12" style="text-align: left;">
+													<div class="form-group">
+														<label for="education" class="g-small-label">Education</label>
+														<select id="education" name="education" class="selectpicker show-menu-arrow" multiple class="form-control" data-size="6" data-max-options="3" data-live-search="true">
+															<option value="0">Nothing selected</option>
+															<option th:each="option:*{degreeOptions}" th:value="${option.id}" th:text="${option.degree}" ></option>
+														
+															<!-- <option>MCA</option>
+															<option>BSc</option>
+															<option>D Pharmacy</option>
+															<option>B Pharmacy</option>
+															<option>BE</option>
+															<option>BA</option>
+															<option>BCom</option>
+															<option>MCom</option>
+															<option>MSc</option>
+															<option>MBA</option> -->
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row" style="margin-top: 20px;">
+												<div class="col-md-6" style="text-align: right; padding-right: 0px;">
+													<button type="submit" class="btn btn-primary btn-sm text-uppercase g-btn-text">	<!-- btn-block  -->
+														<span style="font-weight: 600; font-size: 14px;">
+														<i class="fa fa-search" aria-hidden="true"></i>
+															Search
+														</span>
+													</button>
+													<!-- <span style="padding-left: 20px; padding-right: 10px;"> Or go for </span> -->
+													<!-- <button type="button" class="btn btn-primary btn-xs"><span style="font-weight: 600; font-size: 12px;">Advance Search</span></button> -->
+												</div>
+												<div class="col-md-6" style="text-align: left; padding-left: 10px;">
+													<button type="button" class="btn btn-link btn-sm text-uppercase g-btn-text" onclick="clearProfileFilter()">	<!-- btn-block  -->
+														<span style="font-weight: 600; font-size: 14px;">
+														<!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+															Clear
+														</span>
+													</button>
+													<!-- <span style="padding-left: 20px; padding-right: 10px;"> Or go for </span> -->
+													<!-- <button type="button" class="btn btn-primary btn-xs"><span style="font-weight: 600; font-size: 12px;">Advance Search</span></button> -->
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-9">
+								<div id="SearchResultDivId">
+									<!-- <div th:replace="fragments/f-search-result :: searchResultFragment"></div> -->
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div class="col-md-1"></div>
+			</div>
+		</div>
+		
+		<div th:replace="fragments/f-common :: g-footer"></div>
+	</div>
+	
+	<script type="text/javascript" src="js/app/search.js"></script>
+</body>
+</html>
+								

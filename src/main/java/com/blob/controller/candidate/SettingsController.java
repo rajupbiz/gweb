@@ -25,7 +25,7 @@ public class SettingsController extends BaseController {
 
 		Model m = new ExtendedModelMap();
 		User user = getLoggedInUser();
-		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.privacy_profile.toString(), user);
+		//sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.privacy_profile.toString(), user);
 		return new ModelAndView("/privacy-settings", m.asMap());
 	}
 	

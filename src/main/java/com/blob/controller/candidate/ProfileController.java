@@ -283,6 +283,15 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("/preview-profile", m.asMap());
 	}
 	
+	@RequestMapping(value="/shortlisted-profiles", method=RequestMethod.GET)
+	public ModelAndView vShortlistedProfiles(){
+
+		User user = getLoggedInUser();
+		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.shortlisted_profiles.toString(), user);
+		Model m = new ExtendedModelMap();
+		return new ModelAndView("/shortlisted-profiles", m.asMap());
+	}
+	
 	@RequestMapping(value="/edit-profile-photo", method=RequestMethod.GET)
 	public ModelAndView ePhotoInfo() throws Exception{
 
