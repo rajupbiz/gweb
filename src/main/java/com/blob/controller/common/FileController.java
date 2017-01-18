@@ -21,10 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.blob.controller.BaseController;
 import com.blob.dao.common.SystemPropertyDao;
-import com.blob.enums.ServicesEnum;
 import com.blob.model.common.User;
 import com.blob.model.error.FileUploadError;
 import com.blob.service.candidate.CandidatePhotoService;
+import com.blob.util.GConstants;
 
 @Controller
 public class FileController extends BaseController {
@@ -54,8 +54,8 @@ public class FileController extends BaseController {
 		try {
 			User user = getLoggedInUser();
 			String service = getCurrentService();
-			if(StringUtils.isNotBlank(service) && service.equalsIgnoreCase(ServicesEnum.SAGAI.toString())){
-				candidatePhotoService.uploadPhoto(user, uploadfile);
+			if(StringUtils.isNotBlank(service) && service.equalsIgnoreCase(GConstants.Service_SAGAI)){
+				candidatePhotoService.uploadPhoto(request, user, uploadfile);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -99,9 +99,10 @@ public class FileController extends BaseController {
 	@RequestMapping(value = "load-image/{fileName}", method = RequestMethod.GET)
 	@ResponseBody
 	public void loadImage(@PathVariable String fileName) throws IOException {
-		//TODO: to encrypt and decrypt filname
-		System.out.println(" filename  "+fileName);
-		org.springframework.core.io.Resource r = resourceLoader.getResource("file:C:\\Users\\RPATEL\\Google Drive\\00_biz\\gomaie\\pics\\sagai\\"+fileName+".jpg");
+		String filePath = (String) request.getSession().getAttribute(GConstants.SAGAI_DEFAULT_FILE_UPLOAD_PATH);
+		System.out.println(" filename  "+fileName+"  filePath  "+filePath);
+		//filePath.replaceAll("\\", "\\\\");
+		org.springframework.core.io.Resource r = resourceLoader.getResource("file:"+filePath+"\\"+fileName+".jpg");		//	file:C:\\Users\\RPATEL\\Google Drive\\00_biz\\gomaie\\pics\\sagai\\
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 	    IOUtils.copy(r.getInputStream(), response.getOutputStream());
 	}

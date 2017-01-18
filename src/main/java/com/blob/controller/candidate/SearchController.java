@@ -19,6 +19,7 @@ import org.thymeleaf.context.Context;
 import com.blob.controller.BaseController;
 import com.blob.dao.master.MasterDegreeDao;
 import com.blob.enums.MenuTabEnum;
+import com.blob.model.candidate.Candidate;
 import com.blob.model.common.User;
 import com.blob.model.ui.ProfileFilter;
 import com.blob.security.SessionService;
@@ -66,7 +67,9 @@ public class SearchController extends BaseController {
 		logger.debug(" \n search profile .............  ");
 		GResponse resp = new GResponse();
 		Context ctx = new Context();
-		ctx.setVariable("page", profileService.getProfiles(profileFilter));
+		Candidate c = getLoggedInSagaiCandidate();
+		profileFilter.setLoggedInCandidateId(c.getId());
+		ctx.setVariable("page", profileService.getProfiles(request, profileFilter));
 		
 		String html = templateEngine.process("fragments/f-search-result", ctx);
 		resp.setSuccess(true);

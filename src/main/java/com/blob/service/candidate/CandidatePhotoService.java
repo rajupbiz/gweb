@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -17,7 +18,6 @@ import com.blob.dao.common.GPhotoDao;
 import com.blob.dao.common.SystemPropertyDao;
 import com.blob.enums.PhotoCategoryEnum;
 import com.blob.model.common.GPhoto;
-import com.blob.model.common.SystemProperty;
 import com.blob.model.common.User;
 import com.blob.security.SessionService;
 import com.blob.service.common.CommonService;
@@ -39,10 +39,11 @@ public class CandidatePhotoService {
 	@Resource
 	private GPhotoDao gPhotoDao;
 	
-	public void uploadPhoto(User user, MultipartFile uploadfile) throws Exception{
+	public void uploadPhoto(HttpServletRequest request, User user, MultipartFile uploadfile) throws Exception{
 		
-		SystemProperty systemProperty = systemPropertyDao.findByListNameAndListKeyAndStatus(GConstants.ListName_FILE_UPLOAD_PATH, GConstants.ListKey_SAGAI_PHOTO, GConstants.Status_Active);
-		if(systemProperty != null && StringUtils.isNotBlank(systemProperty.getListValue())){
+		String filePath = (String) request.getSession().getAttribute(GConstants.SAGAI_DEFAULT_FILE_UPLOAD_PATH);
+		
+		if(StringUtils.isNotBlank(filePath)){
 			
 			String origFileName = uploadfile.getOriginalFilename();
 			String[] tokens = origFileName.split("\\.(?=[^\\.]+$)");
@@ -51,7 +52,7 @@ public class CandidatePhotoService {
 				Long photoCounter = gPhotoDao.countByUserAndCategory(user, PhotoCategoryEnum.Sagai.toString());
 				photoCounter++;
 				String fileName = user.getId()+"_"+PhotoCategoryEnum.Sagai.toString()+"_"+photoCounter+"."+tokens[1];
-				String directory = systemProperty.getListValue();
+				String directory = filePath;
 				String filepath = Paths.get(directory, fileName).toString();
 				BufferedOutputStream stream = null;
 				try{

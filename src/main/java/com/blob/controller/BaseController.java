@@ -1,5 +1,6 @@
 package com.blob.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Controller;
 
 import com.blob.dao.common.UserDao;
 import com.blob.enums.SessionParamEnum;
+import com.blob.model.candidate.Candidate;
 import com.blob.model.common.User;
+import com.blob.service.candidate.CandidateService;
 
 @Controller
 public class BaseController {
@@ -23,6 +26,9 @@ public class BaseController {
 	
 	@Autowired
 	protected UserDao userDao;
+	
+	@Resource
+	private CandidateService candidateService;
 	
 	public String getLoggedInUserName(){
 		
@@ -47,6 +53,12 @@ public class BaseController {
 		
 		String userName = getLoggedInUserName();
 		return userDao.findByUsername(userName);
+	}
+	
+	public Candidate getLoggedInSagaiCandidate(){
+		
+		Candidate c = candidateService.getCandidateByUser(getLoggedInUser());
+		return c;
 	}
 	
 	public String getCurrentService(){
