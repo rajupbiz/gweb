@@ -10,24 +10,6 @@
 			<div class="col-md-12">
 				<form action="#" method="post" role="form" class="form-horizontal" th:object="${contactInfo}">
 					<fieldset>
-						<legend style="font-size: 13px;">Native Place</legend>
-						<div class="row">
-							<div class="col-md-2 g-view-label-profile"></div>
-							<div class="col-md-6 g-view-text-profile">
-								<span th:text="*{nativePlace}"></span>
-							</div>
-						</div>
-					</fieldset>
-					<fieldset>
-						<legend style="font-size: 13px;">Current Address</legend>
-						<div class="row">
-							<div class="col-md-2 g-view-label-profile"></div>
-							<div class="col-md-6 g-view-text-profile" th:if="*{address != null}">
-								<span th:text="*{address.addressStr}"></span>
-							</div>
-						</div>
-					</fieldset>
-					<fieldset>
 						<legend style="font-size: 13px;">Contact(s)</legend>
 						<div class="row">
 							<div class="col-md-2 g-view-label-profile"></div>
@@ -42,6 +24,49 @@
 							<div class="col-md-3 g-view-text-profile"><span th:text="*{contacts[__${stat.index}__].mobile}"></span></div>
 						</div>
 					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Address</legend>
+						<div class="row">
+							<div class="col-md-3 g-view-label-profile">Native Place:</div>
+							<div class="col-md-9 g-view-text-profile">
+								<span th:text="*{nativePlace}"></span>
+							</div>
+						</div>
+						<div class="row" style="padding-bottom: 10px;">
+							<div class="col-md-3 g-view-label-profile">Current Location:</div>
+							<div class="col-md-9 g-view-text-profile" th:if="*{address != null}">
+								<span th:text="*{address.cityOrTown}"></span>
+							</div>
+						</div>
+					</fieldset>
+					
+					<!-- <fieldset>
+						<legend style="font-size: 13px;">Address</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="NativePlace">Native Place:</label>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{nativePlace}"></span>
+							</div>
+						</div> -->
+						
+						
+						
+						<!-- <div class="row">
+							<div class="col-md-2 g-view-label-profile"></div>
+							<div class="col-md-6 g-view-text-profile">
+								<span th:text="*{nativePlace}"></span>
+							</div>
+						</div> -->
+					</fieldset>
+					<!-- <fieldset>
+						<legend style="font-size: 13px;">Current Location</legend>
+						<div class="row">
+							<div class="col-md-2 g-view-label-profile"></div>
+							<div class="col-md-6 g-view-text-profile" th:if="*{address != null}">
+								<span th:text="*{address.addressStr}"></span>
+							</div>
+						</div>
+					</fieldset> -->
 					
 					<div class="row" style="padding-top: 20px;">
 						<div class="col-md-12" style="text-align: center;">
@@ -59,16 +84,7 @@
 		<div class="row" style="padding-left: 30px;">
 			<div class="col-md-12">
 				<form role="form" id="editContactInfoForm" class="form-horizontal" th:action="@{/save-profile-contact}" th:object="${contactInfo}"  method="post">
-					<fieldset>
-						<legend style="font-size: 13px;">Native Place:</legend>
-						<div class="form-group form-group-sm">
-							<label class="col-md-3 control-label" for="native-place">Native Place:</label>
-							<div class="col-md-9">
-								<input class="form-control input-sm" type="text" id="native-place" placeholder="Native Place" th:field="*{nativePlace}">
-							</div>
-						</div>
-					</fieldset>
-					<fieldset>
+					<!-- <fieldset>
 						<legend style="font-size: 13px;">Current Address:</legend>
 						<input type="hidden" th:field="*{address.id}">
 						<div class="form-group form-group-sm">
@@ -94,7 +110,7 @@
 							<div class="col-md-3">
 								<select id="address-state" name="address-state" class="form-control selectpicker show-menu-arrow" th:field="*{address.stateId}" onchange="onChangeDropdown('address-state')">
 									<option value="">Select State</option>
-									<option th:each="option:*{stateOptions}" th:value="${option.id}" th:text="${option.state}" ></option>	<!-- th:selected="${option.id} == *{address.stateId}" -->
+									<option th:each="option:*{stateOptions}" th:value="${option.id}" th:text="${option.state}" ></option>	th:selected="${option.id} == *{address.stateId}"
 								</select>
 							</div>
 							<div class="col-md-3">
@@ -105,14 +121,14 @@
 							<label class="col-md-3 control-label" for="address-country">Country:</label>
 							<div class="col-md-3">
 								<select id="address-country" name="address-country" class="form-control selectpicker show-menu-arrow" th:field="*{address.countryId}" onchange="onChangeDropdown('address-country')">
-									<option th:each="option:*{countryOptions}" th:value="${option.id}" th:text="${option.country}" ></option>	<!-- th:selected="${option.id} == *{address.countryId}" -->
+									<option th:each="option:*{countryOptions}" th:value="${option.id}" th:text="${option.country}" ></option>	th:selected="${option.id} == *{address.countryId}"
 								</select>
 							</div>
 							<div class="col-md-3">
 								<input class="form-control input-sm" type="text" id="addess-country-other" placeholder="Specify Other" disabled="disabled" th:field="*{address.otherCountry}">
 							</div>
 						</div>
-					</fieldset>
+					</fieldset> -->
 					<fieldset>
 						<legend style="font-size: 13px;">Contact(s)</legend>
 						<div class="form-group form-group-sm"  th:each="currentContact, stat : *{contacts}">
@@ -138,6 +154,22 @@
 							        });
 							       /*]]>*/
 							</script> 
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 13px;">Address:</legend>
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="native-place">Native Place:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="native-place" placeholder="Native Place" th:field="*{nativePlace}">
+							</div>
+						</div>
+						<input type="hidden" th:field="*{address.id}">
+						<div class="form-group form-group-sm">
+							<label class="col-md-3 control-label" for="address-town">Current Location:</label>
+							<div class="col-md-3">
+								<input class="form-control input-sm" type="text" id="address-town" placeholder="Current Location" th:field="*{address.cityOrTown}">
+							</div>
 						</div>
 					</fieldset>
 					<div class="form-group form-group-sm" style="padding-top: 20px;">

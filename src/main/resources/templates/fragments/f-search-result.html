@@ -54,14 +54,18 @@
 								</div>
 						  	</div>
 						  	<div class="panel-body">
-								<div class="row" style="padding-left: 10px; padding-bottom: 10px; padding-top: 10px; padding-right: 10px;" th:each="profile : ${page.profiles}" th:if="${page.totalPages > 0}">
+								<div class="row" style="padding-left: 10px; padding-bottom: 0px; padding-top: 0px; padding-right: 10px;" th:each="profile, profileStat : ${page.profiles}" th:if="${page.totalPages > 0}">
 									<div class="col-md-12">
 										<div class="row">
 											<div class="col-md-2">
 												<div class="row" style="padding-bottom: 5px; padding-right: 10px;">
 													<div class="col-md-12" style="text-align: center;">
 														<span class="g-text-bold" th:text="${profile.gid}"></span>
-														<a th:attr="data-lightbox=${profile.gid},data-title=${profile.fullName}"  th:href="${profile.primaryPicPath}" ><img alt="Pic Not Available" th:src="${profile.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive"></a>	
+														<span th:if="${profile.primaryPicPath != null && profile.primaryPicPath != ''}">
+															<a th:attr="data-lightbox=${profile.gid},data-title=${profile.fullName}" th:href="${profile.primaryPicPath}">
+																<img th:src="${profile.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive">
+															</a>
+														</span>	
 													</div>
 												</div>
 											</div>
@@ -116,7 +120,7 @@
 																Date of Birth:
 															</div>
 															<div class="col-md-8 g-text-bold" style="text-align: left; padding-right: 0px;">
-																1<sup>st</sup> March 1990
+																<span th:text="${profile.dob}"></span>
 															</div>
 														</div>
 													</div>
@@ -153,8 +157,18 @@
 														</div>
 													</div>
 												</div>
+												
 												<div class="row" style="text-align: left; padding-top: 8px;">
-													<!-- <div class="col-md-6">
+													<div class="col-md-23" style="text-align: right; padding-right: 10px;">
+														<button type="button" class="btn btn-link btn-sm text-uppercase g-btn-text" onclick="clearProfileFilter()">
+															<span style="font-weight: 400; font-size: 14px;">
+																View Details
+															</span>
+														</button>
+													</div>
+												</div>
+												<!-- <div class="row" style="text-align: left; padding-top: 8px;">
+													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-4 g-search-result-label">
 																Occupation:
@@ -163,9 +177,9 @@
 																<span th:text="${profile.occupation}"></span>
 															</div>
 														</div>
-													</div> -->
+													</div>
 													
-												</div>
+												</div> -->
 												<!-- <div class="row" style="text-align: left; padding-top: 10px;">
 													<div class="col-md-1 g-search-result-label">
 														About:
@@ -176,9 +190,11 @@
 												</div> -->
 											</div>
 										</div>
-										<div class="row">
+										
+										 
+										<div class="row" th:if="${profileStat.size != profileStat.count}">
 											<div class="col-md-12">
-												<hr style="padding: 5px;">
+												<hr style="padding: 1px; margin-top: 0px; margin-bottom: 5px;">
 											</div>
 										</div>
 									</div>

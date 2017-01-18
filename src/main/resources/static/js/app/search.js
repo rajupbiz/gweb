@@ -39,5 +39,8 @@ function getSearchResult(pageNo){
 }
 
 function clearProfileFilter(){
-	
+	$("#gid").val('');
+	$("#name").val('');
+	$("#city").val('');
+	$("#FilterFormId").submit();
 }

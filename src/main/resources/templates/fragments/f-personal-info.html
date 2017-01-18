@@ -89,12 +89,12 @@
 								<span th:text="*{aboutMe}"></span>
 							</div>
 						</div>
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-md-3 g-view-label-profile">Is Mangal?:</div>
 							<div class="col-md-6 g-view-text-profile">
 								<span th:text="*{isMangal}"></span>
 							</div>
-						</div>
+						</div> -->
 					</fieldset>
 					<div class="row" style="padding-top: 20px;">
 						<div class="col-md-12" style="text-align: center;">
@@ -217,13 +217,13 @@
 								<textarea class="form-control input-sm" id="about-me" placeholder="About Me" rows="2" th:field="*{aboutMe}"></textarea>
 							</div>
 						</div>
-						<div class="form-group form-group-sm">
+						<!-- <div class="form-group form-group-sm">
 							<label class="col-md-3 control-label" for="is-mangal">Is Mangal?:</label>
 							<div class="col-md-6">
 								<label class="radio-inline"> <input type="radio" name="is-mangal" id="is-mangal-y" value="Yes" th:field="*{isMangal}" > Yes	</label> 
 								<label class="radio-inline"> <input type="radio" name="is-mangal" id="is-mangal-n" value="No" th:field="*{isMangal}" >	No	</label>
 							</div>
-						</div>
+						</div> -->
 					</fieldset>
 					<input type="hidden" id="isNewCandidate" name="isNewCandidate" value="${isNewCandidate}">
 					<div class="form-group form-group-sm" style="padding-top: 20px;">
@@ -236,7 +236,7 @@
 							</button>
 						</div>
 					</div>
-					<!-- <script type="text/javascript" src="js/app/update-profile.js"></script> -->
+					<script type="text/javascript" src="js/app/update-profile.js"></script>
 				</form>
 			</div>
 		</div>
