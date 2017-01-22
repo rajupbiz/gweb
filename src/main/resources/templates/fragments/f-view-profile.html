@@ -7,9 +7,10 @@
 				</div>
 		  	</div>
 		  	<div class="panel-body">
-				<div class="row">
-					<div class="col-md-1"></div>
-					<div class="col-md-10">
+		  		<div class="container-fluid">
+				<div class="row" >	<!-- style="width: 90%;" -->
+					<!-- <div class="col-md-1"></div> -->
+					<div class="col-md-12">
 						<div class="row">
 							<div class="col-md-6 g-view-label-profile">
 								<div class="row" style="padding-bottom: 20px;">
@@ -17,18 +18,18 @@
 									<div class="col-md-10 g-search-result-label">
 										<b th:if="${profile.personalInfo.gender == 'Male'}"><i class="fa fa-male" aria-hidden="true"></i> Var </b>
 										<b th:if="${profile.personalInfo.gender == 'Female'}"><i class="fa fa-female" aria-hidden="true"></i> Vadhu</b>
-										from 
+										<b><span th:text="${profile.profileFrom}"></span></b>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-4 g-view-label-profile">GID:</div>
-									<div class="col-md-8 g-view-text-profile">
-										<span th:text="${profile.gid}"></span>
+									<div class="col-md-6 g-view-label-profile">GID:</div>
+									<div class="col-md-6 g-view-text-profile">
+										<b><span th:text="${profile.gid}"></span></b>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-4 g-view-label-profile">Name:</div>
-									<div class="col-md-8 g-view-text-profile">
+									<div class="col-md-6 g-view-label-profile">Name:</div>
+									<div class="col-md-6 g-view-text-profile">
 										<span th:text="${profile.personalInfo.fullName}"></span>
 									</div>
 								</div>
@@ -43,143 +44,146 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
+								<div class="row" style="padding-top: 20px;">
+								<div class="col-md-12">
 								<fieldset>
 									<legend style="font-size: 13px;">Personal Information</legend>
-									<!-- <div class="row">
-										<div class="col-md-2 g-view-label-profile">GID:</div>
-										<div class="col-md-10 g-view-text-profile">
-											<span th:text="${profile.gid}"></span>
-										</div>
-									</div> -->
-									<!-- <div class="row">
-										<div class="col-md-2 g-view-label-profile">Full Name:</div>
-										<div class="col-md-4 g-view-text-profile">
-											<span th:text="${profile.personalInfo.fullName}"></span>
-										</div>
-										<div class="col-md-2 g-view-label-profile">Gender:</div>
-										<div class="col-md-4 g-view-text-profile">
-											<span th:text="${profile.personalInfo.gender}"></span>
-										</div>
-									</div> -->
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Marital Status:</div>
-										<div class="col-md-4 g-view-text-profile">
-											<span th:text="${profile.personalInfo.maritalStatus}"></span>
+										<div class="col-md-3 g-view-label-profile">Native Place:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.contactInfo.nativePlace}"></span>
 										</div>
-										<!-- <div class="col-md-2 g-view-label-profile">Gender:</div>
-										<div class="col-md-4 g-view-text-profile">
-											<span th:text="${profile.personalInfo.gender}"></span>
-										</div> -->
-									</div>
-									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Height:</div>
-										<div class="col-md-4 g-view-text-profile">
-											<span th:text="${profile.personalInfo.heightCms}"></span>
-										</div>
-										<div class="col-md-2 g-view-label-profile">Weight:</div>
-										<div class="col-md-4 g-view-text-profile">
-											<span th:text="${profile.personalInfo.weight}"></span>
+										<div class="col-md-3 g-view-label-profile">Current Place:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.contactInfo.currentLocation}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Birth Name:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Birth Name:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.personalInfo.birthName}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">Birth Place:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Birth Place:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.personalInfo.birthPlace}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Birth Date:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Birth Date:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.personalInfo.birthDate}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">Birth Time:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Birth Time:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.personalInfo.birthTime}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Birth Day:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Birth Day:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.personalInfo.birthDay}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">Blood Group:</div>
-										<div class="col-md-4 g-view-text-profile">
+									</div>
+									<div class="row">
+										<div class="col-md-3 g-view-label-profile">Marital Status:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.maritalStatus}"></span>
+										</div>
+										<div class="col-md-3 g-view-label-profile">Blood Group:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.personalInfo.bloodGroup}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Hobbies:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Height:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.heightCms}"></span>
+										</div>
+										<div class="col-md-3 g-view-label-profile">Weight:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.weight}"></span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-3 g-view-label-profile">Hobbies:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.personalInfo.hobby}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">About Me:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">About Me:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.personalInfo.aboutMe}"></span>
 										</div>
 									</div>
 								</fieldset>
+								</div>
+								</div>
+								<div class="row" style="padding-top: 20px;">
+								<div class="col-md-12">
 								<fieldset>
 									<legend style="font-size: 13px;">Family Information</legend>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Father's Full Name:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Father's Full Name:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.fatherFirstName}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">Mother's Full Name:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Mother's Full Name:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.motherFirstName}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Family Occupation:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Family Occupation:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.familyOccupation}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">Family Wealth:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Family Wealth:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.familyWealth}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">No of Brother's:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">No of Brother's:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.noOfBrother}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">No of Married Brother's:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">No of Married Brother's:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.noOfMarriedBrother}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">No of Sister's:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">No of Sister's:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.noOfSister}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">No of Married Sister's:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">No of Married Sister's:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.noOfMarriedSister}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Mama's Full Name:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Mama's Full Name:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.mamasName}"></span>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Mama's Native Place:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Mama's Native Place:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.mamasNativePlace}"></span>
 										</div>
-										<div class="col-md-2 g-view-label-profile">Mama's Current Place:</div>
-										<div class="col-md-4 g-view-text-profile">
+										<div class="col-md-3 g-view-label-profile">Mama's Current Place:</div>
+										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.mamasCurrentPlace}"></span>
 										</div>
 									</div>
+								</fieldset>
+								</div>
+								</div>
+								<div class="row" style="padding-top: 20px;">
+								<div class="col-md-12">
+								<fieldset>
+									<legend style="font-size: 13px;">Contact</legend>
 									<div class="row">
 										<div class="col-md-2 g-view-label-profile"></div>
 										<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Contact Person</div>
@@ -192,18 +196,11 @@
 										<div class="col-md-3 g-view-text-profile" th:if="${profile.contactInfo.contacts[__${stat.index}__].relationship != null}"><span th:text="${profile.contactInfo.contacts[__${stat.index}__].relationship.relationship}"></span></div>
 										<div class="col-md-3 g-view-text-profile"><span th:text="${profile.contactInfo.contacts[__${stat.index}__].mobile}"></span></div>
 									</div>
-									<div class="row">
-										<div class="col-md-2 g-view-label-profile">Native Place:</div>
-										<div class="col-md-4 g-view-text-profile">
-											<span th:text="${profile.contactInfo.nativePlace}"></span>
-										</div>
-										<div class="col-md-2 g-view-label-profile">Current Place:</div>
-										<div class="col-md-4 g-view-text-profile">
-											<span th:text="${profile.contactInfo.currentLocation}"></span>
-										</div>
-									</div>
 								</fieldset>
-								
+								</div>
+								</div>
+								<div class="row" style="padding-top: 20px;">
+								<div class="col-md-12">
 								<fieldset>
 									<legend style="font-size: 13px;">Education</legend>
 									<div th:each="currentEducation1, stat1 : ${profile.eduOccInfo.educations}">
@@ -217,7 +214,10 @@
 										</div>
 									</div>
 								</fieldset>
-								
+								</div>
+								</div>
+								<div class="row" style="padding-top: 20px;">
+								<div class="col-md-12">
 								<fieldset>
 									<legend style="font-size: 13px;">Occupation</legend>
 									<div th:each="currentOccupation1, stat1 : ${profile.eduOccInfo.occupations}">
@@ -233,10 +233,13 @@
 										</div>
 									</div>
 								</fieldset>
+								</div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-md-1"></div>
+					<!-- <div class="col-md-1"></div> -->
+				</div>
 				</div>
 			</div>
 		</div>
