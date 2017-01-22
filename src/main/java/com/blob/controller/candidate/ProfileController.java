@@ -99,10 +99,10 @@ public class ProfileController extends BaseController {
 		}
 		System.out.println(" update-profile is called 85 ");
 		m.addAttribute("candidate", c);
-		m.addAttribute("personalInfo", candidateUIService.getPersonalInfoSectionForUI(c));
+		m.addAttribute("personalInfo", candidateUIService.getPersonalInfoSectionForUI(c, true));
 		m.addAttribute("familyInfo", candidateUIService.getFamilyInfoSectionForUI(c));
-		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c));
-		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c));
+		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c, true));
+		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c, true));
 		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
 		m.addAttribute("isNewCandidate", isNewCandidate);
 		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.update_profile.toString(), user);
@@ -114,7 +114,7 @@ public class ProfileController extends BaseController {
 
 		Model m = new ExtendedModelMap();
 		Candidate c = getLoggedInSagaiCandidate();
-		m.addAttribute("personalInfo", candidateUIService.getPersonalInfoSectionForUI(c));
+		m.addAttribute("personalInfo", candidateUIService.getPersonalInfoSectionForUI(c, false));
 		return new ModelAndView("fragments/f-personal-info :: personalInfoEdit", m.asMap());
 	}
 	
@@ -130,7 +130,7 @@ public class ProfileController extends BaseController {
 			c.setCandidatePersonalDetail(new CandidatePersonalDetail());
 		}
 		//m.addAttribute("candidate", c);
-		m.addAttribute("personalInfo", candidateUIService.getPersonalInfoSectionForUI(c));
+		m.addAttribute("personalInfo", candidateUIService.getPersonalInfoSectionForUI(c, true));
 		m.addAttribute("isNewCandidate", isNewCandidate);
 		return new ModelAndView("fragments/f-personal-info :: personalInfoView", m.asMap());
 	}
@@ -157,7 +157,7 @@ public class ProfileController extends BaseController {
 		astroDet = candidateAstroDetailDao.save(astroDet);
 		c.setCandidatePersonalDetail(personalDet);
 		c.setCandidateAstroDetail(astroDet);
-		m.addAttribute("personalInfo", candidateUIService.getPersonalInfoSectionForUI(c));
+		m.addAttribute("personalInfo", candidateUIService.getPersonalInfoSectionForUI(c, true));
 		return new ModelAndView("fragments/f-personal-info :: personalInfoView", m.asMap());
 	}
 	
@@ -200,7 +200,7 @@ public class ProfileController extends BaseController {
 
 		Model m = new ExtendedModelMap();
 		Candidate c = getLoggedInSagaiCandidate();
-		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c));
+		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c, false));
 		return new ModelAndView("fragments/f-contact-info :: contactInfoEdit", m.asMap());
 	}
 	
@@ -209,7 +209,7 @@ public class ProfileController extends BaseController {
 
 		Model m = new ExtendedModelMap();
 		Candidate c = getLoggedInSagaiCandidate();
-		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c));
+		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c, true));
 		return new ModelAndView("fragments/f-contact-info :: contactInfoView", m.asMap());
 	}
 	
@@ -232,7 +232,7 @@ public class ProfileController extends BaseController {
 			c.setCandidateAddresses(addresses);
 		}
 		//c.setCandidatePersonalDetail(pd);
-		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c));
+		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c, true));
 		return new ModelAndView("fragments/f-contact-info :: contactInfoView", m.asMap());
 	}
 	
@@ -241,7 +241,7 @@ public class ProfileController extends BaseController {
 
 		Model m = new ExtendedModelMap();
 		Candidate c = getLoggedInSagaiCandidate();
-		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c));
+		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c, false));
 		return new ModelAndView("fragments/f-education-info :: educationInfoEdit", m.asMap());
 	}
 	
@@ -251,7 +251,7 @@ public class ProfileController extends BaseController {
 		Model m = new ExtendedModelMap();
 		User user = getLoggedInUser();
 		Candidate c = candidateService.getCandidateByUser(user);
-		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c));
+		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c, true));
 		return new ModelAndView("fragments/f-education-info :: educationInfoView", m.asMap());
 	}
 	
@@ -270,7 +270,7 @@ public class ProfileController extends BaseController {
 		if(occupations != null && !occupations.isEmpty()){
 			c.setCandidateOccupations(occupations);
 		}
-		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c));
+		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c, true));
 		return new ModelAndView("fragments/f-education-info :: educationInfoView", m.asMap());
 	}
 	

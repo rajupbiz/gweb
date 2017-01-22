@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.TemplateEngine;
@@ -72,6 +73,25 @@ public class SearchController extends BaseController {
 		ctx.setVariable("page", profileService.getProfiles(request, profileFilter));
 		
 		String html = templateEngine.process("fragments/f-search-result", ctx);
+		resp.setSuccess(true);
+		resp.setData(html);
+		//sessionService.addToSession(request.getSession(), SessionParamEnum.PROFILE_SEARCH_CURRENT_PAGE_NO.toString(), profileFilter.getPageNo());
+		return resp;
+	}
+	
+	@RequestMapping(value="/view-profile", method=RequestMethod.GET)
+	public @ResponseBody GResponse viewProfile(@RequestParam("id") Long id){
+		
+		logger.debug(" \n view profile .............  "+id);
+		GResponse resp = new GResponse();
+		Context ctx = new Context();
+		Candidate c = getLoggedInSagaiCandidate();
+		//profileFilter.setLoggedInCandidateId(c.getId());
+		//ctx.setVariable("page", profileService.getProfiles(request, profileFilter));
+		
+		ctx.setVariable("profile", profileService.getSagaiProfile(id));
+		
+		String html = templateEngine.process("fragments/f-view-profile", ctx);
 		resp.setSuccess(true);
 		resp.setData(html);
 		//sessionService.addToSession(request.getSession(), SessionParamEnum.PROFILE_SEARCH_CURRENT_PAGE_NO.toString(), profileFilter.getPageNo());

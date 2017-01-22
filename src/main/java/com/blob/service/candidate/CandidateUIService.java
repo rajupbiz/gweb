@@ -114,7 +114,7 @@ public class CandidateUIService {
 	@Resource
 	private GPhotoDao gPhotoDao;
 	
-	public PersonalInfo getPersonalInfoSectionForUI(Candidate candidate){
+	public PersonalInfo getPersonalInfoSectionForUI(Candidate candidate, boolean isViewOnly){
 		PersonalInfo pi = new PersonalInfo();
 		if(candidate != null){
 			CandidatePersonalDetail pd = candidate.getCandidatePersonalDetail();
@@ -149,10 +149,11 @@ public class CandidateUIService {
 				pi.setIsMangal(ad.isMangal() ? GConstants.Mangal_Yes : GConstants.Mangal_No);
 			}
 		}
-		
-		pi.setMaritalStatusOptions(masterMaritalStatusDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-		pi.setBirthDayOptions(masterDayOfWeekDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-		pi.setBloodGroupOptions(masterBloodGroupDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		if(!isViewOnly){
+			pi.setMaritalStatusOptions(masterMaritalStatusDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			pi.setBirthDayOptions(masterDayOfWeekDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			pi.setBloodGroupOptions(masterBloodGroupDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		}
 		return pi;
 	}
 	
@@ -250,7 +251,7 @@ public class CandidateUIService {
 		return f;
 	}
 	
-	public ContactInfo getContactInfoSectionForUI(Candidate candidate){
+	public ContactInfo getContactInfoSectionForUI(Candidate candidate, boolean isViewOnly){
 		ContactInfo contactInfo = new ContactInfo();
 		if(candidate != null){
 			List<CandidateContact> contacts = candidate.getCandidateContacts();
@@ -291,10 +292,9 @@ public class CandidateUIService {
 						contactInfo.setNativePlace(ca.getCityOrTown());
 					}
 					if(StringUtils.equalsIgnoreCase(ca.getAddressType(), GConstants.AddressType_Current)){
-						contactInfo.setAddress(ca);
+						contactInfo.setCurrentLocation(ca.getCityOrTown());
 					}
 				}
-				
 				/*CandidateAddress ca = addresses.get(0);
 				if(ca.getState() != null && ca.getState().getId() != null && ca.getState().getId() > 0)
 					ca.setStateId(ca.getState().getId());
@@ -305,9 +305,11 @@ public class CandidateUIService {
 			}
 			//contactInfo.setNativePlace(candidate.getCandidatePersonalDetail().getNativePlace());
 		}
-		contactInfo.setRelationshipOptions(masterRelationshipDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-		/*contactInfo.setStateOptions(masterStateDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-		contactInfo.setCountryOptions(masterCountryDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));*/
+		if(!isViewOnly){
+			contactInfo.setRelationshipOptions(masterRelationshipDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			/*contactInfo.setStateOptions(masterStateDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			contactInfo.setCountryOptions(masterCountryDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));*/
+		}
 		return contactInfo;
 	}
 
@@ -504,7 +506,7 @@ public class CandidateUIService {
 		return resp;
 	}
 	
-	public EduOccuInfo getEducationInfoSectionForUI(Candidate candidate){
+	public EduOccuInfo getEducationInfoSectionForUI(Candidate candidate, boolean isViewOnly){
 		EduOccuInfo eduOccuInfo = new EduOccuInfo();
 		if(candidate != null){
 			List<CandidateEducation> educations = candidate.getCandidateEducations();
@@ -532,6 +534,7 @@ public class CandidateUIService {
 							}
 						}
 					}
+					
 					educationList.add(cc);
 					
 					cc = educations.get(1);
@@ -668,11 +671,13 @@ public class CandidateUIService {
 				}
 			}
 		}
-		eduOccuInfo.setOccupationOptions(masterOccupationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-		eduOccuInfo.setDegreeOptions(masterDegreeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-		eduOccuInfo.setDesignationOptions(masterDesignationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-		eduOccuInfo.setSpecializationOptions(masterDegreeSpecializationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-		eduOccuInfo.setYearlyIncomeOptions(masterYearlyIncomeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		if(!isViewOnly){
+			eduOccuInfo.setOccupationOptions(masterOccupationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			eduOccuInfo.setDegreeOptions(masterDegreeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			eduOccuInfo.setDesignationOptions(masterDesignationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			eduOccuInfo.setSpecializationOptions(masterDegreeSpecializationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			eduOccuInfo.setYearlyIncomeOptions(masterYearlyIncomeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+		}
 		return eduOccuInfo;
 	}
 	
@@ -815,12 +820,27 @@ public class CandidateUIService {
 						p.setPhotoId(gPhoto.getId());
 						p.setIsActive(true);
 						p.setIsPrimary(gPhoto.getIsSagaiPrimary());
-						String fileName = "";
+						/*String fileName = "";
 						if (gPhoto.getFileName().indexOf(".") > 0)
-							fileName = gPhoto.getFileName().substring(0, gPhoto.getFileName().lastIndexOf("."));
-						p.setFileName(fileName);
+							fileName = gPhoto.getFileName().substring(0, gPhoto.getFileName().lastIndexOf("."));*/
+						p.setFileName(gPhoto.getFileName());
 						p.setTitle(gPhoto.getTitle());
 						photos.add(p);
+						
+						if(p.getIsPrimary()){
+							pi.setPrimaryPhoto(p);
+							// set primary pic path
+							String filepath = p.getFileName();
+							if(StringUtils.isBlank(filepath)){
+								CandidatePersonalDetail pd = candidate.getCandidatePersonalDetail();
+								if(StringUtils.equalsIgnoreCase(pd.getGender(), GConstants.Gender_Female)){
+									filepath = GConstants.FilePath_Default_Female_Symbol;
+								}else{
+									filepath = GConstants.FilePath_Default_Male_Symbol;
+								}
+							}
+							pi.setPrimaryPicPath(GConstants.Action_load_image+"/"+filepath);
+						}
 					}
 				}
 				pi.setPhotos(photos);

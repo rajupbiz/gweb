@@ -33,6 +33,7 @@ import com.blob.model.candidate.CandidateOccupation;
 import com.blob.model.ui.ProfileFilter;
 import com.blob.model.ui.ProfileSearchResult;
 import com.blob.model.ui.ProfileSummary;
+import com.blob.model.ui.SagaiProfile;
 import com.blob.util.DateUtils;
 import com.blob.util.GConstants;
 
@@ -62,6 +63,9 @@ public class ProfileService {
 	
 	@Resource
 	private SystemPropertyDao systemPropertyDao;
+	
+	@Resource
+	private CandidateUIService candidateUIService;
 
 	public List<CandidateContact> saveCandidateContacts(List<CandidateContact> contacts, Candidate c){
 
@@ -200,5 +204,17 @@ public class ProfileService {
 			result.setProfiles(content);
 		}
 		return result;
+	}
+	
+	public SagaiProfile getSagaiProfile(Long candidateId){
+		SagaiProfile sagaiProfile = new SagaiProfile();
+		Candidate c = candidateDao.findOne(candidateId);
+		sagaiProfile.setGid(c.getGid());
+		sagaiProfile.setPersonalInfo(candidateUIService.getPersonalInfoSectionForUI(c, true));
+		sagaiProfile.setFamilyInfo(candidateUIService.getFamilyInfoSectionForUI(c));
+		sagaiProfile.setContactInfo(candidateUIService.getContactInfoSectionForUI(c, true));
+		sagaiProfile.setEduOccInfo(candidateUIService.getEducationInfoSectionForUI(c, true));
+		sagaiProfile.setPhotos(candidateUIService.getPhotoInfoSectionForUI(c));
+		return sagaiProfile;
 	}
 }

@@ -41,6 +41,55 @@ function getSearchResult(pageNo){
 	}
 }
 
+function viewDetails(id){
+	$('.nav-tabs a[href="#profile_tab"]').tab('show');
+	
+	if(id != null && id > 0){
+		$("#viewProfileId").val(id);
+		$.ajax({
+			type: "GET",
+			cache: false,
+			url: "view-profile?id="+id,
+			contentType: 'application/x-www-form-urlencoded',
+		    success: function (resp) {
+		    	 console.log(resp);
+				  if(resp && resp.success){
+					  console.log("  vd: "+resp.success);
+					  if(resp.data){
+						  //console.log(resp.data);
+						  $( "#ViewDetailsDivId" ).html(resp.data); 
+					  }
+				  }
+		    },
+		    error: function( xhr,status, error ){
+				  console.log("xhr  ================>>>>>>>>>>>>  "+xhr);
+			  }
+		});
+		
+		/*$.ajax({
+			  type: "GET",
+			  url: ctxPath+"view-profile",
+			  cache: false,
+			  contentType: 'application/x-www-form-urlencoded',
+		      data: $("#FilterFormId").serialize(),
+			  success: function( resp ) {
+				  console.log(resp);
+				  if(resp && resp.success){
+					  console.log("  vd: "+resp.success);
+					  if(resp.data){
+						  //console.log(resp.data);
+						  $( "#ViewDetailsDivId" ).html(resp.data); 
+					  }
+				  }
+			  },
+			  error: function( xhr,status,error ){
+				  console.log("xhr  ================>>>>>>>>>>>>  "+xhr);
+			  }
+		});*/
+	}
+	
+}
+
 function clearProfileFilter(){
 	$("#gid").val('');
 	$("#name").val('');

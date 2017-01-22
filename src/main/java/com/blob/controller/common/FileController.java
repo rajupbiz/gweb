@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.blob.controller.BaseController;
+import com.blob.dao.common.GPhotoDao;
 import com.blob.dao.common.SystemPropertyDao;
+import com.blob.model.common.GPhoto;
 import com.blob.model.common.User;
 import com.blob.model.error.FileUploadError;
 import com.blob.service.candidate.CandidatePhotoService;
@@ -37,6 +39,9 @@ public class FileController extends BaseController {
 	
 	@Autowired
     private ResourceLoader resourceLoader;
+	
+	@Resource
+	private GPhotoDao gPhotoDao;
 	
 	/**
 	 * POST /uploadFile -> receive and locally save a file.
@@ -101,8 +106,11 @@ public class FileController extends BaseController {
 	public void loadImage(@PathVariable String fileName) throws IOException {
 		String filePath = (String) request.getSession().getAttribute(GConstants.SAGAI_DEFAULT_FILE_UPLOAD_PATH);
 		System.out.println(" filename  "+fileName+"  filePath  "+filePath);
+		
+		GPhoto gPhoto = gPhotoDao.findByFileNameLikeAndStatus(fileName+"%", GConstants.Status_Active);
+		
 		//filePath.replaceAll("\\", "\\\\");
-		org.springframework.core.io.Resource r = resourceLoader.getResource("file:"+filePath+"\\"+fileName+".jpg");		//	file:C:\\Users\\RPATEL\\Google Drive\\00_biz\\gomaie\\pics\\sagai\\
+		org.springframework.core.io.Resource r = resourceLoader.getResource("file:"+filePath+"\\"+gPhoto.getFileName());		// +".jpg"	file:C:\\Users\\RPATEL\\Google Drive\\00_biz\\gomaie\\pics\\sagai\\
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 	    IOUtils.copy(r.getInputStream(), response.getOutputStream());
 	}
