@@ -277,7 +277,7 @@ public class CandidateUIService {
 					contactList.add(new CandidateContact());
 					contacts = contactList;
 				}
-			}else{
+			}else if(!isViewOnly){
 				contacts = new ArrayList<>(2);
 				contacts.add(new CandidateContact());
 				contacts.add(new CandidateContact());
@@ -585,7 +585,7 @@ public class CandidateUIService {
 					educationList.add(new CandidateEducation());
 					educations = educationList;
 				}
-			}else{
+			}else if(!isViewOnly){
 				educations = new ArrayList<>(2);
 				educations.add(new CandidateEducation());
 				educations.add(new CandidateEducation());
@@ -657,7 +657,7 @@ public class CandidateUIService {
 					occupationList.add(new CandidateOccupation());
 					occupations = occupationList;
 				}
-			}else{
+			}else if(!isViewOnly){
 				occupations = new ArrayList<>(2);
 				occupations.add(new CandidateOccupation());
 				occupations.add(new CandidateOccupation());

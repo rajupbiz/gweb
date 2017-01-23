@@ -85,12 +85,7 @@ public class SearchController extends BaseController {
 		logger.debug(" \n view profile .............  "+id);
 		GResponse resp = new GResponse();
 		Context ctx = new Context();
-		Candidate c = getLoggedInSagaiCandidate();
-		//profileFilter.setLoggedInCandidateId(c.getId());
-		//ctx.setVariable("page", profileService.getProfiles(request, profileFilter));
-		
 		ctx.setVariable("profile", profileService.getSagaiProfile(id));
-		
 		String html = templateEngine.process("fragments/f-view-profile", ctx);
 		resp.setSuccess(true);
 		resp.setData(html);

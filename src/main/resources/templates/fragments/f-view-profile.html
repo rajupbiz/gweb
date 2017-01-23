@@ -34,20 +34,22 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6 g-view-text-profile">
-								<span th:if="${profile.photos.primaryPicPath != null && profile.photos.primaryPicPath != ''}">
+							<div class="col-md-2"></div>
+							
+							<div class="col-md-4 g-view-text-profile" style="text-align: center;" th:if="${profile.photos.primaryPicPath != null && profile.photos.primaryPicPath != ''}">
+								<div>
 									<a th:attr="data-lightbox=${profile.gid},data-title=${profile.personalInfo.fullName}" th:href="${profile.photos.primaryPicPath}">
 										<img th:src="${profile.photos.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive">
 									</a>
-								</span>
+								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<div class="row" style="padding-top: 20px;">
+								<div class="row" style="padding-top: 0px;">
 								<div class="col-md-12">
 								<fieldset>
-									<legend style="font-size: 13px;">Personal Information</legend>
+									<legend style="font-size: 13px;">Basic</legend>
 									<div class="row">
 										<div class="col-md-3 g-view-label-profile">Native Place:</div>
 										<div class="col-md-3 g-view-text-profile">
@@ -58,6 +60,44 @@
 											<span th:text="${profile.contactInfo.currentLocation}"></span>
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-md-3 g-view-label-profile">Marital Status:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.maritalStatus}"></span>
+										</div>
+										<div class="col-md-3 g-view-label-profile">Blood Group:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.bloodGroup}"></span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-3 g-view-label-profile">Height:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.heightCms}"></span>
+										</div>
+										<div class="col-md-3 g-view-label-profile">Weight:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.weight}"></span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-3 g-view-label-profile">About Me:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.aboutMe}"></span>
+										</div>
+										<div class="col-md-3 g-view-label-profile">Hobbies:</div>
+										<div class="col-md-3 g-view-text-profile">
+											<span th:text="${profile.personalInfo.hobby}"></span>
+										</div>
+									</div>
+								</fieldset>
+								</div>
+								</div>
+								
+								<div class="row" style="padding-top: 0px;">
+								<div class="col-md-12">
+								<fieldset>
+									<legend style="font-size: 13px;">Birth</legend>
 									<div class="row">
 										<div class="col-md-3 g-view-label-profile">Birth Name:</div>
 										<div class="col-md-3 g-view-text-profile">
@@ -84,49 +124,20 @@
 											<span th:text="${profile.personalInfo.birthDay}"></span>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-3 g-view-label-profile">Marital Status:</div>
-										<div class="col-md-3 g-view-text-profile">
-											<span th:text="${profile.personalInfo.maritalStatus}"></span>
-										</div>
-										<div class="col-md-3 g-view-label-profile">Blood Group:</div>
-										<div class="col-md-3 g-view-text-profile">
-											<span th:text="${profile.personalInfo.bloodGroup}"></span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-3 g-view-label-profile">Height:</div>
-										<div class="col-md-3 g-view-text-profile">
-											<span th:text="${profile.personalInfo.heightCms}"></span>
-										</div>
-										<div class="col-md-3 g-view-label-profile">Weight:</div>
-										<div class="col-md-3 g-view-text-profile">
-											<span th:text="${profile.personalInfo.weight}"></span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-3 g-view-label-profile">Hobbies:</div>
-										<div class="col-md-3 g-view-text-profile">
-											<span th:text="${profile.personalInfo.hobby}"></span>
-										</div>
-										<div class="col-md-3 g-view-label-profile">About Me:</div>
-										<div class="col-md-3 g-view-text-profile">
-											<span th:text="${profile.personalInfo.aboutMe}"></span>
-										</div>
-									</div>
 								</fieldset>
 								</div>
 								</div>
-								<div class="row" style="padding-top: 20px;">
+								
+								<div class="row" style="padding-top: 0px;">
 								<div class="col-md-12">
 								<fieldset>
-									<legend style="font-size: 13px;">Family Information</legend>
+									<legend style="font-size: 13px;">Family</legend>
 									<div class="row">
 										<div class="col-md-3 g-view-label-profile">Father's Full Name:</div>
 										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.fatherFirstName}"></span>
 										</div>
-										<div class="col-md-3 g-view-label-profile">Mother's Full Name:</div>
+										<div class="col-md-3 g-view-label-profile">Mother's First Name:</div>
 										<div class="col-md-3 g-view-text-profile">
 											<span th:text="${profile.familyInfo.motherFirstName}"></span>
 										</div>
@@ -161,6 +172,14 @@
 											<span th:text="${profile.familyInfo.noOfMarriedSister}"></span>
 										</div>
 									</div>
+								</fieldset>
+								</div>
+								</div>
+								
+								<div class="row" style="padding-top: 0px;">
+								<div class="col-md-12">
+								<fieldset>
+									<legend style="font-size: 13px;">Mama</legend>
 									<div class="row">
 										<div class="col-md-3 g-view-label-profile">Mama's Full Name:</div>
 										<div class="col-md-3 g-view-text-profile">
@@ -180,11 +199,56 @@
 								</fieldset>
 								</div>
 								</div>
-								<div class="row" style="padding-top: 20px;">
+								
+								<div class="row" style="padding-top: 10px;">
+								<div class="col-md-12">
+								<fieldset>
+									<legend style="font-size: 13px;">Education</legend>
+									<div th:if="${not #lists.isEmpty(profile.eduOccInfo.educations)}" th:each="currentEducation1, stat1 : ${profile.eduOccInfo.educations}">
+										<div class="row" th:if="${profile.eduOccInfo.educations[__${stat1.index}__].degreeStr != null && profile.eduOccInfo.educations[__${stat1.index}__].degreeStr != ''}">
+											<div class="col-md-3 g-view-label-profile">
+												<i class="fa fa-caret-right" aria-hidden="true"></i>
+											</div>
+											<div class="col-md-9 g-view-text-profile">
+												<span th:text="${profile.eduOccInfo.educations[__${stat1.index}__].degreeStr}"></span>
+											</div>
+										</div>
+									</div>
+									<div class="row" th:if="${profile.eduOccInfo.educations == null || #lists.isEmpty(profile.eduOccInfo.educations)}">
+										<div class="col-md-12 g-view-label-profile" style="text-align: center;">Education not available.</div>
+									</div>
+								</fieldset>
+								</div>
+								</div>
+								
+								<div class="row" style="padding-top: 0px;">
+								<div class="col-md-12">
+								<fieldset>
+									<legend style="font-size: 13px;">Occupation</legend>
+									<div th:if="${not #lists.isEmpty(profile.eduOccInfo.occupations)}" th:each="currentOccupation1, stat1 : ${profile.eduOccInfo.occupations}">
+										<div th:if="${profile.eduOccInfo.occupations[__${stat1.index}__].occupationStr != null && profile.eduOccInfo.occupations[__${stat1.index}__].occupationStr != ''}">
+											<div class="row">
+												<div class="col-md-3 g-view-label-profile">
+													<i class="fa fa-caret-right" aria-hidden="true"></i>
+												</div>
+												<div class="col-md-9 g-view-text-profile">
+													<span th:text="${profile.eduOccInfo.occupations[__${stat1.index}__].occupationStr}"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" th:if="${#lists.isEmpty(profile.eduOccInfo.occupations)}">
+										<div class="col-md-12 g-view-label-profile" style="text-align: center;">Occupation not available.</div>
+									</div>
+								</fieldset>
+								</div>
+								</div>
+								
+								<div class="row" style="padding-top: 0px;">
 								<div class="col-md-12">
 								<fieldset>
 									<legend style="font-size: 13px;">Contact</legend>
-									<div class="row">
+									<div class="row" th:if="${profile.eduOccInfo.educations != null && not #lists.isEmpty(profile.contactInfo.contacts)}">
 										<div class="col-md-2 g-view-label-profile"></div>
 										<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Contact Person</div>
 										<div class="col-md-3 g-view-label-profile" style="text-align: left; font-style: italic;">Relation</div>
@@ -196,41 +260,8 @@
 										<div class="col-md-3 g-view-text-profile" th:if="${profile.contactInfo.contacts[__${stat.index}__].relationship != null}"><span th:text="${profile.contactInfo.contacts[__${stat.index}__].relationship.relationship}"></span></div>
 										<div class="col-md-3 g-view-text-profile"><span th:text="${profile.contactInfo.contacts[__${stat.index}__].mobile}"></span></div>
 									</div>
-								</fieldset>
-								</div>
-								</div>
-								<div class="row" style="padding-top: 20px;">
-								<div class="col-md-12">
-								<fieldset>
-									<legend style="font-size: 13px;">Education</legend>
-									<div th:each="currentEducation1, stat1 : ${profile.eduOccInfo.educations}">
-										<div class="row" th:if="${profile.eduOccInfo.educations[__${stat1.index}__].degreeStr != null && profile.eduOccInfo.educations[__${stat1.index}__].degreeStr != ''}">
-											<div class="col-md-3 g-view-label-profile">
-												<i class="fa fa-caret-right" aria-hidden="true"></i>
-											</div>
-											<div class="col-md-9 g-view-text-profile">
-												<span th:text="${profile.eduOccInfo.educations[__${stat1.index}__].degreeStr}"></span>
-											</div>
-										</div>
-									</div>
-								</fieldset>
-								</div>
-								</div>
-								<div class="row" style="padding-top: 20px;">
-								<div class="col-md-12">
-								<fieldset>
-									<legend style="font-size: 13px;">Occupation</legend>
-									<div th:each="currentOccupation1, stat1 : ${profile.eduOccInfo.occupations}">
-										<div th:if="${profile.eduOccInfo.occupations[__${stat1.index}__].occupationStr != null && profile.eduOccInfo.occupations[__${stat1.index}__].occupationStr != ''}">
-											<div class="row">
-												<div class="col-md-3 g-view-label-profile">
-													<i class="fa fa-caret-right" aria-hidden="true"></i>
-												</div>
-												<div class="col-md-9 g-view-text-profile">
-													<span th:text="${profile.eduOccInfo.occupations[__${stat1.index}__].occupationStr}"></span>
-												</div>
-											</div>
-										</div>
+									<div class="row" th:if="${#lists.isEmpty(profile.contactInfo.contacts)}">
+										<div class="col-md-12 g-view-label-profile" style="text-align: center;">Contact not available.</div>
 									</div>
 								</fieldset>
 								</div>

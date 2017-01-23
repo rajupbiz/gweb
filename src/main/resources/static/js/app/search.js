@@ -42,7 +42,7 @@ function getSearchResult(pageNo){
 }
 
 function viewDetails(id){
-	$('.nav-tabs a[href="#profile_tab"]').tab('show');
+	$('.nav-pills a[href="#profile_tab"]').tab('show');
 	
 	if(id != null && id > 0){
 		$("#viewProfileId").val(id);

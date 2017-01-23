@@ -11,7 +11,7 @@
 				  <ul class="pagination" style="margin-bottom: 2px;">
 				    <li th:if="${page.totalPages > 2}" >
 				      <a href="#" aria-label="Previous" th:onclick="'getSearchResult(\'' + ${page.previousPageNo} + '\');'">
-				        <span aria-hidden="true">&laquo;</span>
+				        <span aria-hidden="true">&laquo; Previous</span>
 				      </a>
 				    </li>
 				    
@@ -21,7 +21,7 @@
 				    
 				    <li th:if="${page.totalPages > 2}">
 				      <a href="#" aria-label="Next" th:onclick="'getSearchResult(\'' + ${page.nextPageNo} + '\');'">
-				        <span aria-hidden="true">&raquo;</span>
+				        <span aria-hidden="true">Next &raquo;</span>
 				      </a>
 				    </li>
 				  </ul>
@@ -216,11 +216,11 @@
 		
 		<div class="row" style="text-align: right;" th:if="${page.totalPages > 0}">
 			<div class="col-md-12">
-				<nav aria-label="Page navigation">
-				  <ul class="pagination" style="margin-bottom: 15px; margin-top: 2px;">
+				<nav aria-label="Page navigation" >
+				  <ul class="pagination" style="margin-bottom: 2px;">
 				    <li th:if="${page.totalPages > 2}" >
 				      <a href="#" aria-label="Previous" th:onclick="'getSearchResult(\'' + ${page.previousPageNo} + '\');'">
-				        <span aria-hidden="true">&laquo;</span>
+				        <span aria-hidden="true" style="font-family: cursive;">&laquo; Previous</span>
 				      </a>
 				    </li>
 				    
@@ -230,7 +230,7 @@
 				    
 				    <li th:if="${page.totalPages > 2}">
 				      <a href="#" aria-label="Next" th:onclick="'getSearchResult(\'' + ${page.nextPageNo} + '\');'">
-				        <span aria-hidden="true">&raquo;</span>
+				        <span aria-hidden="true" style="font-family: cursive;">Next &raquo;</span>
 				      </a>
 				    </li>
 				  </ul>

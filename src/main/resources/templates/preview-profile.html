@@ -10,12 +10,16 @@
 
 <body>
 
-	<div id="wrapper" class="container-fluid">
+	<div id="wrapper" class="container">
 		
 		<div th:replace="fragments/f-common :: g-header"></div>
 		
-		<div id="content">
-			
+		<div class="container-fluid preview-profile-container-fluid content">
+			<div class="row" style="padding-top: 10px;">
+				<div class="col-md-12">
+					<div th:replace="fragments/f-view-profile"></div>
+				</div>
+			</div>
 		</div>
 			
 		<div th:replace="fragments/f-common :: g-footer"></div>

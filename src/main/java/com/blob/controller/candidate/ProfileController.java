@@ -280,6 +280,8 @@ public class ProfileController extends BaseController {
 		User user = getLoggedInUser();
 		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.preview_profile.toString(), user);
 		Model m = new ExtendedModelMap();
+		Candidate c = getLoggedInSagaiCandidate();
+		m.addAttribute("profile", profileService.getSagaiProfile(c.getId()));
 		return new ModelAndView("/preview-profile", m.asMap());
 	}
 	

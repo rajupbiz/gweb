@@ -30,8 +30,41 @@
 										
 										<div class="col-md-10">
 											<div class="row g-header-above-menu">
-												<div class="col-md-12">
-													<div class="g-header-signed-in" th:if="${#authentication.name != 'anonymousUser'}">Signed in as <span class="g-text-bold" th:text="${#authentication.name}"></span></div>
+												<div class="col-md-12" style="padding-top: 2px;">
+													<div class="g-header-signed-in" th:if="${#authentication.name != 'anonymousUser'}">Signed in as <span class="g-text-bold" th:text="${#authentication.name}"></span> &nbsp;&nbsp;&nbsp;
+														<!-- <button type="button" class="btn btn-primary btn-circle"><i class="fa fa-list"></i></button> -->
+														
+														<ul class="nav navbar-top-links navbar-right">
+											                <li class="dropdown">
+											                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" style="padding-top: 1px;padding-right: 2px;margin-right: 5px;padding-bottom: 2px;padding-left: 2px;">
+											                        <span class="glyphicon glyphicon-user"></span> <span class="glyphicon glyphicon-triangle-bottom"></span>
+											                    </a>
+											                    <ul class="dropdown-menu dropdown-user">
+											                    	<li><a th:href="@{/profile-account-settings}"><i class="fa fa-address-book" aria-hidden="true"></i> Identity</a></li>
+											                    	<li><a th:href="@{/profile-account-settings}"><i class="fa fa-gear fa-fw"></i> Sagai</a></li>
+											                        <li><a th:href="@{/profile-account-settings}"><i class="fa fa-gear fa-fw"></i> Account Settings</a></li>
+											                        <li class="divider"></li>
+											                        <li><a th:href="@{/signout}"><i class="fa fa-sign-out fa-fw"></i> Sign out</a>
+											                        </li>
+											                    </ul>
+											                </li>
+											            </ul>
+											            
+														<!-- <div class="btn-group">
+														  <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														    Account <span class="caret"></span>
+														  </button>
+														  <ul class="dropdown-menu">
+														    <li><a href="#">Action</a></li>
+														    <li><a href="#">Another action</a></li>
+														    <li><a href="#">Something else here</a></li>
+														    <li role="separator" class="divider"></li>
+														    <li><a href="#">Separated link</a></li>
+														  </ul>
+														</div> -->
+													
+													</div>
+													<div class="g-header-signed-in" th:if="${#authentication.name != 'anonymousUser'}"></span></div>
 												</div>
 											</div>
 											<input type="hidden" id="ctxPath" name="ctxPath" th:value="@{/}">
@@ -76,16 +109,16 @@
 													        <li th:classappend="${session.TAB == 'update_profile'}? 'active'"><a th:href="@{/update-profile}">Update Profile</a></li>
 													        <li th:classappend="${session.TAB == 'preview_profile'}? 'active'"><a th:href="@{/preview-profile}">Preview Profile</a></li>
 													        <li th:classappend="${session.TAB == 'shortlisted_profiles'}? 'active'"><a th:href="@{/shortlisted-profiles}">Shortlisted Profiles <span class="badge" th:if="${session.noOfShortlistedProfiles > 0}"} th:text="${session.noOfShortlistedProfiles}"></span></a></li>
-													        <li class="dropdown" th:classappend="${session.TAB == 'more'}? 'active'">
-													          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> More <span class="glyphicon glyphicon-triangle-bottom"></span></a>
-													          <ul class="dropdown-menu">
-													            <li><a th:href="@{/profile-messages}" class="g-sub-menu-a">Messages <span class="badge" th:if="${session.noOfUnreadMessages > 0}"} th:text="${session.noOfUnreadMessages}"></span></a></li>
-													            <li class="active"><a th:href="@{/profile-privacy-settings}" class="g-sub-menu-a">Privacy Settings </a></li>
-													            <li><a th:href="@{/profile-account-settings}" class="g-sub-menu-a">Account Settings</a></li>
-													            <li role="separator" class="divider"></li>
-													            <li><a th:href="@{/signout}" class="g-sub-menu-a">Sign out</a></li>
-													          </ul>
-													        </li>
+													        <!-- <li class="dropdown" th:classappend="${session.TAB == 'more'}? 'active'">
+													          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> More <i class="fa fa-caret-down"></i></a>
+													          <ul class="dropdown-menu"> -->
+													            <!-- <li><a th:href="@{/profile-messages}" class="g-sub-menu-a">Messages <span class="badge" th:if="${session.noOfUnreadMessages > 0}"} th:text="${session.noOfUnreadMessages}"></span></a></li> -->
+													            <!-- <li class="active"><a th:href="@{/profile-account-settings}" class="g-sub-menu-a">Privacy Settings </a></li> -->
+													            <!-- <li><a th:href="@{/profile-account-settings}" class="g-sub-menu-a">Account Settings</a></li> -->
+													            <!-- <li role="separator" class="divider"></li> -->
+													            <!-- <li><a th:href="@{/signout}" class="g-sub-menu-a">Sign out</a></li> -->
+													          <!-- </ul>
+													        </li> -->
 													      	</ul>
 												   	 		</div>
 													 	 </div>
@@ -105,7 +138,7 @@
 				</div>
 			</div>
 		
-			<div id="content">
+			<div class="content">
 				
 			</div>
 			

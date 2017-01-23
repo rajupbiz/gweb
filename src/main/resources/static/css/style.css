@@ -58,7 +58,7 @@ label{
 	/* padding-left: 0px;
 	padding-right: 0px; */
 }
-#content {
+.content {
 	padding-bottom: 112px;
 	width: 90%;
 }
@@ -354,7 +354,12 @@ label{
 	padding-bottom: 7px;
 	padding-top: 7px;
 	font-size: 12px; 
+}
 
+#search-pills > li > a {
+	padding-bottom: 7px;
+	padding-top: 7px;
+	font-size: 12px; 
 }
 
 
@@ -374,7 +379,13 @@ label{
 .g-header{
 	height: 60px;
 }
-
+.search-container-fluid{
+}
+.preview-profile-container-fluid{
+	padding-left: 0px;
+	padding-right: 0px;
+	width: 70%;
+}
 /************** Media quries **************/
 /******************************************/
 
@@ -491,7 +502,19 @@ label{
 	.g-m-bottom-padding-5px{
 		padding-bottom: 5px;
 	}
-	
+	.update-profile-left-col{
+		padding-top: 20px;
+	}
+	.search-container-fluid{
+		padding-left: 0px;
+		padding-right: 0px;
+		width: 100%;
+	}
+	.preview-profile-container-fluid{
+		padding-left: 0px;
+		padding-right: 0px;
+		width: 100%;
+	}
 }
 @media (max-width:320px) {
 	.g-header-above-menu{
