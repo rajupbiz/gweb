@@ -20,9 +20,14 @@
 					<div class="col-md-12" style="text-align: left;">
 						<div style="font-family: cursive; font-weight:bolder; font-size: 16pt; color: black;">Welcome</div>
 						<div class="g-home-vertical-line" style="font-family: cursive; font-weight:bolder; font-size: 16pt; color: black; padding-bottom: 20px;"><span th:text="${dashboard.firstName}"></span>!</div>
-						
-						<div class="g-home-vertical-line" ><img alt="img" src="assets/img/p1.jpg" height="140px;" width="130px;" class="img-rounded img-responsive"></div>
-						<div class="g-home-vertical-line g-text-bold" style="padding-top: 20px;">G-ID: <span th:text="${dashboard.gid}"></span></div>
+						<div class="g-home-vertical-line" >
+							<span th:if="${dashboard.photoInfo.primaryPicPath != null && dashboard.photoInfo.primaryPicPath != ''}">
+								<a th:attr="data-lightbox=${dashboard.gid},data-title=${dashboard.fullName}" th:href="${'/'+dashboard.photoInfo.primaryPicPath}">
+									<img alt="img" th:src="${'/'+dashboard.photoInfo.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive">
+								</a>
+							</span>
+						</div>
+						<div class="g-home-vertical-line g-text-bold" style="padding-top: 20px;">GID: <span th:text="${dashboard.gid}"></span></div>
 						<div class="g-home-vertical-line" style="text-align: left; padding-left: 5px; padding-top: 30px;">
 							<div class="g-text-header-3" style="margin-bottom: 10px;">Activities:</div>	
 							<div style="margin-bottom: 3px;">Last signed in: <span class="g-text-bold" th:text="${session.LAST_LOGGED_IN}"></span></div>
