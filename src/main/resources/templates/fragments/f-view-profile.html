@@ -38,8 +38,8 @@
 							
 							<div class="col-md-4 g-view-text-profile" style="text-align: center;" th:if="${profile.photos.primaryPicPath != null && profile.photos.primaryPicPath != ''}">
 								<div>
-									<a th:attr="data-lightbox=${profile.gid},data-title=${profile.personalInfo.fullName}" th:href="${profile.photos.primaryPicPath}">
-										<img th:src="${profile.photos.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive">
+									<a th:attr="data-lightbox=${profile.gid},data-title=${profile.personalInfo.fullName}" th:href="${'/'+profile.photos.primaryPicPath}">
+										<img th:src="${'/'+profile.photos.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive">
 									</a>
 								</div>
 							</div>

@@ -152,7 +152,7 @@
 	<div class="panel-body" style="padding-left: 20px;" th:fragment="familyInfoEdit" id="familyInfoSectionBody">
 		<div class="row" style="padding-left: 30px;">
 			<div class="col-md-12">
-				<form role="form" id="editFamilyInfoForm" class="form-horizontal" th:action="@{/save-profile-family}" th:object="${familyInfo}"  method="post">
+				<form role="form" id="editFamilyInfoForm" class="form-horizontal" th:action="@{/profile/family/save}" th:object="${familyInfo}"  method="post">
 					<fieldset>
 						<legend style="font-size: 13px;">Parents Information</legend>
 						<div class="form-group form-group-sm">
@@ -259,7 +259,7 @@
 							</button>
 						</div>
 					</div>
-					<script type="text/javascript" src="js/app/update-profile.js"></script>
+					<script type="text/javascript" th:src="@{/js/app/update-profile.js}"></script>
 				</form>
 			</div>
 		</div>

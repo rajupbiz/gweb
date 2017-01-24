@@ -11,7 +11,7 @@
 				  <ul class="pagination" style="margin-bottom: 2px;">
 				    <li th:if="${page.totalPages > 2}" >
 				      <a href="#" aria-label="Previous" th:onclick="'getSearchResult(\'' + ${page.previousPageNo} + '\');'">
-				        <span aria-hidden="true">&laquo; Previous</span>
+				        <span aria-hidden="true" style="font-family: cursive;">&laquo; Previous</span>
 				      </a>
 				    </li>
 				    
@@ -21,7 +21,7 @@
 				    
 				    <li th:if="${page.totalPages > 2}">
 				      <a href="#" aria-label="Next" th:onclick="'getSearchResult(\'' + ${page.nextPageNo} + '\');'">
-				        <span aria-hidden="true">Next &raquo;</span>
+				        <span aria-hidden="true" style="font-family: cursive;">Next &raquo;</span>
 				      </a>
 				    </li>
 				  </ul>
@@ -56,8 +56,8 @@
 													<div class="col-md-12" style="text-align: center;">
 														<span class="g-text-bold" th:text="${profile.gid}"></span>
 														<span th:if="${profile.primaryPicPath != null && profile.primaryPicPath != ''}">
-															<a th:attr="data-lightbox=${profile.gid},data-title=${profile.fullName}" th:href="${profile.primaryPicPath}">
-																<img th:src="${profile.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive">
+															<a th:attr="data-lightbox=${profile.gid},data-title=${profile.fullName}" th:href="${'/'+profile.primaryPicPath}">
+																<img th:src="${'/'+profile.primaryPicPath}" height="140px;" width="130px;" class="img-rounded img-responsive">
 															</a>
 														</span>
 													</div>

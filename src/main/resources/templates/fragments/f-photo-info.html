@@ -17,11 +17,11 @@
 											<div class="card">
 										        <div class="card-header" style="text-align: center;" >
 										        	<span th:if="${photo.isPrimary != null && photo.isPrimary}" style="text-align: center;">
-														Primary
+														<b style="padding-bottom: 2px;">Primary</b>
 													</span>
 										        </div>
-										        <a class="thumbnail"  th:attr="href='load-image/'+${photo.fileName}" data-lightbox="example-set" th:attrappend="data-title=''+${photo.title}" >
-													<img class="g-img img-rounded img-responsive" th:src="'load-image/'+${photo.fileName}" alt="p1">
+										        <a class="thumbnail"  th:attr="href=@{/load-image/}+${photo.fileName}" data-lightbox="example-set" th:attrappend="data-title=''+${photo.title}" >
+													<img class="g-img img-rounded img-responsive" th:src="@{/load-image/}+${photo.fileName}" alt="p1">
 												</a>
 										        <!-- <div class="card-block">
 										            <a href="#" class="card-link" style="display: inline;">c</a>
@@ -77,12 +77,12 @@
 											<div class="card">
 										        <div class="card-header" style="text-align: center; padding-bottom: 5px;">
 										        	<span th:if="${photo.isPrimary != null && photo.isPrimary}" style="text-align: center;">
-														Primary
+														<b style="padding-bottom: 2px;">Primary</b>
 													</span>
 													<a href="javascript:void(0)" class="btn btn-link btn-xs" th:if="${photo.isPrimary == null || !photo.isPrimary}" th:attr="onclick='makePrimary('+${photo.photoId}+'); return false; '" >Make Primary</a>
 										        </div>
-										        <a class="thumbnail"  th:attr="href='load-image/'+${photo.fileName}" data-lightbox="example-set" th:attrappend="data-title=''+${photo.title}" >
-													<img class="g-img img-rounded img-responsive" th:src="'load-image/'+${photo.fileName}" alt="p1">
+										        <a class="thumbnail"  th:attr="href=@{/load-image/}+${photo.fileName}" data-lightbox="example-set" th:attrappend="data-title=''+${photo.title}" >
+													<img class="g-img img-rounded img-responsive" th:src="@{/load-image/}+${photo.fileName}" alt="p1">
 												</a>
 										        <div class="card-block" style="text-align: center;">
 										            <a href="#" class="btn btn-link btn-xs" th:attr="onclick='removePic('+${photo.photoId}+')'">Remove</a>

@@ -34,8 +34,8 @@
 						</div>
 						<div class="row" style="padding-bottom: 10px;">
 							<div class="col-md-3 g-view-label-profile">Current Location:</div>
-							<div class="col-md-9 g-view-text-profile" th:if="*{address != null}">
-								<span th:text="*{address.cityOrTown}"></span>
+							<div class="col-md-9 g-view-text-profile">
+								<span th:text="*{currentLocation}"></span>
 							</div>
 						</div>
 					</fieldset>
@@ -83,7 +83,7 @@
 	<div class="panel-body" style="padding-left: 20px;" th:fragment="contactInfoEdit" id="contactInfoSectionBody">
 		<div class="row" style="padding-left: 30px;">
 			<div class="col-md-12">
-				<form role="form" id="editContactInfoForm" class="form-horizontal" th:action="@{/save-profile-contact}" th:object="${contactInfo}"  method="post">
+				<form role="form" id="editContactInfoForm" class="form-horizontal" th:action="@{/profile/contact/save}" th:object="${contactInfo}"  method="post">
 					<!-- <fieldset>
 						<legend style="font-size: 13px;">Current Address:</legend>
 						<input type="hidden" th:field="*{address.id}">
@@ -164,18 +164,18 @@
 								<input class="form-control input-sm" type="text" id="native-place" placeholder="Native Place" th:field="*{nativePlace}">
 							</div>
 						</div>
-						<input type="hidden" th:field="*{address.id}">
+						<!-- <input type="text" th:field="*{address.id}"> -->
 						<div class="form-group form-group-sm">
 							<label class="col-md-3 control-label" for="address-town">Current Location:</label>
 							<div class="col-md-3">
-								<input class="form-control input-sm" type="text" id="address-town" placeholder="Current Location" th:field="*{address.cityOrTown}">
+								<input class="form-control input-sm" type="text" id="address-town" placeholder="Current Location" th:field="*{currentLocation}">
 							</div>
 						</div>
 					</fieldset>
 					<div class="form-group form-group-sm" style="padding-top: 20px;">
 						<div class="col-md-12" style="text-align: center;">
-							<input type="hidden" id="specifyOtherStateId" name="specifyOtherStateId" th:value="*{address.specifyOtherStateId}">
-							<input type="hidden" id="specifyOtherCountryId" name="specifyOtherCountryId" th:value="*{address.specifyOtherCountryId}">
+							<!-- <input type="hidden" id="specifyOtherStateId" name="specifyOtherStateId" th:value="*{address.specifyOtherStateId}">
+							<input type="hidden" id="specifyOtherCountryId" name="specifyOtherCountryId" th:value="*{address.specifyOtherCountryId}"> -->
 							<button id="personal-info-save-btn"	class="btn btn-primary btn-sm" type="button" style="width: 100px;" onclick="saveInfo('Contact')">
 								<span class="text-uppercase g-btn-text">Save</span>
 							</button>
@@ -184,7 +184,7 @@
 							</button>
 						</div>
 					</div>
-					<script type="text/javascript" src="js/app/update-profile.js"></script>
+					<script type="text/javascript" th:src="@{/js/app/update-profile.js}"></script>
 				</form>
 			</div>
 		</div>
