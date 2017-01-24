@@ -71,7 +71,7 @@ public class SignupController extends BaseController {
 				
 				sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.home.toString(), user);
 				mv = new ModelAndView("/home", m.asMap());*/
-				return new ModelAndView("redirect:/profile-home", m.asMap());
+				return new ModelAndView("redirect:/profile/home", m.asMap());
 			}else{
 				Model m = new ExtendedModelMap();
 				m.addAttribute("ErrorMsg", resp.getError().getErrorMsg());

@@ -84,7 +84,7 @@ public class ProfileController extends BaseController {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value="/update-profile", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/update", method=RequestMethod.GET)
 	public ModelAndView vUpdateProfile(){
 
 		logger.debug(" \n update profile .............  ");
@@ -103,13 +103,13 @@ public class ProfileController extends BaseController {
 		m.addAttribute("familyInfo", candidateUIService.getFamilyInfoSectionForUI(c));
 		m.addAttribute("contactInfo", candidateUIService.getContactInfoSectionForUI(c, true));
 		m.addAttribute("eduOccuInfo", candidateUIService.getEducationInfoSectionForUI(c, true));
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, request.getContextPath()));
 		m.addAttribute("isNewCandidate", isNewCandidate);
 		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.update_profile.toString(), user);
 		return new ModelAndView("/update-profile", m.asMap());
 	}
 	
-	@RequestMapping(value="/edit-profile-personal", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/personal/edit", method=RequestMethod.GET)
 	public ModelAndView ePersonalInfo(){
 
 		Model m = new ExtendedModelMap();
@@ -118,7 +118,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-personal-info :: personalInfoEdit", m.asMap());
 	}
 	
-	@RequestMapping(value="/get-profile-personal", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/personal/get", method=RequestMethod.GET)
 	public ModelAndView vPersonalInfo(){
 
 		Model m = new ExtendedModelMap();
@@ -135,7 +135,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-personal-info :: personalInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/save-profile-personal", method=RequestMethod.POST)
+	@RequestMapping(value="/profile/personal/save", method=RequestMethod.POST)
 	public ModelAndView sPersonalInfo(@ModelAttribute("personalInfo") PersonalInfo personalInfo, BindingResult result, Model model){
 
 		CandidatePersonalDetail personalDet = candidateUIService.getCandidatePersonalInfoFromUI(personalInfo);
@@ -161,7 +161,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-personal-info :: personalInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/edit-profile-family", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/family/edit", method=RequestMethod.GET)
 	public ModelAndView eFamilyInfo(){
 
 		Model m = new ExtendedModelMap();
@@ -170,7 +170,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-family-info :: familyInfoEdit", m.asMap());
 	}
 	
-	@RequestMapping(value="/get-profile-family", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/family/get", method=RequestMethod.GET)
 	public ModelAndView vFamilyInfo(){
 
 		Model m = new ExtendedModelMap();
@@ -179,7 +179,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-family-info :: familyInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/save-profile-family", method=RequestMethod.POST)
+	@RequestMapping(value="/profile/family/save", method=RequestMethod.POST)
 	public ModelAndView sFamilyInfo(@ModelAttribute("familyInfo") FamilyInfo familyInfo, BindingResult result, Model model){
 
 		Model m = new ExtendedModelMap();
@@ -195,7 +195,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-family-info :: familyInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/edit-profile-contact", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/contact/edit", method=RequestMethod.GET)
 	public ModelAndView eContactInfo(){
 
 		Model m = new ExtendedModelMap();
@@ -204,7 +204,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-contact-info :: contactInfoEdit", m.asMap());
 	}
 	
-	@RequestMapping(value="/get-profile-contact", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/contact/get", method=RequestMethod.GET)
 	public ModelAndView vContactInfo(){
 
 		Model m = new ExtendedModelMap();
@@ -213,7 +213,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-contact-info :: contactInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/save-profile-contact", method=RequestMethod.POST)
+	@RequestMapping(value="/profile/contact/save", method=RequestMethod.POST)
 	public ModelAndView sContactInfo(@ModelAttribute("contactInfo") ContactInfo contactInfo, BindingResult result, Model model){
 
 		Model m = new ExtendedModelMap();
@@ -236,7 +236,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-contact-info :: contactInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/edit-profile-education", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/education/edit", method=RequestMethod.GET)
 	public ModelAndView eEducationInfo(){
 
 		Model m = new ExtendedModelMap();
@@ -245,7 +245,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-education-info :: educationInfoEdit", m.asMap());
 	}
 	
-	@RequestMapping(value="/get-profile-education", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/education/get", method=RequestMethod.GET)
 	public ModelAndView vEducationInfo(){
 
 		Model m = new ExtendedModelMap();
@@ -255,7 +255,7 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-education-info :: educationInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/save-profile-education", method=RequestMethod.POST)
+	@RequestMapping(value="/profile/education/save", method=RequestMethod.POST)
 	public ModelAndView sEducationInfo(@ModelAttribute("eduOccuInfo") EduOccuInfo eduOccuInfo, BindingResult result, Model model){
 
 		Model m = new ExtendedModelMap();
@@ -274,18 +274,18 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("fragments/f-education-info :: educationInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/preview-profile", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/preview", method=RequestMethod.GET)
 	public ModelAndView vPreviewProfile(){
 
 		User user = getLoggedInUser();
 		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.preview_profile.toString(), user);
 		Model m = new ExtendedModelMap();
 		Candidate c = getLoggedInSagaiCandidate();
-		m.addAttribute("profile", profileService.getSagaiProfile(c.getId()));
+		m.addAttribute("profile", profileService.getSagaiProfile(c.getId(), request.getContextPath()));
 		return new ModelAndView("/preview-profile", m.asMap());
 	}
 	
-	@RequestMapping(value="/shortlisted-profiles", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/shortlisted", method=RequestMethod.GET)
 	public ModelAndView vShortlistedProfiles(){
 
 		User user = getLoggedInUser();
@@ -294,29 +294,29 @@ public class ProfileController extends BaseController {
 		return new ModelAndView("/shortlisted-profiles", m.asMap());
 	}
 	
-	@RequestMapping(value="/edit-profile-photo", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/photo/edit", method=RequestMethod.GET)
 	public ModelAndView ePhotoInfo() throws Exception{
 
 		Model m = new ExtendedModelMap();
 		Candidate c = getLoggedInSagaiCandidate();
 //		String baseURL = commonService.getURLBase(request);
 //		baseURL += request.getContextPath();
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, request.getContextPath()));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoEdit", m.asMap());
 	}
 	
-	@RequestMapping(value="/get-profile-photo", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/photo/get", method=RequestMethod.GET)
 	public ModelAndView vPhotoInfo()  throws Exception{
 
 		Model m = new ExtendedModelMap();
 		User user = getLoggedInUser();
 		Candidate c = candidateService.getCandidateByUser(user);
 //		String baseURL = commonService.getURLBase(request);
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, request.getContextPath()));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/save-profile-photo", method=RequestMethod.POST)
+	@RequestMapping(value="/profile/photo/save", method=RequestMethod.POST)
 	public ModelAndView sPhotoInfo(@ModelAttribute("photoInfo") PhotoInfo photoInfo, BindingResult result, Model model) throws Exception{
 
 		Model m = new ExtendedModelMap();
@@ -329,11 +329,11 @@ public class ProfileController extends BaseController {
 			}
 		}
 //		String baseURL = commonService.getURLBase(request);
-		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+		m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, request.getContextPath()));
 		return new ModelAndView("fragments/f-photo-info :: photoInfoView", m.asMap());
 	}
 	
-	@RequestMapping(value="/make-profile-primary", method=RequestMethod.GET)
+	@RequestMapping(value="/profile/make-primary", method=RequestMethod.GET)
 	public ModelAndView makePrimary(@RequestParam("photo") Long photo) throws Exception{
 
 		Model m = new ExtendedModelMap();
@@ -342,7 +342,7 @@ public class ProfileController extends BaseController {
 		Boolean resp = candidatePhotoService.setPhotoAsSagaiPrimary(user, gPhoto);
 		if(resp){
 			Candidate c = candidateService.getCandidateByUser(user);
-			m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c));
+			m.addAttribute("photoInfo", candidateUIService.getPhotoInfoSectionForUI(c, request.getContextPath()));
 		}else{
 			// TODO: handle error
 		}

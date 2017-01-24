@@ -31,16 +31,6 @@ public class SigninSignoutController extends BaseController {
 	@Resource
 	private UserDao userDao;
 	
-	@RequestMapping("/register")
-	public String register(){
-
-		System.out.println(" \n\n\n register ............. ");
-		
-		
-		
-		return "index";
-	}
-	
 	@RequestMapping(value="/signin",method=RequestMethod.POST)
 	public ModelAndView signIn(Model model){
 		
@@ -66,7 +56,7 @@ public class SigninSignoutController extends BaseController {
 		}
 		System.out.println(" \n\n\n signIn 11 ............. ");
 		//sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.home.toString(), user);
-		return new ModelAndView("redirect:/profile-home", model.asMap());
+		return new ModelAndView("redirect:/profile/home", model.asMap());
 		//return "redirect:/home";
 	}
 	

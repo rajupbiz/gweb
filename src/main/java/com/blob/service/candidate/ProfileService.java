@@ -181,7 +181,8 @@ public class ProfileService {
 						filepath = GConstants.FilePath_Default_Male_Symbol;
 					}
 				}
-				p.setPrimaryPicPath(GConstants.Action_load_image+"/"+filepath);
+				String contextPath = request.getContextPath();
+				p.setPrimaryPicPath(""+contextPath.substring(1, contextPath.length())+"/"+GConstants.Action_load_image+"/"+filepath);
 				
 				System.out.println("  dob "+row[17]);
 				if(row[17] != null){
@@ -206,7 +207,7 @@ public class ProfileService {
 		return result;
 	}
 	
-	public SagaiProfile getSagaiProfile(Long candidateId){
+	public SagaiProfile getSagaiProfile(Long candidateId, String contextPath){
 		SagaiProfile sagaiProfile = new SagaiProfile();
 		Candidate c = candidateDao.findOne(candidateId);
 		sagaiProfile.setGid(c.getGid());
@@ -214,7 +215,7 @@ public class ProfileService {
 		sagaiProfile.setFamilyInfo(candidateUIService.getFamilyInfoSectionForUI(c));
 		sagaiProfile.setContactInfo(candidateUIService.getContactInfoSectionForUI(c, true));
 		sagaiProfile.setEduOccInfo(candidateUIService.getEducationInfoSectionForUI(c, true));
-		sagaiProfile.setPhotos(candidateUIService.getPhotoInfoSectionForUI(c));
+		sagaiProfile.setPhotos(candidateUIService.getPhotoInfoSectionForUI(c, contextPath));
 		return sagaiProfile;
 	}
 }

@@ -283,27 +283,15 @@ public class CandidateUIService {
 				contacts.add(new CandidateContact());
 			}
 			contactInfo.setContacts(contacts);
-			List<CandidateAddress> addresses = candidate.getCandidateAddresses();
-			//CandidateAddress address = null;
-			if(addresses != null && !addresses.isEmpty()){
-				
-				for (CandidateAddress ca : addresses) {
-					if(StringUtils.equalsIgnoreCase(ca.getAddressType(), GConstants.AddressType_Native)){
-						contactInfo.setNativePlace(ca.getCityOrTown());
-					}
-					if(StringUtils.equalsIgnoreCase(ca.getAddressType(), GConstants.AddressType_Current)){
-						contactInfo.setCurrentLocation(ca.getCityOrTown());
-					}
-				}
-				/*CandidateAddress ca = addresses.get(0);
-				if(ca.getState() != null && ca.getState().getId() != null && ca.getState().getId() > 0)
-					ca.setStateId(ca.getState().getId());
-				if(ca.getCountry() != null && ca.getCountry().getId() != null && ca.getCountry().getId() > 0)
-					ca.setCountryId(ca.getCountry().getId());
-				ca.setAddressStr(uiUtils.getAddressTxt(addresses));
-				address = ca;*/
+			
+			CandidateAddress existingNativeAddress = candidateAddressDao.findFirstByCandidateAndAddressTypeAndStatusOrderByUpdateOnDesc(candidate, GConstants.AddressType_Native, GConstants.Status_Active);
+			CandidateAddress existingCurrentAddress = candidateAddressDao.findFirstByCandidateAndAddressTypeAndStatusOrderByUpdateOnDesc(candidate, GConstants.AddressType_Current, GConstants.Status_Active);
+			if(existingNativeAddress != null){
+				contactInfo.setNativePlace(existingNativeAddress.getCityOrTown());
 			}
-			//contactInfo.setNativePlace(candidate.getCandidatePersonalDetail().getNativePlace());
+			if(existingCurrentAddress != null){
+				contactInfo.setCurrentLocation(existingCurrentAddress.getCityOrTown());
+			}
 		}
 		if(!isViewOnly){
 			contactInfo.setRelationshipOptions(masterRelationshipDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
@@ -340,10 +328,10 @@ public class CandidateUIService {
 	}
 	
 	public List<CandidateAddress> getAddressesInfoFromUI(Candidate c, ContactInfo contactInfo){
-		List<CandidateAddress> addresses = new ArrayList<>(2);
 		
+		List<CandidateAddress> addresses = new ArrayList<>(2);
 		if(contactInfo != null){
-			CandidateAddress existingNativeAddress = candidateAddressDao.findByCandidateAndAddressTypeAndStatus(c, GConstants.AddressType_Native, GConstants.Status_Active);
+			CandidateAddress existingNativeAddress = candidateAddressDao.findFirstByCandidateAndAddressTypeAndStatusOrderByUpdateOnDesc(c, GConstants.AddressType_Native, GConstants.Status_Active);
 			if(existingNativeAddress != null){
 				existingNativeAddress.setCityOrTown(contactInfo.getNativePlace());
 				existingNativeAddress.setUpdateOn(DateUtils.now());
@@ -351,49 +339,32 @@ public class CandidateUIService {
 			}else{
 				if(StringUtils.isNoneBlank(contactInfo.getNativePlace())){
 					CandidateAddress nativeAddress = new CandidateAddress();
+					nativeAddress.setCityOrTown(contactInfo.getNativePlace());
 					nativeAddress.setAddressType(GConstants.AddressType_Native);
 					nativeAddress.setStatus(GConstants.Status_Active);
 					nativeAddress.setUpdateOn(DateUtils.now());
 					addresses.add(nativeAddress);
 				}
 			}
-		}
-		
-		if(contactInfo != null && contactInfo.getAddress() != null){
-			CandidateAddress address = contactInfo.getAddress();
-			if(address != null){
-				if(address.getId() != null && address.getId() > 0){
-					CandidateAddress existingAddress = candidateAddressDao.findOne(address.getId());
-					existingAddress.setCityOrTown(address.getCityOrTown());
-					/*existingAddress.setAddressLine(address.getAddressLine());
-					existingAddress.setTahsil(address.getTahsil());
-					existingAddress.setDistrict(address.getDistrict());
-					if(address.getStateId() != null && address.getStateId() > 0)
-						existingAddress.setState(masterStateDao.findOne(address.getStateId()));
-					else
-						existingAddress.setState(null);
-					if(address.getCountryId() != null && address.getCountryId() > 0)
-						existingAddress.setCountry(masterCountryDao.findOne(address.getCountryId()));
-					else
-						existingAddress.setCountry(null);
-					existingAddress.setOtherCountry(address.getOtherCountry());
-					existingAddress.setOtherState(address.getOtherState());*/
-					existingAddress.setUpdateOn(DateUtils.now());
-					addresses.add(existingAddress);
-				}else{
-					if(StringUtils.isNotBlank(address.getCityOrTown())){
-						/*if(address.getStateId() != null && address.getStateId() > 0)
-							address.setState(masterStateDao.findOne(address.getStateId()));
-						else
-							address.setState(null);
-						if(address.getCountryId() != null && address.getCountryId() > 0)
-							address.setCountry(masterCountryDao.findOne(address.getCountryId()));
-						else
-							address.setCountry(null);*/
-						address.setAddressType(GConstants.AddressType_Current);
-						address.setStatus(GConstants.Status_Active);
-						address.setUpdateOn(DateUtils.now());
-						addresses.add(address);
+			CandidateAddress existingCurrentAddress = candidateAddressDao.findFirstByCandidateAndAddressTypeAndStatusOrderByUpdateOnDesc(c, GConstants.AddressType_Current, GConstants.Status_Active);
+			if(existingCurrentAddress != null){
+				existingCurrentAddress.setCityOrTown(contactInfo.getCurrentLocation());
+				existingCurrentAddress.setUpdateOn(DateUtils.now());
+				addresses.add(existingCurrentAddress);
+			}else{
+				if(StringUtils.isNoneBlank(contactInfo.getNativePlace())){
+					CandidateAddress address = new CandidateAddress();
+					address.setCityOrTown(contactInfo.getCurrentLocation());
+					address.setAddressType(GConstants.AddressType_Current);
+					address.setStatus(GConstants.Status_Active);
+					address.setUpdateOn(DateUtils.now());
+					addresses.add(address);
+				}
+			}
+			if(CollectionUtils.isNotEmpty(addresses)){
+				for (CandidateAddress candidateAddress : addresses) {
+					if(candidateAddress != null){
+						candidateAddressDao.save(candidateAddress);
 					}
 				}
 			}
@@ -401,7 +372,7 @@ public class CandidateUIService {
 		return addresses;
 	}
 	
-	public DashboardInfo getDashboardInfoForUI(Candidate candidate){
+	public DashboardInfo getDashboardInfoForUI(Candidate candidate, String contextPath){
 		DashboardInfo dashboard = new DashboardInfo();
 		if(candidate != null){
 			CandidatePersonalDetail personalDetail = candidate.getCandidatePersonalDetail();
@@ -410,6 +381,7 @@ public class CandidateUIService {
 			List<CandidateOccupation> occupations = candidate.getCandidateOccupations();
 			List<CandidateAddress> addresses = candidate.getCandidateAddresses();
 			List<CandidateContact> contacts = candidate.getCandidateContacts();
+			dashboard.setPhotoInfo(getPhotoInfoSectionForUI(candidate, contextPath));
 			dashboard.setGid(candidate.getGid());
 			if(DateUtils.toLocalDate(DateUtils.now()).equals(getLastProfileUpdatedDate(candidate))){
 				dashboard.setLastProfileUpdated("today");
@@ -808,7 +780,7 @@ public class CandidateUIService {
 		return messages;
 	}
 	
-	public PhotoInfo getPhotoInfoSectionForUI(Candidate candidate){
+	public PhotoInfo getPhotoInfoSectionForUI(Candidate candidate, String contextPath){
 		PhotoInfo pi = new PhotoInfo();
 		if(candidate != null){
 			List<GPhoto> gPhotos = candidateService.getCandidatePhotos(candidate);
@@ -839,7 +811,8 @@ public class CandidateUIService {
 									filepath = GConstants.FilePath_Default_Male_Symbol;
 								}
 							}
-							pi.setPrimaryPicPath(GConstants.Action_load_image+"/"+filepath);
+							pi.setPrimaryPicPath(""+contextPath.substring(1, contextPath.length())+"/"+GConstants.Action_load_image+"/"+filepath);
+							/*pi.setPrimaryPicPath(GConstants.Action_load_image+"/"+filepath);*/
 						}
 					}
 				}

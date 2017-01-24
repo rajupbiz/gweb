@@ -40,7 +40,7 @@ public class HomeController extends BaseController {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping("/profile-home")
+	@RequestMapping("/profile/home")
 	public ModelAndView profileHome(){
 		Model m = new ExtendedModelMap();
 		logger.debug(" \n profile home .............  ");
@@ -48,7 +48,7 @@ public class HomeController extends BaseController {
 		
 		User user = getLoggedInUser();
 		Candidate c = candidateService.getCandidateByUser(user);
-		m.addAttribute("dashboard", candidateUIService.getDashboardInfoForUI(c));
+		m.addAttribute("dashboard", candidateUIService.getDashboardInfoForUI(c, request.getContextPath()));
 		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.home.toString(), user);
 		return new ModelAndView("/home", m.asMap());
 	}
