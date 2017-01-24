@@ -19,7 +19,7 @@ function getSearchResult(pageNo){
 		$("#pageNo").val(pageNo);
 		$.ajax({
 			  type: "GET",
-			  url: ctxPath+"get-profiles",
+			  url: ctxPath+"profiles/get",
 			  cache: false,
 			  async: false,
 			  contentType: 'application/x-www-form-urlencoded',
@@ -49,7 +49,7 @@ function viewDetails(id){
 		$.ajax({
 			type: "GET",
 			cache: false,
-			url: "view-profile?id="+id,
+			url: ctxPath+"profile/view?id="+id,
 			contentType: 'application/x-www-form-urlencoded',
 		    success: function (resp) {
 		    	 console.log(resp);

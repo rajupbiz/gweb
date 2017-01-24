@@ -311,19 +311,19 @@ $(document).ready(function() {
 function editInfo(section) {
 	switch (section) {
 	case 'Personal':
-		$("#personalInfoSectionBody").load(ctxPath+"edit-profile-personal");
+		$("#personalInfoSectionBody").load(ctxPath+"profile/personal/edit");
 		break;
 	case 'Family':
-		$("#familyInfoSectionBody").load(ctxPath+"edit-profile-family");
+		$("#familyInfoSectionBody").load(ctxPath+"profile/family/edit");
 		break;
 	case 'Contact':
-		$("#contactInfoSectionBody").load(ctxPath+"edit-profile-contact");
+		$("#contactInfoSectionBody").load(ctxPath+"profile/contact/edit");
 		break;
 	case 'Education':
-		$("#educationInfoSectionBody").load(ctxPath+"edit-profile-education");
+		$("#educationInfoSectionBody").load(ctxPath+"profile/education/edit");
 		break;
 	case 'Photo':
-		$("#photoInfoSectionBody").load(ctxPath+"edit-profile-photo");
+		$("#photoInfoSectionBody").load(ctxPath+"profile/photo/edit");
 		break;
 	default:
 		break;
@@ -333,19 +333,19 @@ function editInfo(section) {
 function cancelEdit(section) {
 	switch (section) {
 	case 'Personal':
-		$("#personalInfoSectionBody").load(ctxPath+"get-profile-personal");
+		$("#personalInfoSectionBody").load(ctxPath+"profile/personal/get");
 		break;
 	case 'Family':
-		$("#familyInfoSectionBody").load(ctxPath+"get-profile-family");
+		$("#familyInfoSectionBody").load(ctxPath+"profile/family/get");
 		break;
 	case 'Contact':
-		$("#contactInfoSectionBody").load(ctxPath+"get-profile-contact");
+		$("#contactInfoSectionBody").load(ctxPath+"profile/contact/get");
 		break;
 	case 'Education':
-		$("#educationInfoSectionBody").load(ctxPath+"get-profile-education");
+		$("#educationInfoSectionBody").load(ctxPath+"profile/education/get");
 		break;
 	case 'Photo':
-		$("#photoInfoSectionBody").load(ctxPath+"get-profile-photo");
+		$("#photoInfoSectionBody").load(ctxPath+"profile/photo/get");
 		break;
 	default:
 		break;
@@ -479,7 +479,7 @@ function onChangeDropdown(dropdown){
 function makePrimary(photo1) {
 	console.log(" 336 "+photo1);
 	$.ajax({
-	    url: "make-profile-primary?photo="+photo1,
+	    url: ctxPath+"profile/make-primary?photo="+photo1,
 	    type: "GET",
 	    success: function () {
 	    	console.log(" mp 347 ");
