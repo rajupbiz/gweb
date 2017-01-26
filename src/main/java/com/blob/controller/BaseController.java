@@ -13,7 +13,7 @@ import com.blob.dao.common.UserDao;
 import com.blob.enums.SessionParamEnum;
 import com.blob.model.candidate.Candidate;
 import com.blob.model.common.User;
-import com.blob.service.candidate.CandidateService;
+import com.blob.service.sagai.CandidateService;
 
 @Controller
 public class BaseController {

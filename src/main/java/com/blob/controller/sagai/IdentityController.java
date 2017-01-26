@@ -14,8 +14,8 @@ import com.blob.dao.master.MasterDegreeDao;
 import com.blob.enums.MenuTabEnum;
 import com.blob.model.common.User;
 import com.blob.security.SessionService;
-import com.blob.service.candidate.CandidateService;
-import com.blob.service.candidate.ProfileService;
+import com.blob.service.sagai.CandidateService;
+import com.blob.service.sagai.ProfileService;
 
 @Controller
 public class IdentityController extends BaseController {

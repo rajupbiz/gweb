@@ -19,8 +19,8 @@ import com.blob.model.common.Services;
 import com.blob.model.common.SystemProperty;
 import com.blob.model.common.User;
 import com.blob.model.common.UserServices;
-import com.blob.service.candidate.CandidateService;
 import com.blob.service.common.CommonService;
+import com.blob.service.sagai.CandidateService;
 import com.blob.util.DateUtils;
 import com.blob.util.GConstants;
 

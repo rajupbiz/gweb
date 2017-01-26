@@ -40,11 +40,11 @@ import com.blob.model.ui.FamilyInfo;
 import com.blob.model.ui.PersonalInfo;
 import com.blob.model.ui.PhotoInfo;
 import com.blob.security.SessionService;
-import com.blob.service.candidate.CandidatePhotoService;
-import com.blob.service.candidate.CandidateService;
-import com.blob.service.candidate.CandidateUIService;
-import com.blob.service.candidate.ProfileService;
 import com.blob.service.common.CommonService;
+import com.blob.service.sagai.CandidatePhotoService;
+import com.blob.service.sagai.CandidateService;
+import com.blob.service.sagai.CandidateUIService;
+import com.blob.service.sagai.ProfileService;
 
 @Controller
 public class ProfileController extends BaseController {

@@ -16,9 +16,9 @@ import com.blob.controller.BaseController;
 import com.blob.model.common.User;
 import com.blob.security.SessionService;
 import com.blob.security.SigninSignoutService;
-import com.blob.service.candidate.CandidateService;
-import com.blob.service.candidate.CandidateUIService;
 import com.blob.service.common.SignupService;
+import com.blob.service.sagai.CandidateService;
+import com.blob.service.sagai.CandidateUIService;
 import com.blob.util.GConstants;
 import com.blob.util.GResponse;
 

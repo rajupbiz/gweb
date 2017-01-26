@@ -17,8 +17,8 @@ import com.blob.model.candidate.Candidate;
 import com.blob.model.common.User;
 import com.blob.security.SessionService;
 import com.blob.security.SigninSignoutService;
-import com.blob.service.candidate.CandidateService;
-import com.blob.service.candidate.CandidateUIService;
+import com.blob.service.sagai.CandidateService;
+import com.blob.service.sagai.CandidateUIService;
 
 @Controller
 public class HomeController extends BaseController {

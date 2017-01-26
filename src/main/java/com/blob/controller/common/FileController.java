@@ -25,7 +25,7 @@ import com.blob.dao.common.SystemPropertyDao;
 import com.blob.model.common.GPhoto;
 import com.blob.model.common.User;
 import com.blob.model.error.FileUploadError;
-import com.blob.service.candidate.CandidatePhotoService;
+import com.blob.service.sagai.CandidatePhotoService;
 import com.blob.util.GConstants;
 
 @Controller
