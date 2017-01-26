@@ -41,36 +41,36 @@
 									
 									<div class="panel panel-info">
 										<div class="panel-heading"><b>Personal Information</b></div>
-										<span th:if="${!isNewCandidate}"><div id="personalInfoSectionBody" th:replace="fragments/f-personal-info :: personalInfoView"></div></span> 
-										<span th:if="${isNewCandidate}" ><div id="personalInfoSectionBody" th:replace="fragments/f-personal-info :: personalInfoEdit"></div></span>
+										<span th:if="${!isNewCandidate}"><div id="personalInfoSectionBody" th:replace="sagai/fragments/f-personal-info :: personalInfoView"></div></span> 
+										<span th:if="${isNewCandidate}" ><div id="personalInfoSectionBody" th:replace="sagai/fragments/f-personal-info :: personalInfoEdit"></div></span>
 									</div>
 								</section>
 
 								<section id="FamilySection" style="padding-top: 5px;">
 									<div class="panel panel-info">
 										<div class="panel-heading"><b>Family Information</b></div>
-		  								<div id="familyInfoSectionBody" th:replace="fragments/f-family-info :: familyInfoView"></div>
+		  								<div id="familyInfoSectionBody" th:replace="sagai/fragments/f-family-info :: familyInfoView"></div>
 									</div>
 								</section>
 				
 								<section id="ContactSection" style="padding-top: 5px;">
 									<div class="panel panel-info">
 										<div class="panel-heading"><b>Contact & Address</b></div>
-		  								<div id="contactInfoSectionBody" th:replace="fragments/f-contact-info :: contactInfoView"></div>
+		  								<div id="contactInfoSectionBody" th:replace="sagai/fragments/f-contact-info :: contactInfoView"></div>
 									</div>
 								</section>
 				
 								<section id="EducationSection" style="padding-top: 5px;">
 									<div class="panel panel-info">
 										<div class="panel-heading"><b>Education & Occupation</b></div>
-		  								<div id="educationInfoSectionBody" th:replace="fragments/f-education-info :: educationInfoView"></div>
+		  								<div id="educationInfoSectionBody" th:replace="sagai/fragments/f-education-info :: educationInfoView"></div>
 									</div>
 								</section>
 				
 								<section id="PhotosSection" style="padding-top: 5px;">
 									<div class="panel panel-info">
 										<div class="panel-heading"><b>Photo(s)</b></div>
-		  								<div id="photoInfoSectionBody" th:replace="fragments/f-photo-info :: photoInfoView"></div>
+		  								<div id="photoInfoSectionBody" th:replace="sagai/fragments/f-photo-info :: photoInfoView"></div>
 									</div>
 								</section>
 							</div>

@@ -24,8 +24,22 @@
 								<div class="col-md-10 one-edge-shadow">
 									<div class="row">
 										<div class="col-md-2">
-											<div class="g-header-img-div"><img alt="img" th:src="@{/assets/img/gomaie_logo.png}" width="140px;" class="img-rounded img-responsive"/></div>
-											<!-- <div>a private portal</div> -->
+											<div class="g-header-img-div">
+												<!-- <span th:if="${session.SERVICE == 'IDENTITY'}">
+													<img alt="img" th:src="@{/assets/img/gomaie_logo.png}" width="140px;" class="img-rounded img-responsive"/>
+												</span> -->
+												
+												<!-- <img alt="img" th:src="@{/assets/img/gomaie_logo.png}" width="140px;" class="img-rounded img-responsive"/> -->
+												
+												<div th:switch="${session.SERVICE}">
+												  <span th:case="IDENTITY"><img alt="img" th:src="@{/assets/img/g-id.png}" width="160px;" class="img-rounded img-responsive"/></span>
+												  <span th:case="JOB"><img alt="img" th:src="@{/assets/img/g-job.png}" width="160px;" class="img-rounded img-responsive"/></span>
+												  <span th:case="SAGAI"><img alt="img" th:src="@{/assets/img/g-sagai.png}" width="210px;" height="40px;" class="img-rounded img-responsive"/></span>
+												  <span th:case="*"><img alt="img" th:src="@{/assets/img/gomaie_logo.png}" width="140px;" class="img-rounded img-responsive"/></span>
+												</div>
+												
+											</div>
+											
 										</div>
 										
 										<div class="col-md-10">
@@ -40,14 +54,13 @@
 											                        <span class="glyphicon glyphicon-user"></span> <span class="glyphicon glyphicon-triangle-bottom"></span>
 											                    </a>
 											                    <ul class="dropdown-menu dropdown-user">
-											                    	<li><a th:href="@{/id/home}"><i class="fa fa-address-book" aria-hidden="true"></i> Identity</a></li>
-											                    	<li><a th:href="@{/profile/home}"><i class="fa fa-handshake-o" aria-hidden="true"></i> Sagai</a></li>
-											                    	<li><a th:href="@{/job/home}"><i class="fa fa-handshake-o" aria-hidden="true"></i> Job</a></li>
-											                    	<li><a th:href="@{/todo/home}"><i class="fa fa-handshake-o" aria-hidden="true"></i> Todo</a></li>
-											                        <li><a th:href="@{/profile/account-settings}"><i class="fa fa-gear fa-fw"></i> Account Settings</a></li>
+											                    	<li><a th:href="@{/service/switch/1}"><i class="fa fa-address-book"></i>&nbsp;Identity</a></li>
+											                    	<li><a th:href="@{/service/switch/3}"><i class="fa fa-id-card"></i>&nbsp;Job</a></li>
+											                    	<li><a th:href="@{/service/switch/2}"><i class="fa fa-handshake-o"></i>&nbsp;Sagai</a></li>
+											                    	<!-- <li><a th:href="@{/todo/home}"><i class="fa fa-th-list"></i>&nbsp;Todo</a></li> -->
 											                        <li class="divider"></li>
-											                        <li><a th:href="@{/signout}"><i class="fa fa-sign-out fa-fw"></i> Sign out</a>
-											                        </li>
+											                        <li><a th:href="@{/account-settings}"><i class="fa fa-gear fa-fw"></i>&nbsp;Account Settings</a></li>
+											                        <li><a th:href="@{/signout}"><i class="fa fa-sign-out fa-fw"></i>&nbsp;Sign out</a></li>
 											                    </ul>
 											                </li>
 											            </ul>
@@ -101,14 +114,33 @@
 																</li> -->
 															</ul>
 													   	 </div>
-													    
-													    <div class="collapse navbar-collapse g-menu-collapse" id="g-navbar-collapse-id" th:if="${#authentication.name != 'anonymousUser'}">
+													   	 
+													   	  <div class="collapse navbar-collapse g-menu-collapse" id="g-navbar-collapse-id" th:if="${#authentication.name != 'anonymousUser' && session.SERVICE == 'IDENTITY'}">
+														      <ul class="nav navbar-nav navbar-right" style="padding-right: 5px;"> 
+														        <li th:classappend="${session.TAB == 'id_home'}? 'active'"><a th:href="@{/id/home}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+														        <li th:classappend="${session.TAB == 'id_search'}? 'active'"><a th:href="@{/id/search}">Search</a></li>
+														        <li th:classappend="${session.TAB == 'id_update_profile'}? 'active'"><a th:href="@{/id/update}">Update Profile</a></li>
+														        <li th:classappend="${session.TAB == 'id_view_profile'}? 'active'"><a th:href="@{/id/preview}">View Profile</a></li>
+														      </ul>
+											   			 </div>
+											   			 
+											   			 <div class="collapse navbar-collapse g-menu-collapse" id="g-navbar-collapse-id" th:if="${#authentication.name != 'anonymousUser' && session.SERVICE == 'JOB'}">
+														      <ul class="nav navbar-nav navbar-right" style="padding-right: 5px;"> 
+														        <li th:classappend="${session.TAB == 'job_home'}? 'active'"><a th:href="@{/job/home}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+														        <li th:classappend="${session.TAB == 'job_search'}? 'active'"><a th:href="@{/job/search}">Search</a></li>
+														        <li th:classappend="${session.TAB == 'job_update_resume'}? 'active'"><a th:href="@{/job/update}">Update Resume</a></li>
+														        <li th:classappend="${session.TAB == 'job_view_resume'}? 'active'"><a th:href="@{/job/preview}">View Resume</a></li>
+														      </ul>
+											   			 </div>
+											   			 
+													    <!-- <span th:text="${session.SERVICE}+' '+Service" class="text-capitalize"></span> -->
+													    <div class="collapse navbar-collapse g-menu-collapse" id="g-navbar-collapse-id" th:if="${#authentication.name != 'anonymousUser' && session.SERVICE == 'SAGAI'}">
 													      <ul class="nav navbar-nav navbar-right" style="padding-right: 5px;"> 
-													        <li th:classappend="${session.TAB == 'home'}? 'active'"><a th:href="@{/profile/home}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-													        <li th:classappend="${session.TAB == 'search'}? 'active'"><a th:href="@{/profile/search}">Search</a></li>
-													        <li th:classappend="${session.TAB == 'update_profile'}? 'active'"><a th:href="@{/profile/update}">Update Profile</a></li>
-													        <li th:classappend="${session.TAB == 'preview_profile'}? 'active'"><a th:href="@{/profile/preview}">Preview Profile</a></li>
-													        <li th:classappend="${session.TAB == 'shortlisted_profiles'}? 'active'"><a th:href="@{/profile/shortlisted}">Shortlisted Profiles <span class="badge" th:if="${session.noOfShortlistedProfiles > 0}"} th:text="${session.noOfShortlistedProfiles}"></span></a></li>
+													        <li th:classappend="${session.TAB == 'sagai_home'}? 'active'"><a th:href="@{/profile/home}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+													        <li th:classappend="${session.TAB == 'sagai_search'}? 'active'"><a th:href="@{/profile/search}">Search</a></li>
+													        <li th:classappend="${session.TAB == 'sagai_update_profile'}? 'active'"><a th:href="@{/profile/update}">Update Profile</a></li>
+													        <li th:classappend="${session.TAB == 'sagai_preview_profile'}? 'active'"><a th:href="@{/profile/preview}">Preview Profile</a></li>
+													        <li th:classappend="${session.TAB == 'sagai_shortlisted_profiles'}? 'active'"><a th:href="@{/profile/shortlisted}">Shortlisted Profiles <span class="badge" th:if="${session.noOfShortlistedProfiles > 0}"} th:text="${session.noOfShortlistedProfiles}"></span></a></li>
 													        <!-- <li class="dropdown" th:classappend="${session.TAB == 'more'}? 'active'">
 													          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> More <i class="fa fa-caret-down"></i></a>
 													          <ul class="dropdown-menu"> -->
@@ -120,7 +152,8 @@
 													          <!-- </ul>
 													        </li> -->
 													      	</ul>
-												   	 		</div>
+											   	 		</div>
+												   	 		
 													 	 </div>
 														</nav>
 													</div>
