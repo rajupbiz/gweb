@@ -15,6 +15,7 @@ import com.blob.dao.common.UserServicesDao;
 import com.blob.enums.SessionParamEnum;
 import com.blob.model.candidate.Candidate;
 import com.blob.model.common.GMessage;
+import com.blob.model.common.Services;
 import com.blob.model.common.SystemProperty;
 import com.blob.model.common.User;
 import com.blob.model.common.UserServices;
@@ -84,6 +85,10 @@ public class SessionService {
 		session.setAttribute(SessionParamEnum.NO_OF_UNREAD_MESSAGES.toString(), noOfUnreadMessages);
 		session.setAttribute(SessionParamEnum.NO_OF_SHORTLISTED_PROFILES.toString(), noOfShortlistedProfiles);
 		session.setAttribute(SessionParamEnum.TAB.toString(), tab);
+	}
+	
+	public void setServiceSwitchCommonAttribtesInSession(HttpSession session, Services service, User user){
+		session.setAttribute(SessionParamEnum.SERVICE.toString(), service.getServiceName());
 	}
 	
 	public void addToSession(HttpSession session, String key, Object value){

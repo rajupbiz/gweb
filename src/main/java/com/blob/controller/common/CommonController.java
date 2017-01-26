@@ -1,17 +1,31 @@
 package com.blob.controller.common;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blob.controller.BaseController;
+import com.blob.dao.common.ServicesDao;
+import com.blob.model.common.Services;
+import com.blob.model.common.User;
+import com.blob.security.SessionService;
+import com.blob.util.GConstants;
 
 
 @Controller
 public class CommonController extends BaseController {
-
+	
+	@Resource
+	private SessionService sessionService;
+	
+	@Resource
+	private ServicesDao servicesDao;
+	
 	@RequestMapping("/register")
 	public ModelAndView register(){
 
@@ -46,5 +60,33 @@ public class CommonController extends BaseController {
 		System.out.println("Goto how-it-works");
 		model.addAttribute("MENU_TAB", "how-it-works");
 		return new ModelAndView("/how-it-works", model.asMap());
+	}
+	
+	@RequestMapping("/service/switch/{serviceId}")
+	public ModelAndView serviceSwitch(@PathVariable Long serviceId){
+		Model m = new ExtendedModelMap();
+		User user = getLoggedInUser();
+		Services service = servicesDao.findOne(serviceId);
+		sessionService.setServiceSwitchCommonAttribtesInSession(request.getSession(), service, user);
+		
+		String view = null;
+		switch (service.getServiceName()) {
+		case GConstants.Service_IDENTITY:
+			view = "id/home";
+			break;
+			
+		case GConstants.Service_SAGAI:
+			view = "profile/home";
+			break;
+			
+		case GConstants.Service_JOB:
+			view = "job/home";
+			break;
+
+		default:
+			break;
+		}
+		System.out.println("serviceId >> "+serviceId+" view >> "+view);
+		return new ModelAndView("redirect:/"+view, m.asMap());
 	}
 }
