@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blob.controller.BaseController;
-import com.blob.dao.common.ServicesDao;
-import com.blob.dao.common.UserDao;
-import com.blob.model.common.Services;
-import com.blob.model.common.User;
+import com.blob.dao.master.MasterServiceDao;
+import com.blob.dao.user.UserDao;
+import com.blob.model.master.MasterService;
 import com.blob.security.SessionService;
 import com.blob.security.SigninSignoutService;
 import com.blob.util.GConstants;
@@ -32,7 +31,7 @@ public class SigninSignoutController extends BaseController {
 	private SessionService sessionService;
 	
 	@Resource
-	private ServicesDao servicesDao;
+	private MasterServiceDao masterServiceDao;
 	
 	@Resource
 	private UserDao userDao;
@@ -44,9 +43,8 @@ public class SigninSignoutController extends BaseController {
 		System.out.println(" signIn ............. ");
 		String signinUserName = request.getParameter("signinUserName");
 		String signinPassword = request.getParameter("signinPassword");
-		User user = null;
 		try{
-			user = signinSignoutService.autoSignin(signinUserName, signinPassword, request);
+			signinSignoutService.autoSignin(signinUserName, signinPassword, request);
 			/*user = userDao.findByUsername(signinUserName);
 			sessionService.setLoginSessionData(request.getSession(), user);
 			user.setLastLoggedIn(DateUtils.now());
@@ -60,9 +58,9 @@ public class SigninSignoutController extends BaseController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		Services service = servicesDao.findByServiceNameAndStatus(GConstants.Service_IDENTITY, GConstants.Status_Active);
-		sessionService.setServiceSwitchCommonAttribtesInSession(request.getSession(), service, user);
-		//sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.home.toString(), user);
+		MasterService service = masterServiceDao.findByServiceNameAndStatus(GConstants.Service_IDENTITY, GConstants.Status_Active);
+		sessionService.setServiceSwitchCommonAttribtesInSession(request.getSession(), service);
+		//sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.home.toString());
 		return new ModelAndView("redirect:/id/home", model.asMap());
 		//return "redirect:/home";
 	}

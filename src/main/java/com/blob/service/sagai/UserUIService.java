@@ -10,13 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.blob.dao.candidate.CandidateAddressDao;
-import com.blob.dao.candidate.CandidateContactDao;
-import com.blob.dao.candidate.CandidateEducationDao;
-import com.blob.dao.candidate.CandidateOccupationDao;
-import com.blob.dao.common.GPhotoDao;
 import com.blob.dao.master.MasterBloodGroupDao;
-import com.blob.dao.master.MasterCountryDao;
 import com.blob.dao.master.MasterDayOfWeekDao;
 import com.blob.dao.master.MasterDegreeDao;
 import com.blob.dao.master.MasterDegreeSpecializationDao;
@@ -24,30 +18,30 @@ import com.blob.dao.master.MasterDesignationDao;
 import com.blob.dao.master.MasterMaritalStatusDao;
 import com.blob.dao.master.MasterOccupationDao;
 import com.blob.dao.master.MasterRelationshipDao;
-import com.blob.dao.master.MasterStateDao;
-import com.blob.dao.master.MasterYearlyIncomeDao;
+import com.blob.dao.user.UserAddressDao;
+import com.blob.dao.user.UserContactDao;
+import com.blob.dao.user.UserEducationDao;
+import com.blob.dao.user.UserOccupationDao;
+import com.blob.dao.user.UserPhotoDao;
 import com.blob.enums.PhotoCategoryEnum;
-import com.blob.model.candidate.Candidate;
-import com.blob.model.candidate.CandidateAddress;
-import com.blob.model.candidate.CandidateAstroDetail;
-import com.blob.model.candidate.CandidateContact;
-import com.blob.model.candidate.CandidateEducation;
-import com.blob.model.candidate.CandidateFamily;
-import com.blob.model.candidate.CandidateOccupation;
-import com.blob.model.candidate.CandidatePersonalDetail;
-import com.blob.model.candidate.CandidateShortlistedProfile;
-import com.blob.model.common.GMessage;
-import com.blob.model.common.GPhoto;
-import com.blob.model.common.User;
+import com.blob.model.sagai.SagaiShortlistedProfile;
 import com.blob.model.ui.ContactInfo;
 import com.blob.model.ui.DashboardInfo;
 import com.blob.model.ui.EduOccuInfo;
 import com.blob.model.ui.FamilyInfo;
-import com.blob.model.ui.Message;
 import com.blob.model.ui.PersonalInfo;
 import com.blob.model.ui.Photo;
 import com.blob.model.ui.PhotoInfo;
 import com.blob.model.ui.ShortlistedProfile;
+import com.blob.model.user.User;
+import com.blob.model.user.UserAddress;
+import com.blob.model.user.UserAstro;
+import com.blob.model.user.UserContact;
+import com.blob.model.user.UserEducation;
+import com.blob.model.user.UserFamily;
+import com.blob.model.user.UserOccupation;
+import com.blob.model.user.UserPersonal;
+import com.blob.model.user.UserPhoto;
 import com.blob.service.common.CommonService;
 import com.blob.util.DateUtils;
 import com.blob.util.GConstants;
@@ -55,25 +49,19 @@ import com.blob.util.GConverter;
 import com.blob.util.UiUtils;
 
 @Service
-public class CandidateUIService {
-	
-	@Resource
-	private MasterBloodGroupDao masterBloodGroupDao;
+public class UserUIService {
 	
 	@Resource
 	private MasterMaritalStatusDao masterMaritalStatusDao;
+	
+	@Resource
+	private MasterBloodGroupDao masterBloodGroupDao;
 	
 	@Resource
 	private MasterDayOfWeekDao masterDayOfWeekDao;
 	
 	@Resource
 	private MasterRelationshipDao masterRelationshipDao;
-	
-	@Resource
-	private MasterStateDao masterStateDao;
-	
-	@Resource
-	private MasterCountryDao masterCountryDao;
 	
 	@Resource
 	private MasterDegreeDao masterDegreeDao;
@@ -87,20 +75,26 @@ public class CandidateUIService {
 	@Resource
 	private MasterOccupationDao masterOccupationDao;
 	
-	@Resource
-	private MasterYearlyIncomeDao masterYearlyIncomeDao;
+	/*@Resource
+	private MasterStateDao masterStateDao;
 	
 	@Resource
-	private CandidateContactDao candidateContactDao;
+	private MasterCountryDao masterCountryDao;
 	
 	@Resource
-	private CandidateAddressDao candidateAddressDao;
+	private MasterYearlyIncomeDao masterYearlyIncomeDao;*/
 	
 	@Resource
-	private CandidateEducationDao candidateEducationDao;
+	private UserContactDao userContactDao;
 	
 	@Resource
-	private CandidateOccupationDao candidateOccupationDao;
+	private UserAddressDao userAddressDao;
+	
+	@Resource
+	private UserEducationDao userEducationDao;
+	
+	@Resource
+	private UserOccupationDao userOccupationDao;
 	
 	@Resource
 	private UiUtils uiUtils;
@@ -109,31 +103,30 @@ public class CandidateUIService {
 	private CommonService commonService;
 	
 	@Resource
-	private CandidateService candidateService;
+	private UserService userService;
 	
 	@Resource
-	private GPhotoDao gPhotoDao;
+	private UserPhotoDao userPhotoDao;
 	
-	public PersonalInfo getPersonalInfoSectionForUI(Candidate candidate, boolean isViewOnly){
+	public PersonalInfo getPersonalInfoSectionForUI(User user, boolean isViewOnly){
 		PersonalInfo pi = new PersonalInfo();
-		if(candidate != null){
-			CandidatePersonalDetail pd = candidate.getCandidatePersonalDetail();
-			CandidateAstroDetail ad = candidate.getCandidateAstroDetail();
+		if(user != null){
+			UserPersonal pd = user.getUserPersonal();
+			UserAstro ad = user.getUserAstro();
 			if(pd != null){
 				pi.setFirstName(pd.getFirstName());
 				pi.setMiddleName(pd.getMiddleName());
 				pi.setLastName(pd.getLastName());
 				pi.setGender(pd.getGender());
 				if(pd.getMaritalStatus() != null){
-					pi.setMaritalStatus(pd.getMaritalStatus().getMaritalStatus());
-					pi.setMaritalStatusId(pd.getMaritalStatus().getId());
+					pi.setMaritalStatus(pd.getMaritalStatus());
 				}
 				pi.setHeightCms(pd.getHeight());
 				if(pd.getHeight() != null && pd.getHeight() > 0)
 				pi.setHeightFoot("("+GConverter.convertCmsToFoot(pd.getHeight())+")");
 				pi.setWeight(pd.getWeight());
 				if(pd.getBloodGroup() != null)
-				pi.setBloodGroup(pd.getBloodGroup().getBloodGroupName());
+				pi.setBloodGroup(pd.getBloodGroup());
 				pi.setHobby(pd.getHobby());
 				pi.setAboutMe(pd.getAboutMe());
 			}
@@ -143,7 +136,7 @@ public class CandidateUIService {
 				pi.setBirthDate(DateUtils.toDDMMYYYY(DateUtils.toLocalDate(ad.getBirthDate())));
 				pi.setBirthTime(DateUtils.toHHMM_AMPM(DateUtils.toLocalTime(ad.getBirthTime())));
 				if(ad.getBirthDayOfWeek() != null){
-					pi.setBirthDay(ad.getBirthDayOfWeek().getDayOfWeek());
+					pi.setBirthDay(ad.getBirthDayOfWeek());
 				}
 				if(ad.isMangal() != null)
 				pi.setIsMangal(ad.isMangal() ? GConstants.Mangal_Yes : GConstants.Mangal_No);
@@ -157,46 +150,46 @@ public class CandidateUIService {
 		return pi;
 	}
 	
-	public CandidatePersonalDetail getCandidatePersonalInfoFromUI(PersonalInfo pi){
-		CandidatePersonalDetail pd = null;
+	public UserPersonal getUserPersonalInfoFromUI(PersonalInfo pi){
+		UserPersonal pd = null;
 		if(pi != null){
-			pd = new CandidatePersonalDetail();
+			pd = new UserPersonal();
 			pd.setFirstName(pi.getFirstName());
 			pd.setLastName(pi.getLastName());
 			pd.setMiddleName(pi.getMiddleName());
 			pd.setGender(pi.getGender());
-			if(pi.getMaritalStatusId() != null && pi.getMaritalStatusId() > 0)
-				pd.setMaritalStatus(masterMaritalStatusDao.findOne(pi.getMaritalStatusId()));
+			if(StringUtils.isNoneBlank(pi.getMaritalStatus()))
+				pd.setMaritalStatus(pi.getMaritalStatus());
 			pd.setHeight(pi.getHeightCms());
 			pd.setWeight(pi.getWeight());
-			if(pi.getBloodGroupId() != null && pi.getBloodGroupId() > 0)
-				pd.setBloodGroup(masterBloodGroupDao.findOne(pi.getBloodGroupId()));
+			if(StringUtils.isNoneBlank(pi.getBloodGroup()))
+				pd.setBloodGroup(pi.getBloodGroup());
 			pd.setHobby(pi.getHobby());
 			pd.setAboutMe(pi.getAboutMe());
 		}
 		return pd;
 	}
 	
-	public CandidateAstroDetail getCandidateAstroDetailFromUI(PersonalInfo pi){
-		CandidateAstroDetail ad = null;
+	public UserAstro getUserAstroFromUI(PersonalInfo pi){
+		UserAstro ad = null;
 		if(pi != null){
-			ad = new CandidateAstroDetail();
+			ad = new UserAstro();
 			ad.setBirthName(pi.getBirthName());
 			ad.setBirthPlace(pi.getBirthPlace());
 			ad.setBirthDate(DateUtils.toDate(DateUtils.toLocalDate(pi.getBirthDate())));
 			ad.setBirthTime(DateUtils.toDate(DateUtils.toLocalTime(pi.getBirthTime())));
 			if(StringUtils.isNoneBlank(pi.getBirthDay()))
-				ad.setBirthDayOfWeek(masterDayOfWeekDao.findByDayOfWeek(pi.getBirthDay()));
+				ad.setBirthDayOfWeek(pi.getBirthDay());
 			if(StringUtils.isNotBlank(pi.getIsMangal()))
 				ad.setMangal(pi.getIsMangal().equalsIgnoreCase(GConstants.Mangal_No)? false : true);
 		}
 		return ad;
 	}
 	
-	public FamilyInfo getFamilyInfoSectionForUI(Candidate candidate){
+	public FamilyInfo getFamilyInfoSectionForUI(User user){
 		FamilyInfo fi = new FamilyInfo();
-		if(candidate != null){
-			CandidateFamily f = candidate.getCandidateFamily();
+		if(user != null){
+			UserFamily f = user.getUserFamily();
 			if(f != null){
 				fi.setFatherFirstName(f.getFatherFirstName());
 				fi.setFatherMiddleName(f.getFatherMiddleName());
@@ -227,10 +220,10 @@ public class CandidateUIService {
 		return fi;
 	}
 	
-	public CandidateFamily getFamilyInfoFromUI(FamilyInfo fi){
-		CandidateFamily f = null;
+	public UserFamily getFamilyInfoFromUI(FamilyInfo fi){
+		UserFamily f = null;
 		if(fi != null){
-			f = new CandidateFamily();
+			f = new UserFamily();
 			f.setFatherFirstName(fi.getFatherFirstName());
 			f.setFatherMiddleName(fi.getFatherMiddleName());
 			f.setFatherLastName(fi.getFatherLastName());
@@ -251,41 +244,41 @@ public class CandidateUIService {
 		return f;
 	}
 	
-	public ContactInfo getContactInfoSectionForUI(Candidate candidate, boolean isViewOnly){
+	public ContactInfo getContactInfoSectionForUI(User user, boolean isViewOnly){
 		ContactInfo contactInfo = new ContactInfo();
-		if(candidate != null){
-			List<CandidateContact> contacts = candidate.getCandidateContacts();
+		if(user != null){
+			List<UserContact> contacts = user.getUserContacts();
 			if(contacts != null && !contacts.isEmpty()){
 				if(contacts.size() >= 2){
 					//	additional validation to only show 2 contacts
-					List<CandidateContact> contactList = new ArrayList<>(2);
-					CandidateContact cc = contacts.get(0);
-					if(cc.getRelationship() != null && cc.getRelationship().getId() != null && cc.getRelationship().getId() > 0)
-						cc.setRelationshipId(cc.getRelationship().getId());
+					List<UserContact> contactList = new ArrayList<>(2);
+					UserContact cc = contacts.get(0);
+					/*if(StringUtils.isNotBlank(cc.getRelationship()))
+						cc.setRelationship(cc.getRelationship());*/
 					contactList.add(cc);
 					cc = contacts.get(1);
-					if(cc.getRelationship() != null && cc.getRelationship().getId() != null && cc.getRelationship().getId() > 0)
-						cc.setRelationshipId(cc.getRelationship().getId());
+					/*if(StringUtils.isNotBlank(cc.getRelationship()))
+						cc.setRelationship(cc.getRelationship().getId());*/
 					contactList.add(cc);
-					contacts = contactList;
+					contacts = contactList;				
 				}else if(contacts.size() == 1){
-					List<CandidateContact> contactList = new ArrayList<>(2);
-					CandidateContact cc = contacts.get(0);
-					if(cc.getRelationship() != null && cc.getRelationship().getId() != null && cc.getRelationship().getId() > 0)
-						cc.setRelationshipId(cc.getRelationship().getId());
+					List<UserContact> contactList = new ArrayList<>(2);
+					UserContact cc = contacts.get(0);
+					/*if(cc.getRelationship() != null && cc.getRelationship().getId() != null && cc.getRelationship().getId() > 0)
+						cc.setRelationshipId(cc.getRelationship().getId());*/
 					contactList.add(cc);
-					contactList.add(new CandidateContact());
+					contactList.add(new UserContact());
 					contacts = contactList;
 				}
 			}else if(!isViewOnly){
 				contacts = new ArrayList<>(2);
-				contacts.add(new CandidateContact());
-				contacts.add(new CandidateContact());
+				contacts.add(new UserContact());
+				contacts.add(new UserContact());
 			}
 			contactInfo.setContacts(contacts);
 			
-			CandidateAddress existingNativeAddress = candidateAddressDao.findFirstByCandidateAndAddressTypeAndStatusOrderByUpdateOnDesc(candidate, GConstants.AddressType_Native, GConstants.Status_Active);
-			CandidateAddress existingCurrentAddress = candidateAddressDao.findFirstByCandidateAndAddressTypeAndStatusOrderByUpdateOnDesc(candidate, GConstants.AddressType_Current, GConstants.Status_Active);
+			UserAddress existingNativeAddress = userAddressDao.findFirstByUserAndAddressTypeAndStatusOrderByUpdateOnDesc(user, GConstants.AddressType_Native, GConstants.Status_Active);
+			UserAddress existingCurrentAddress = userAddressDao.findFirstByUserAndAddressTypeAndStatusOrderByUpdateOnDesc(user, GConstants.AddressType_Current, GConstants.Status_Active);
 			if(existingNativeAddress != null){
 				contactInfo.setNativePlace(existingNativeAddress.getCityOrTown());
 			}
@@ -301,22 +294,22 @@ public class CandidateUIService {
 		return contactInfo;
 	}
 
-	public List<CandidateContact> getContactsInfoFromUI(ContactInfo contactInfo){
-		List<CandidateContact> contacts = new ArrayList<>(2);
+	public List<UserContact> getContactsInfoFromUI(ContactInfo contactInfo){
+		List<UserContact> contacts = new ArrayList<>(2);
 		if(contactInfo != null){
-			for (CandidateContact cc : contactInfo.getContacts()) {
+			for (UserContact cc : contactInfo.getContacts()) {
 				if(cc.getId() != null){
-					CandidateContact existingCC = candidateContactDao.findOne(cc.getId());
+					UserContact existingCC = userContactDao.findOne(cc.getId());
 					existingCC.setFullName(cc.getFullName());
-					existingCC.setRelationshipId(cc.getRelationshipId());
-					existingCC.setRelationship(masterRelationshipDao.findOne(cc.getRelationshipId()));
+					existingCC.setRelationship(cc.getRelationship());
+//					//existingCC.setRelationship(masterRelationshipDao.findOne(cc.getRelationshipId()));
 					existingCC.setMobile(cc.getMobile());
 					existingCC.setUpdateOn(DateUtils.now());
 					contacts.add(existingCC);
 				}else{
 					if(StringUtils.isNotBlank(cc.getFullName())){
 						cc.setCreateOn(DateUtils.now());
-						cc.setRelationship(masterRelationshipDao.findOne(cc.getRelationshipId()));
+						cc.setRelationship(cc.getRelationship());
 						cc.setStatus(GConstants.Status_Active);
 						cc.setUpdateOn(DateUtils.now());
 						contacts.add(cc);
@@ -327,18 +320,18 @@ public class CandidateUIService {
 		return contacts;
 	}
 	
-	public List<CandidateAddress> getAddressesInfoFromUI(Candidate c, ContactInfo contactInfo){
+	public List<UserAddress> getAddressesInfoFromUI(User c, ContactInfo contactInfo){
 		
-		List<CandidateAddress> addresses = new ArrayList<>(2);
+		List<UserAddress> addresses = new ArrayList<>(2);
 		if(contactInfo != null){
-			CandidateAddress existingNativeAddress = candidateAddressDao.findFirstByCandidateAndAddressTypeAndStatusOrderByUpdateOnDesc(c, GConstants.AddressType_Native, GConstants.Status_Active);
+			UserAddress existingNativeAddress = userAddressDao.findFirstByUserAndAddressTypeAndStatusOrderByUpdateOnDesc(c, GConstants.AddressType_Native, GConstants.Status_Active);
 			if(existingNativeAddress != null){
 				existingNativeAddress.setCityOrTown(contactInfo.getNativePlace());
 				existingNativeAddress.setUpdateOn(DateUtils.now());
 				addresses.add(existingNativeAddress);
 			}else{
 				if(StringUtils.isNoneBlank(contactInfo.getNativePlace())){
-					CandidateAddress nativeAddress = new CandidateAddress();
+					UserAddress nativeAddress = new UserAddress();
 					nativeAddress.setCityOrTown(contactInfo.getNativePlace());
 					nativeAddress.setAddressType(GConstants.AddressType_Native);
 					nativeAddress.setStatus(GConstants.Status_Active);
@@ -346,14 +339,14 @@ public class CandidateUIService {
 					addresses.add(nativeAddress);
 				}
 			}
-			CandidateAddress existingCurrentAddress = candidateAddressDao.findFirstByCandidateAndAddressTypeAndStatusOrderByUpdateOnDesc(c, GConstants.AddressType_Current, GConstants.Status_Active);
+			UserAddress existingCurrentAddress = userAddressDao.findFirstByUserAndAddressTypeAndStatusOrderByUpdateOnDesc(c, GConstants.AddressType_Current, GConstants.Status_Active);
 			if(existingCurrentAddress != null){
 				existingCurrentAddress.setCityOrTown(contactInfo.getCurrentLocation());
 				existingCurrentAddress.setUpdateOn(DateUtils.now());
 				addresses.add(existingCurrentAddress);
 			}else{
 				if(StringUtils.isNoneBlank(contactInfo.getNativePlace())){
-					CandidateAddress address = new CandidateAddress();
+					UserAddress address = new UserAddress();
 					address.setCityOrTown(contactInfo.getCurrentLocation());
 					address.setAddressType(GConstants.AddressType_Current);
 					address.setStatus(GConstants.Status_Active);
@@ -362,9 +355,9 @@ public class CandidateUIService {
 				}
 			}
 			if(CollectionUtils.isNotEmpty(addresses)){
-				for (CandidateAddress candidateAddress : addresses) {
-					if(candidateAddress != null){
-						candidateAddressDao.save(candidateAddress);
+				for (UserAddress UserAddress : addresses) {
+					if(UserAddress != null){
+						userAddressDao.save(UserAddress);
 					}
 				}
 			}
@@ -372,27 +365,27 @@ public class CandidateUIService {
 		return addresses;
 	}
 	
-	public DashboardInfo getDashboardInfoForUI(Candidate candidate, String contextPath){
+	public DashboardInfo getDashboardInfoForUI(User user, String contextPath){
 		DashboardInfo dashboard = new DashboardInfo();
-		if(candidate != null){
-			CandidatePersonalDetail personalDetail = candidate.getCandidatePersonalDetail();
-			CandidateAstroDetail astroDetail = candidate.getCandidateAstroDetail();
-			List<CandidateEducation> educations = candidate.getCandidateEducations();
-			List<CandidateOccupation> occupations = candidate.getCandidateOccupations();
-			List<CandidateAddress> addresses = candidate.getCandidateAddresses();
-			List<CandidateContact> contacts = candidate.getCandidateContacts();
-			dashboard.setPhotoInfo(getPhotoInfoSectionForUI(candidate, contextPath));
-			dashboard.setGid(candidate.getGid());
-			if(DateUtils.toLocalDate(DateUtils.now()).equals(getLastProfileUpdatedDate(candidate))){
+		if(user != null){
+			UserPersonal personalDetail = user.getUserPersonal();
+			UserAstro astroDetail = user.getUserAstro();
+			List<UserEducation> educations = user.getUserEducations();
+			List<UserOccupation> occupations = user.getUserOccupations();
+			List<UserAddress> addresses = user.getUserAddresses();
+			List<UserContact> contacts = user.getUserContacts();
+			dashboard.setPhotoInfo(getPhotoInfoSectionForUI(user, contextPath));
+			dashboard.setGid(user.getGid());
+			if(DateUtils.toLocalDate(DateUtils.now()).equals(getLastProfileUpdatedDate(user))){
 				dashboard.setLastProfileUpdated("today");
 			}else{
-				dashboard.setLastProfileUpdated(DateUtils.getYearMonthDayBetweenDates(getLastProfileUpdatedDate(candidate), DateUtils.toLocalDate(DateUtils.now()))+" before");
+				dashboard.setLastProfileUpdated(DateUtils.getYearMonthDayBetweenDates(getLastProfileUpdatedDate(user), DateUtils.toLocalDate(DateUtils.now()))+" before");
 			}
 			if(personalDetail != null){
 				// activities
 				// profile overview
 				dashboard.setFirstName(personalDetail.getFirstName());
-				dashboard.setFullName(personalDetail.getFirstName()+" "+personalDetail.getMiddleName()+" "+personalDetail.getLastName());
+				dashboard.setFullName(personalDetail.getFirstName()+" "+(personalDetail.getMiddleName() != null ? personalDetail.getMiddleName() +" " : "")+personalDetail.getLastName());
 				dashboard.setHeight(personalDetail.getHeight() != null? personalDetail.getHeight().toString():"");
 				dashboard.setHeightFoot(GConverter.convertCmsToFoot(personalDetail.getHeight()));
 				dashboard.setWeight(personalDetail.getWeight() != null? personalDetail.getWeight().toString():"");
@@ -401,43 +394,51 @@ public class CandidateUIService {
 				}
 				dashboard.setOccupation(uiUtils.getOccupationTxt(occupations));
 				dashboard.setEducation(uiUtils.getEducationTxt(educations));
-				dashboard.setCurrentLocation(uiUtils.getAddressCityOrTown(addresses));
+				if(CollectionUtils.isNotEmpty(addresses)){
+					for (UserAddress userAddr : addresses) {
+						if(StringUtils.equalsIgnoreCase(userAddr.getAddressType(), GConstants.AddressType_Native)){
+							dashboard.setNativePlace(userAddr.getCityOrTown());
+						}else if(StringUtils.equalsIgnoreCase(userAddr.getAddressType(), GConstants.AddressType_Current)){
+							dashboard.setCurrentPlace(userAddr.getCityOrTown());
+						}
+					}
+				}
 				dashboard.setContact(uiUtils.getContactTxt(contacts));
 			}
-			dashboard.setMessages(getMessagesForUI(candidate));
-			dashboard.setShortlistedProfiles(getShortlistedProfilesForUI(candidate));
+			//dashboard.setMessages(getMessagesForUI(user));
+			dashboard.setShortlistedProfiles(getShortlistedProfilesForUI(user));
 		}
 		return dashboard;
 	}
 	
-	private LocalDate getLastProfileUpdatedDate(Candidate c){
+	private LocalDate getLastProfileUpdatedDate(User c){
 		LocalDate resp = DateUtils.toLocalDate(DateUtils.now());
 		if(c != null && c.getUpdateOn() != null){
 			resp = DateUtils.toLocalDate(c.getUpdateOn());
 		}
-		if(c.getCandidatePersonalDetail() != null && c.getCandidatePersonalDetail().getUpdateOn() != null){
-			if(resp.isBefore(DateUtils.toLocalDate(c.getCandidatePersonalDetail().getUpdateOn()))){
-				resp = DateUtils.toLocalDate(c.getCandidatePersonalDetail().getUpdateOn());
+		if(c.getUserPersonal() != null && c.getUserPersonal().getUpdateOn() != null){
+			if(resp.isBefore(DateUtils.toLocalDate(c.getUserPersonal().getUpdateOn()))){
+				resp = DateUtils.toLocalDate(c.getUserPersonal().getUpdateOn());
 			}
 		}
-		if(c.getCandidateFamily() != null && c.getCandidateFamily().getUpdateOn() != null){
-			if(resp.isBefore(DateUtils.toLocalDate(c.getCandidateFamily().getUpdateOn()))){
-				resp = DateUtils.toLocalDate(c.getCandidateFamily().getUpdateOn());
+		if(c.getUserFamily() != null && c.getUserFamily().getUpdateOn() != null){
+			if(resp.isBefore(DateUtils.toLocalDate(c.getUserFamily().getUpdateOn()))){
+				resp = DateUtils.toLocalDate(c.getUserFamily().getUpdateOn());
 			}
 		}
-		if(c.getCandidateExpectation() != null && c.getCandidateExpectation().getUpdateOn() != null){
-			if(resp.isBefore(DateUtils.toLocalDate(c.getCandidateExpectation().getUpdateOn()))){
-				resp = DateUtils.toLocalDate(c.getCandidateExpectation().getUpdateOn());
+		/*if(c.getUserExpectation() != null && c.getUserExpectation().getUpdateOn() != null){
+			if(resp.isBefore(DateUtils.toLocalDate(c.getUserExpectation().getUpdateOn()))){
+				resp = DateUtils.toLocalDate(c.getUserExpectation().getUpdateOn());
+			}
+		}*/
+		if(c.getUserAstro() != null && c.getUserAstro().getUpdateOn() != null){
+			if(resp.isBefore(DateUtils.toLocalDate(c.getUserAstro().getUpdateOn()))){
+				resp = DateUtils.toLocalDate(c.getUserAstro().getUpdateOn());
 			}
 		}
-		if(c.getCandidateAstroDetail() != null && c.getCandidateAstroDetail().getUpdateOn() != null){
-			if(resp.isBefore(DateUtils.toLocalDate(c.getCandidateAstroDetail().getUpdateOn()))){
-				resp = DateUtils.toLocalDate(c.getCandidateAstroDetail().getUpdateOn());
-			}
-		}
-		List<CandidateAddress> addresses = c.getCandidateAddresses();
+		List<UserAddress> addresses = c.getUserAddresses();
 		if(CollectionUtils.isNotEmpty(addresses)){
-			for (CandidateAddress ca : addresses) {
+			for (UserAddress ca : addresses) {
 				if(ca != null && ca.getUpdateOn() != null){
 					if(resp.isBefore(DateUtils.toLocalDate(ca.getUpdateOn()))){
 						resp = DateUtils.toLocalDate(ca.getUpdateOn());
@@ -445,9 +446,9 @@ public class CandidateUIService {
 				}
 			}
 		}
-		List<CandidateContact> contacts = c.getCandidateContacts();
+		List<UserContact> contacts = c.getUserContacts();
 		if(CollectionUtils.isNotEmpty(contacts)){
-			for (CandidateContact ca : contacts) {
+			for (UserContact ca : contacts) {
 				if(ca != null && ca.getUpdateOn() != null){
 					if(resp.isBefore(DateUtils.toLocalDate(ca.getUpdateOn()))){
 						resp = DateUtils.toLocalDate(ca.getUpdateOn());
@@ -455,9 +456,9 @@ public class CandidateUIService {
 				}
 			}
 		}
-		List<CandidateEducation> educations = c.getCandidateEducations();
+		List<UserEducation> educations = c.getUserEducations();
 		if(CollectionUtils.isNotEmpty(educations)){
-			for (CandidateEducation ca : educations) {
+			for (UserEducation ca : educations) {
 				if(ca != null && ca.getUpdateOn() != null){
 					if(resp.isBefore(DateUtils.toLocalDate(ca.getUpdateOn()))){
 						resp = DateUtils.toLocalDate(ca.getUpdateOn());
@@ -465,9 +466,9 @@ public class CandidateUIService {
 				}
 			}
 		}
-		List<CandidateOccupation> occupations = c.getCandidateOccupations();
+		List<UserOccupation> occupations = c.getUserOccupations();
 		if(CollectionUtils.isNotEmpty(occupations)){
-			for (CandidateOccupation ca : occupations) {
+			for (UserOccupation ca : occupations) {
 				if(ca != null && ca.getUpdateOn() != null){
 					if(resp.isBefore(DateUtils.toLocalDate(ca.getUpdateOn()))){
 						resp = DateUtils.toLocalDate(ca.getUpdateOn());
@@ -478,19 +479,19 @@ public class CandidateUIService {
 		return resp;
 	}
 	
-	public EduOccuInfo getEducationInfoSectionForUI(Candidate candidate, boolean isViewOnly){
+	public EduOccuInfo getEducationInfoSectionForUI(User user, boolean isViewOnly){
 		EduOccuInfo eduOccuInfo = new EduOccuInfo();
-		if(candidate != null){
-			List<CandidateEducation> educations = candidate.getCandidateEducations();
+		if(user != null){
+			List<UserEducation> educations = user.getUserEducations();
 			if(educations != null && !educations.isEmpty()){
 				if(educations.size() >= 2){
 					//	additional validation to only show 2 educations
-					List<CandidateEducation> educationList = new ArrayList<>(2);
+					List<UserEducation> educationList = new ArrayList<>(2);
 					
-					CandidateEducation cc = educations.get(0);
-					if(cc.getDegree() != null && cc.getDegree().getId() != null && cc.getDegree().getId() > 0){
+					UserEducation cc = educations.get(0);
+					if(cc.getDegree() != null && cc.getDegreeId() != null && cc.getDegreeId() > 0){
 						cc.setDegreeId(cc.getDegree().getId());
-						if(cc.getDegree().getDegree().equalsIgnoreCase(GConstants.SpecifyOther) && StringUtils.isNoneBlank(cc.getOtherDegree())){
+						if(StringUtils.equalsIgnoreCase(cc.getDegree().getDegree(), GConstants.SpecifyOther) && StringUtils.isNoneBlank(cc.getOtherDegree())){
 							cc.setDegreeStr(cc.getOtherDegree());
 						}else{
 							cc.setDegreeStr(cc.getDegree().getDegree());
@@ -532,8 +533,8 @@ public class CandidateUIService {
 					educationList.add(cc);
 					educations = educationList;
 				}else if(educations.size() == 1){
-					List<CandidateEducation> educationList = new ArrayList<>(2);
-					CandidateEducation cc = educations.get(0);
+					List<UserEducation> educationList = new ArrayList<>(2);
+					UserEducation cc = educations.get(0);
 					if(cc.getDegree() != null && cc.getDegree().getId() != null && cc.getDegree().getId() > 0){
 						cc.setDegreeId(cc.getDegree().getId());
 						if(cc.getDegree().getDegree().equalsIgnoreCase(GConstants.SpecifyOther) && StringUtils.isNoneBlank(cc.getOtherDegree())){
@@ -552,23 +553,22 @@ public class CandidateUIService {
 							}
 						}
 					}
-					
 					educationList.add(cc);
-					educationList.add(new CandidateEducation());
+					educationList.add(new UserEducation());
 					educations = educationList;
 				}
 			}else if(!isViewOnly){
 				educations = new ArrayList<>(2);
-				educations.add(new CandidateEducation());
-				educations.add(new CandidateEducation());
+				educations.add(new UserEducation());
+				educations.add(new UserEducation());
 			}
 			eduOccuInfo.setEducations(educations);
-			List<CandidateOccupation> occupations = candidate.getCandidateOccupations();
+			List<UserOccupation> occupations = user.getUserOccupations();
 			if(occupations != null && !occupations.isEmpty()){
 				if(occupations.size() >= 2){
 					//	additional validation to only show 2 occupations
-					List<CandidateOccupation> occupationList = new ArrayList<>(2);
-					CandidateOccupation cc = occupations.get(0);
+					List<UserOccupation> occupationList = new ArrayList<>(2);
+					UserOccupation cc = occupations.get(0);
 					if(cc.getOccupation() != null && cc.getOccupation().getId() != null && cc.getOccupation().getId() > 0){
 						cc.setOccupationId(cc.getOccupation().getId());
 						if(cc.getOccupation().getOccupation().equalsIgnoreCase(GConstants.SpecifyOther) && StringUtils.isNoneBlank(cc.getOtherOccupation())){
@@ -607,8 +607,8 @@ public class CandidateUIService {
 					occupationList.add(cc);
 					occupations = occupationList;
 				}else if(occupations.size() == 1){
-					List<CandidateOccupation> occupationList = new ArrayList<>(2);
-					CandidateOccupation cc = occupations.get(0);
+					List<UserOccupation> occupationList = new ArrayList<>(2);
+					UserOccupation cc = occupations.get(0);
 					if(cc.getOccupation() != null && cc.getOccupation().getId() != null && cc.getOccupation().getId() > 0){
 						cc.setOccupationId(cc.getOccupation().getId());
 						if(cc.getOccupation().getOccupation().equalsIgnoreCase(GConstants.SpecifyOther) && StringUtils.isNoneBlank(cc.getOtherOccupation())){
@@ -626,40 +626,40 @@ public class CandidateUIService {
 						}
 					}
 					occupationList.add(cc);
-					occupationList.add(new CandidateOccupation());
+					occupationList.add(new UserOccupation());
 					occupations = occupationList;
 				}
 			}else if(!isViewOnly){
 				occupations = new ArrayList<>(2);
-				occupations.add(new CandidateOccupation());
-				occupations.add(new CandidateOccupation());
+				occupations.add(new UserOccupation());
+				occupations.add(new UserOccupation());
 			}
 			eduOccuInfo.setOccupations(occupations);
 			
-			if(CollectionUtils.isNotEmpty(occupations) && occupations.size() > 0){
-				if(candidate.getYearlyIncome() != null){
-					eduOccuInfo.setYearlyIncomeId(candidate.getYearlyIncome().getId());
-					eduOccuInfo.setYearlyIncomeStr(candidate.getYearlyIncome().getYearlyIncome());
+			/*if(CollectionUtils.isNotEmpty(occupations) && occupations.size() > 0){
+				if(user.getYearlyIncome() != null){
+					eduOccuInfo.setYearlyIncomeId(user.getYearlyIncome().getId());
+					eduOccuInfo.setYearlyIncomeStr(user.getYearlyIncome().getYearlyIncome());
 				}
-			}
+			}*/
 		}
 		if(!isViewOnly){
 			eduOccuInfo.setOccupationOptions(masterOccupationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
 			eduOccuInfo.setDegreeOptions(masterDegreeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
 			eduOccuInfo.setDesignationOptions(masterDesignationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
 			eduOccuInfo.setSpecializationOptions(masterDegreeSpecializationDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
-			eduOccuInfo.setYearlyIncomeOptions(masterYearlyIncomeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
+			//eduOccuInfo.setYearlyIncomeOptions(masterYearlyIncomeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
 		}
 		return eduOccuInfo;
 	}
 	
-	public List<CandidateEducation> getEducationsInfoFromUI(EduOccuInfo eduOccuInfo){
-		List<CandidateEducation> educations = new ArrayList<>(2);
+	public List<UserEducation> getEducationsInfoFromUI(EduOccuInfo eduOccuInfo){
+		List<UserEducation> educations = new ArrayList<>(2);
 		if(eduOccuInfo != null){
 			int eduSequenceNum = 1;
-			for (CandidateEducation cc : eduOccuInfo.getEducations()) {
+			for (UserEducation cc : eduOccuInfo.getEducations()) {
 				if(cc.getId() != null){
-					CandidateEducation existingCE = candidateEducationDao.findOne(cc.getId());
+					UserEducation existingCE = userEducationDao.findOne(cc.getId());
 					if(cc.getDegreeId() != null && cc.getDegreeId() > 0)
 						existingCE.setDegree(masterDegreeDao.findOne(cc.getDegreeId()));
 					else
@@ -693,13 +693,13 @@ public class CandidateUIService {
 		return educations;
 	}
 	
-	public List<CandidateOccupation> getOccupationsInfoFromUI(EduOccuInfo eduOccuInfo){
-		List<CandidateOccupation> occupations = new ArrayList<>(2);
+	public List<UserOccupation> getOccupationsInfoFromUI(EduOccuInfo eduOccuInfo){
+		List<UserOccupation> occupations = new ArrayList<>(2);
 		if(eduOccuInfo != null){
 			int occSequenceNum = 1;
-			for (CandidateOccupation cc : eduOccuInfo.getOccupations()) {
+			for (UserOccupation cc : eduOccuInfo.getOccupations()) {
 				if(cc.getId() != null){
-					CandidateOccupation existingCO = candidateOccupationDao.findOne(cc.getId());
+					UserOccupation existingCO = userOccupationDao.findOne(cc.getId());
 					if(cc.getOccupationId() != null && cc.getOccupationId() > 0)
 						existingCO.setOccupation(masterOccupationDao.findOne(cc.getOccupationId()));
 					else
@@ -722,10 +722,10 @@ public class CandidateUIService {
 							cc.setDesignation(masterDesignationDao.findOne(cc.getDesignationId()));
 						else
 							cc.setDesignation(null);
-						if(cc.getYearlyIncomeId() != null && cc.getYearlyIncomeId() > 0)
+						/*if(cc.getYearlyIncomeId() != null && cc.getYearlyIncomeId() > 0)
 							cc.setYearlyIncome(masterYearlyIncomeDao.findOne(cc.getYearlyIncomeId()));
 						else
-							cc.setYearlyIncome(null);
+							cc.setYearlyIncome(null);*/
 						cc.setSequenceNumber(occSequenceNum);
 						cc.setCreateOn(DateUtils.now());
 						cc.setStatus(GConstants.Status_Active);
@@ -739,19 +739,39 @@ public class CandidateUIService {
 		return occupations;
 	}
 	
-	public List<ShortlistedProfile> getShortlistedProfilesForUI(Candidate candidate){
+	public List<ShortlistedProfile> getShortlistedProfilesForUI(User user){
 		List<ShortlistedProfile> shortlistedProfiles = null;
-		List<CandidateShortlistedProfile> candidateProfiles = candidate.getShortlistedCandidates();
+		List<SagaiShortlistedProfile> candidateProfiles = user.getSagaiShortlistedProfiles();
 		if(CollectionUtils.isNotEmpty(candidateProfiles)){
 			shortlistedProfiles = new ArrayList<>();
 			ShortlistedProfile p = null;
-			for (CandidateShortlistedProfile profile : candidateProfiles) {
+			for (SagaiShortlistedProfile profile : candidateProfiles) {
 				if(profile != null){
 					p = new ShortlistedProfile();
-					p.setFullName(candidate.getCandidatePersonalDetail().getFirstName() + " " + candidate.getCandidatePersonalDetail().getLastName());
-					p.setDateOfBirth(DateUtils.toDDMMYYYY(DateUtils.toLocalDate(candidate.getCandidateAstroDetail().getBirthDate())));
-					p.setAddress(uiUtils.getAddressCityOrTown(candidate.getCandidateAddresses()));
-					p.setOccupation(uiUtils.getPrimaryOccupation(candidate.getCandidateOccupations()));
+					p.setFullName(user.getUserPersonal().getFirstName() + " " + user.getUserPersonal().getLastName());
+					p.setDateOfBirth(DateUtils.toDDMMYYYY(DateUtils.toLocalDate(user.getUserAstro().getBirthDate())));
+					
+					if(CollectionUtils.isNotEmpty(user.getUserAddresses())){
+						String nativePlace = null, currentPlace = null;
+						for (UserAddress userAddr : user.getUserAddresses()) {
+							if(StringUtils.equalsIgnoreCase(userAddr.getAddressType(), GConstants.AddressType_Native)){
+								nativePlace = userAddr.getCityOrTown();
+							}else if(StringUtils.equalsIgnoreCase(userAddr.getAddressType(), GConstants.AddressType_Current)){
+								currentPlace = userAddr.getCityOrTown();
+							}
+						}
+						StringBuffer address = new StringBuffer();
+						if(StringUtils.isNotBlank(nativePlace)){
+							address.append(nativePlace);
+							if(StringUtils.isNotBlank(currentPlace)){
+								address.append(" ("+currentPlace+")");
+							}
+						}else if(StringUtils.isNotBlank(currentPlace)){
+							address.append(currentPlace);
+						}
+						p.setAddress(address.toString());
+					}
+					p.setOccupation(uiUtils.getPrimaryOccupation(user.getUserOccupations()));
 					shortlistedProfiles.add(p);
 				}
 			}
@@ -759,9 +779,9 @@ public class CandidateUIService {
 		return shortlistedProfiles;
 	}
 	
-	public List<Message> getMessagesForUI(Candidate fromCandidate){
+	/*public List<Message> getMessagesForUI(User fromUser){
 		List<Message> messages = null;
-		List<GMessage> gmessages = candidateService.getCandidateMessages(fromCandidate);
+		List<GMessage> gmessages = candidateService.getUserMessages(fromUser);
 		if(CollectionUtils.isNotEmpty(gmessages)){
 			messages = new ArrayList<>();
 			Message m = null;
@@ -769,7 +789,7 @@ public class CandidateUIService {
 				if(message != null){
 					m = new Message();
 					m.setMessageId(message.getId());
-					m.setFrom(fromCandidate.getCandidatePersonalDetail().getFirstName() + " " + fromCandidate.getCandidatePersonalDetail().getLastName());
+					m.setFrom(fromuser.getUserPersonal().getFirstName() + " " + fromuser.getUserPersonal().getLastName());
 					m.setSubject(message.getSubject());
 					m.setBody(message.getBody());
 					m.setDateReceived(DateUtils.toDDMMYYYY(DateUtils.toLocalDate(message.getCreateOn())));
@@ -778,15 +798,15 @@ public class CandidateUIService {
 			}
 		}
 		return messages;
-	}
+	}*/
 	
-	public PhotoInfo getPhotoInfoSectionForUI(Candidate candidate, String contextPath){
+	public PhotoInfo getPhotoInfoSectionForUI(User user, String contextPath){
 		PhotoInfo pi = new PhotoInfo();
-		if(candidate != null){
-			List<GPhoto> gPhotos = candidateService.getCandidatePhotos(candidate);
+		if(user != null){
+			List<UserPhoto> gPhotos = userService.getUserPhotos(user);
 			if(CollectionUtils.isNotEmpty(gPhotos)){
 				List<Photo> photos = new ArrayList<>();
-				for (GPhoto gPhoto : gPhotos) {
+				for (UserPhoto gPhoto : gPhotos) {
 					if(gPhoto != null){
 						Photo p = new Photo();
 						p.setPhotoId(gPhoto.getId());
@@ -799,12 +819,12 @@ public class CandidateUIService {
 						p.setTitle(gPhoto.getTitle());
 						photos.add(p);
 						
-						if(p.getIsPrimary()){
+						if(p.getIsPrimary() != null && p.getIsPrimary()){
 							pi.setPrimaryPhoto(p);
 							// set primary pic path
 							String filepath = p.getFileName();
 							if(StringUtils.isBlank(filepath)){
-								CandidatePersonalDetail pd = candidate.getCandidatePersonalDetail();
+								UserPersonal pd = user.getUserPersonal();
 								if(StringUtils.equalsIgnoreCase(pd.getGender(), GConstants.Gender_Female)){
 									filepath = GConstants.FilePath_Default_Female_Symbol;
 								}else{
@@ -823,13 +843,13 @@ public class CandidateUIService {
 		return pi;
 	}
 	
-	public List<GPhoto> getPhotosInfoFromUI(PhotoInfo photoInfo, User user){
-		List<GPhoto> gPhotos = new ArrayList<>();
+	public List<UserPhoto> getPhotosInfoFromUI(PhotoInfo photoInfo, User user){
+		List<UserPhoto> gPhotos = new ArrayList<>();
 		if(photoInfo != null){
 			for (Photo p : photoInfo.getPhotos()) {
-				GPhoto gp = null;
+				UserPhoto gp = null;
 				if(p.getPhotoId() != null){
-					gp = gPhotoDao.findOne(p.getPhotoId());
+					gp = userPhotoDao.findOne(p.getPhotoId());
 					gp.setIsSagaiPrimary(p.getIsPrimary());
 					if(!p.getIsActive()){
 						gp.setStatus(GConstants.Status_Inactive);
@@ -837,8 +857,8 @@ public class CandidateUIService {
 					gp.setUpdateOn(DateUtils.now());
 					gPhotos.add(gp);
 				}else{
-					gp = new GPhoto();
-					gp.setTitle(user.getCandidates().get(0).getCandidatePersonalDetail().getFirstName()+" "+user.getCandidates().get(0).getCandidatePersonalDetail().getLastName());
+					gp = new UserPhoto();
+					gp.setTitle(user.getUserPersonal().getFirstName()+" "+user.getUserPersonal().getLastName());
 					gp.setUser(user);
 					gp.setCategory(PhotoCategoryEnum.Sagai.toString());
 					gp.setIsSagaiPrimary(p.getIsPrimary());

@@ -257,7 +257,7 @@
 									<div class="row" th:each="currentContact, stat : ${profile.contactInfo.contacts}">
 										<div class="col-md-2 g-view-label-profile"></div>
 										<div class="col-md-3 g-view-text-profile"><span th:text="${profile.contactInfo.contacts[__${stat.index}__].fullName}"></span></div>
-										<div class="col-md-3 g-view-text-profile" th:if="${profile.contactInfo.contacts[__${stat.index}__].relationship != null}"><span th:text="${profile.contactInfo.contacts[__${stat.index}__].relationship.relationship}"></span></div>
+										<div class="col-md-3 g-view-text-profile" th:if="${profile.contactInfo.contacts[__${stat.index}__].relationship != null}"><span th:text="${profile.contactInfo.contacts[__${stat.index}__].relationship}"></span></div>
 										<div class="col-md-3 g-view-text-profile"><span th:text="${profile.contactInfo.contacts[__${stat.index}__].mobile}"></span></div>
 									</div>
 									<div class="row" th:if="${#lists.isEmpty(profile.contactInfo.contacts)}">

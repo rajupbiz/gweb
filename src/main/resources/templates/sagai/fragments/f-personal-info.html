@@ -29,7 +29,7 @@
 								<span th:text="*{maritalStatus}"></span>
 							</div>
 						</div>
-						<div class="row">
+						<!-- <div class="row">
 							<div class="col-md-3 g-view-label-profile">Height:</div>
 							<div class="col-md-6 g-view-text-profile">
 								<span th:text="*{heightCms}"></span> cm <span th:text="*{heightFoot}"></span>
@@ -40,7 +40,7 @@
 							<div class="col-md-6 g-view-text-profile">
 								<span th:text="*{weight}"></span> kg
 							</div>
-						</div>
+						</div> -->
 					</fieldset>
 					<fieldset>
 						<legend style="font-size: 13px;">Birth Information</legend>
@@ -135,14 +135,14 @@
 							</div>
 						</div>
 						<div class="form-group form-group-sm">
-							<label class="col-md-3 control-label" for="maritalStatusId">Marital	Status:</label>
+							<label class="col-md-3 control-label" for="maritalStatus">Marital Status:</label>
 							<div class="col-md-3">
-								<select class="form-control show-menu-arrow selectpicker" id="maritalStatusId" name="maritalStatusId">
-									<option th:each="option:*{maritalStatusOptions}" th:value="${option.id}" th:text="${option.maritalStatus}" th:selected="${option.id} == *{maritalStatusId}"></option>
+								<select class="form-control show-menu-arrow selectpicker" id="maritalStatus" name="maritalStatus">
+									<option th:each="option:*{maritalStatusOptions}" th:value="${option.maritalStatus}" th:text="${option.maritalStatus}" th:selected="${option.maritalStatus} == *{maritalStatus}"></option>
 								</select>
 							</div>
 						</div>
-						<div class="form-group form-group-sm">
+						<!-- <div class="form-group form-group-sm">
 							<label class="col-md-3 control-label" for="height">Height:</label>
 							<div class="col-md-2 g-d-right-0px">
 								<input class="form-control input-sm" type="text" id="height" placeholder="Height" th:field="*{heightCms}">
@@ -156,7 +156,7 @@
 								<input class="form-control input-sm" type="text" id="weight" placeholder="Weight" maxlength="3" th:field="*{weight}">
 							</div>
 							<label class="col-md-1 control-label" style="text-align: left;">kg</label>
-						</div>
+						</div> -->
 					</fieldset>
 					<fieldset>
 						<legend style="font-size: 13px;">Birth Information</legend>
@@ -198,10 +198,10 @@
 					<fieldset>
 						<legend style="font-size: 13px;">Other Personal	Information</legend>
 						<div class="form-group form-group-sm">
-							<label class="col-md-3 control-label" for="blood-group">Blood Group:</label>
+							<label class="col-md-3 control-label" for="bloodGroup">Blood Group:</label>
 							<div class="col-md-3">
-								<select class="form-control show-menu-arrow selectpicker" id="bloodGroupId" name="bloodGroupId">
-									<option th:each="option:*{bloodGroupOptions}" th:value="${option.id}" th:text="${option.bloodGroupName}" th:selected="${option.id} == *{bloodGroupId}"></option>
+								<select class="form-control show-menu-arrow selectpicker" id="bloodGroup" name="bloodGroup">
+									<option th:each="option:*{bloodGroupOptions}" th:value="${option.bloodGroupName}" th:text="${option.bloodGroupName}" th:selected="${option.bloodGroupName} == *{bloodGroup}"></option>
 								</select>
 							</div>
 						</div>

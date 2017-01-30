@@ -55,15 +55,15 @@ $(document).ready(function() {
         format: 'LT'
     });
     
-    $("#maritalStatusId").selectpicker({
+    $("#maritalStatus").selectpicker({
         style: "btn-default btn-sm"
     });
     
-    $("#birthDayId").selectpicker({
+    $("#birthDay").selectpicker({
         style: "btn-default btn-sm"
     });
     
-    $("#bloodGroupId").selectpicker({
+    $("#bloodGroup").selectpicker({
         style: "btn-default btn-sm"
     });
 

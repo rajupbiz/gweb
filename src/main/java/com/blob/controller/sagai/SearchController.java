@@ -20,12 +20,12 @@ import org.thymeleaf.context.Context;
 import com.blob.controller.BaseController;
 import com.blob.dao.master.MasterDegreeDao;
 import com.blob.enums.MenuTabEnum;
-import com.blob.model.candidate.Candidate;
-import com.blob.model.common.User;
+import com.blob.model.account.Account;
 import com.blob.model.ui.ProfileFilter;
+import com.blob.model.user.User;
 import com.blob.security.SessionService;
-import com.blob.service.sagai.CandidateService;
 import com.blob.service.sagai.ProfileService;
+import com.blob.service.sagai.UserService;
 import com.blob.util.GConstants;
 import com.blob.util.GResponse;
 
@@ -39,7 +39,7 @@ public class SearchController extends BaseController {
 	private ProfileService profileService;
 	
 	@Resource
-	private CandidateService candidateService;
+	private UserService userService;
 	
 	@Resource
 	protected TemplateEngine templateEngine;
@@ -54,8 +54,8 @@ public class SearchController extends BaseController {
 		
 		logger.debug(" \n search profile .............  ");
 		Model m = new ExtendedModelMap();
-		User user = getLoggedInUser();
-		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.sagai_search.toString(), user);
+		Account a = getLoggedInAccount();
+		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.sagai_search.toString(), a);
 		ProfileFilter profileFilter = new ProfileFilter();
 		profileFilter.setDegreeOptions(masterDegreeDao.findByStatusOrderBySequenceNumber(GConstants.Status_Active));
 		m.addAttribute("profileFilter", profileFilter);
@@ -68,8 +68,8 @@ public class SearchController extends BaseController {
 		logger.debug(" \n search profile .............  ");
 		GResponse resp = new GResponse();
 		Context ctx = new Context();
-		Candidate c = getLoggedInSagaiCandidate();
-		profileFilter.setLoggedInCandidateId(c.getId());
+		User c = getLoggedInUser();
+		profileFilter.setLoggedInUserId(c.getId());
 		ctx.setVariable("page", profileService.getProfiles(request, profileFilter));
 		
 		String html = templateEngine.process("sagai/fragments/f-search-result", ctx);

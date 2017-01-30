@@ -52,6 +52,12 @@
 												Register Now
 											</div>
 											<div class="g-signup-form-field-div">
+												<input type="text"  placeholder="First Name" name="signupFirstName" id="signupFirstName" class="form-control g-input-sign-in" maxlength="20" required th:value="${firstName}" />
+											</div>
+											<div class="g-signup-form-field-div">
+												<input type="text"  placeholder="Last Name" name="signupLastName" id="signupLastName" class="form-control g-input-sign-in" maxlength="20" required th:value="${lastName}" />
+											</div>
+											<div class="g-signup-form-field-div">
 												<input type="text"  placeholder="Mobile Number" name="signupUserName" id="signupUserName" class="form-control g-input-sign-in" maxlength="10" required th:value="${userName}" />
 											</div>
 											<div class="g-signup-form-field-div">
@@ -60,9 +66,9 @@
 											<div class="g-signup-form-field-div">
 												<input type="password" placeholder="Password" id="signupPassword" name="signupPassword" class="form-control g-input-sign-in" maxlength="20" required th:value="${password}" />
 											</div>
-											<div class="g-signup-form-field-div">
+											<!-- <div class="g-signup-form-field-div">
 												<input type="password" placeholder="Confirm Password" id="signupConfirmPassword" name="signupConfirmPassword" class="form-control g-input-sign-in" maxlength="20" required th:value="${password}" />
-											</div>
+											</div> -->
 											<div class="g-register-form-btn-div">
 												<input type="submit" value="Sign up" class="form-control btn-primary g-sign-in-button"/>
 											</div>

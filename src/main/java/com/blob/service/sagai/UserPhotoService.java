@@ -14,18 +14,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.blob.dao.common.GPhotoDao;
 import com.blob.dao.common.SystemPropertyDao;
+import com.blob.dao.user.UserPhotoDao;
 import com.blob.enums.PhotoCategoryEnum;
-import com.blob.model.common.GPhoto;
-import com.blob.model.common.User;
+import com.blob.model.account.Account;
+import com.blob.model.user.User;
+import com.blob.model.user.UserPhoto;
 import com.blob.security.SessionService;
 import com.blob.service.common.CommonService;
 import com.blob.util.DateUtils;
 import com.blob.util.GConstants;
 
 @Service
-public class CandidatePhotoService {
+public class UserPhotoService {
 	
 	@Resource
 	private SystemPropertyDao systemPropertyDao;
@@ -37,19 +38,17 @@ public class CandidatePhotoService {
 	private CommonService commonService;
 	
 	@Resource
-	private GPhotoDao gPhotoDao;
+	private UserPhotoDao userPhotoDao;
 	
 	public void uploadPhoto(HttpServletRequest request, User user, MultipartFile uploadfile) throws Exception{
 		
 		String filePath = (String) request.getSession().getAttribute(GConstants.SAGAI_DEFAULT_FILE_UPLOAD_PATH);
-		
 		if(StringUtils.isNotBlank(filePath)){
-			
 			String origFileName = uploadfile.getOriginalFilename();
 			String[] tokens = origFileName.split("\\.(?=[^\\.]+$)");
 			if(tokens != null && tokens.length == 2){
 				// upload photo
-				Long photoCounter = gPhotoDao.countByUserAndCategory(user, PhotoCategoryEnum.Sagai.toString());
+				Long photoCounter = userPhotoDao.countByUserAndCategory(user, PhotoCategoryEnum.Sagai.toString());
 				photoCounter++;
 				String fileName = user.getId()+"_"+PhotoCategoryEnum.Sagai.toString()+"_"+photoCounter+"."+tokens[1];
 				String directory = filePath;
@@ -62,7 +61,7 @@ public class CandidatePhotoService {
 					stream.close();
 				}
 				// save photo details
-				GPhoto gPhoto = new GPhoto();
+				UserPhoto gPhoto = new UserPhoto();
 				gPhoto.setUser(user);
 				gPhoto.setCategory(PhotoCategoryEnum.Sagai.toString());
 				gPhoto.setCreateOn(DateUtils.now());
@@ -70,36 +69,35 @@ public class CandidatePhotoService {
 				gPhoto.setOriginalFileName(origFileName);
 				gPhoto.setStatus(GConstants.Status_Active);
 				gPhoto.setUpdateOn(DateUtils.now());
-				gPhotoDao.save(gPhoto);
+				userPhotoDao.save(gPhoto);
 			}
 		}
 	}
 	
-	public void removePhoto(User user, GPhoto gPhoto) throws Exception{
+	public void removePhoto(Account account, UserPhoto gPhoto) throws Exception{
 		if(gPhoto != null && StringUtils.isNotBlank(gPhoto.getStatus()) && gPhoto.getStatus().equalsIgnoreCase(GConstants.Status_Active)){
 			gPhoto.setStatus(GConstants.Status_Inactive);
 			gPhoto.setIsSagaiPrimary(false);
 			gPhoto.setUpdateOn(DateUtils.now());
-			gPhotoDao.save(gPhoto);
+			userPhotoDao.save(gPhoto);
 		}
 	}
 	
-	public Boolean setPhotoAsSagaiPrimary(User user, GPhoto gPhoto) {
+	public Boolean setPhotoAsSagaiPrimary(User user, UserPhoto gPhoto) {
 		Boolean resp = false;
 		try {
 			if (gPhoto != null && StringUtils.isNotBlank(gPhoto.getStatus())
 					&& gPhoto.getStatus().equalsIgnoreCase(GConstants.Status_Active)) {
-				List<GPhoto> allActivePhotos = gPhotoDao.findByUserAndCategoryAndStatus(user,
-						PhotoCategoryEnum.Sagai.toString(), GConstants.Status_Active);
+				List<UserPhoto> allActivePhotos = userPhotoDao.findByUserAndCategoryAndStatus(user, PhotoCategoryEnum.Sagai.toString(), GConstants.Status_Active);
 				if (CollectionUtils.isNotEmpty(allActivePhotos)) {
-					for (GPhoto gPhoto2 : allActivePhotos) {
+					for (UserPhoto gPhoto2 : allActivePhotos) {
 						if (gPhoto2.getId().equals(gPhoto.getId())) {
 							gPhoto2.setIsSagaiPrimary(true);
 						} else {
 							gPhoto2.setIsSagaiPrimary(false);
 						}
 						gPhoto2.setUpdateOn(DateUtils.now());
-						gPhotoDao.save(gPhoto2);
+						userPhotoDao.save(gPhoto2);
 					}
 				}
 			} 

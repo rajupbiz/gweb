@@ -10,15 +10,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import com.blob.dao.common.UserDao;
-import com.blob.model.common.User;
+import com.blob.dao.account.AccountDao;
+import com.blob.model.account.Account;
 import com.blob.util.DateUtils;
 
 @Service
 public class SigninSignoutService {
 	
 	@Resource
-	private UserDao userDao;
+	private AccountDao accountDao;
 	
 	@Resource
     private UserDetailsService userDetailService;
@@ -29,23 +29,23 @@ public class SigninSignoutService {
 	@Resource
 	private AuthenticationManager authenticationManager;
 
-	public User autoSignin(String username, String password, HttpServletRequest request) throws Exception {
+	public Account autoSignin(String username, String password, HttpServletRequest request) throws Exception {
 		
-		User user = null;
+		Account account = null;
 		System.out.println(" auto signin ");
 		UserDetails userDetails = userDetailService.loadUserByUsername(username);
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 		authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 		if (usernamePasswordAuthenticationToken.isAuthenticated()) {
 			SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-			user = userDao.findByUsername(username);
-			sessionService.setLoginSessionData(request.getSession(), user);
-			user.setLastLoggedIn(DateUtils.now());
-			user = userDao.save(user);
+			account = accountDao.findByUsername(username);
+			sessionService.setLoginSessionData(request.getSession(), account);
+			account.setLastLoggedIn(DateUtils.now());
+			account = accountDao.save(account);
 			
 			//logger.debug(String.format("Auto login %s successfully!", username));
 		}
-		return user;
+		return account;
 	}
 	
 	public void logout(){

@@ -14,10 +14,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.blob.dao.common.UserDao;
-import com.blob.dao.common.UserRoleDao;
-import com.blob.model.common.User;
-import com.blob.model.common.UserRole;
+import com.blob.dao.account.AccountDao;
+import com.blob.dao.account.AccountRoleDao;
+import com.blob.model.account.Account;
+import com.blob.model.account.AccountRole;
 import com.blob.util.GConstants;
 
 @Component
@@ -25,27 +25,27 @@ import com.blob.util.GConstants;
 public class UserDetailService implements UserDetailsService {
 	
 	@Resource
-	private UserDao userDao;
+	private AccountDao accountDao;
 	
 	@Resource
-	private UserRoleDao userRoleDao;
+	private AccountRoleDao accountRoleDao;
 
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 
 		System.out.println(" \n\n\n loadUserByUsername ... ");
 		UserDetails userDetails = null;
-		User user = userDao.findByUsername(userName);
-		if(user == null){
+		Account account = accountDao.findByUsername(userName);
+		if(account == null){
 			throw new UsernameNotFoundException("User name or password is incorrect.");
 		}else{
-			List<UserRole> roles = userRoleDao.findByUserAndStatus(user, GConstants.Status_Active);
-			userDetails = getUserDetails(user.getUsername(), user.getPassword(), roles);
+			List<AccountRole> roles = accountRoleDao.findByAccountAndStatus(account, GConstants.Status_Active);
+			userDetails = getAccountDetails(account.getUsername(), account.getPassword(), roles);
 		}
 		return userDetails;
 	}
 	
-	private UserDetails getUserDetails(String userName, String password, List<UserRole> roles){
+	private UserDetails getAccountDetails(String userName, String password, List<AccountRole> roles){
 		
 		System.out.println(" \n\n\n getUserDetails ... ");
 		UserDetails userDetails = null;
@@ -59,12 +59,12 @@ public class UserDetailService implements UserDetailsService {
 		return userDetails;
 	}
 	
-	private Collection<GrantedAuthority> getAuthorities(List<UserRole> roles){
+	private Collection<GrantedAuthority> getAuthorities(List<AccountRole> roles){
 		
 		List<GrantedAuthority> lstAuth = null;
 		if(roles != null && !roles.isEmpty()){
 			lstAuth = new ArrayList<GrantedAuthority>(roles.size());
-			for (UserRole role : roles) {
+			for (AccountRole role : roles) {
 				if(role != null){
 					lstAuth.add(new SimpleGrantedAuthority(role.getRole().getId().toString()));
 				}

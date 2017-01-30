@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.blob.controller.BaseController;
 import com.blob.enums.MenuTabEnum;
-import com.blob.model.common.User;
+import com.blob.model.account.Account;
 import com.blob.security.SessionService;
 
 @Controller
@@ -33,8 +33,8 @@ public class SettingsController extends BaseController {
 	public ModelAndView vAccountSettings(){
 
 		Model m = new ExtendedModelMap();
-		User user = getLoggedInUser();
-		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.more.toString(), user);
+		Account a = getLoggedInAccount();
+		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.more.toString(), a);
 		return new ModelAndView("/account-settings", m.asMap());
 	}
 }

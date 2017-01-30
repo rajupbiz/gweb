@@ -12,10 +12,10 @@ import org.thymeleaf.TemplateEngine;
 import com.blob.controller.BaseController;
 import com.blob.dao.master.MasterDegreeDao;
 import com.blob.enums.MenuTabEnum;
-import com.blob.model.common.User;
+import com.blob.model.account.Account;
 import com.blob.security.SessionService;
-import com.blob.service.sagai.CandidateService;
 import com.blob.service.sagai.ProfileService;
+import com.blob.service.sagai.UserService;
 
 @Controller
 public class JobHomeController extends BaseController {
@@ -27,7 +27,7 @@ public class JobHomeController extends BaseController {
 	private ProfileService profileService;
 	
 	@Resource
-	private CandidateService candidateService;
+	private UserService userService;
 	
 	@Resource
 	protected TemplateEngine templateEngine;
@@ -40,8 +40,8 @@ public class JobHomeController extends BaseController {
 
 		Model m = new ExtendedModelMap();
 		System.out.println("job home");
-		User user = getLoggedInUser();
-		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.job_home.toString(), user);
+		Account account = getLoggedInAccount();
+		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.job_home.toString(), account);
 		return new ModelAndView("/job/job-home", m.asMap());
 	}
 }

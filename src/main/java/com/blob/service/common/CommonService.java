@@ -2,25 +2,23 @@ package com.blob.service.common;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
-import com.blob.model.candidate.Candidate;
-import com.blob.model.common.User;
+import com.blob.model.account.Account;
+import com.blob.model.user.User;
 
 @Service
 public class CommonService {
 
-	public Candidate getCandidateByUser(User user){
+	public User getUserByAccount(Account account){
 	
-		Candidate c = null;
-		List<Candidate> candidates = user.getCandidates();
+		User c = account.getUser();
+		/*List<User> users = account.getUser();
 		if(CollectionUtils.isNotEmpty(candidates))
-			c = candidates.get(0);
+			c = users.get(0);*/
 		return c;
 	}
 	
@@ -30,3 +28,4 @@ public class CommonService {
 	    return requestURL.getProtocol() + "://" + requestURL.getHost() + port;
 	}
 }
+                                                                                                                  

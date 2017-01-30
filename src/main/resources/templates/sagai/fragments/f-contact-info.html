@@ -20,7 +20,7 @@
 						<div class="row" th:each="currentContact, stat : *{contacts}">
 							<div class="col-md-2 g-view-label-profile"></div>
 							<div class="col-md-3 g-view-text-profile"><span th:text="*{contacts[__${stat.index}__].fullName}"></span></div>
-							<div class="col-md-3 g-view-text-profile" th:if="*{contacts[__${stat.index}__].relationship != null}"><span th:text="*{contacts[__${stat.index}__].relationship.relationship}"></span></div>
+							<div class="col-md-3 g-view-text-profile" th:if="*{contacts[__${stat.index}__].relationship != null}"><span th:text="*{contacts[__${stat.index}__].relationship}"></span></div>
 							<div class="col-md-3 g-view-text-profile"><span th:text="*{contacts[__${stat.index}__].mobile}"></span></div>
 						</div>
 					</fieldset>
@@ -133,13 +133,13 @@
 						<legend style="font-size: 13px;">Contact(s)</legend>
 						<div class="form-group form-group-sm"  th:each="currentContact, stat : *{contacts}">
 							<input type="hidden" th:field="*{contacts[__${stat.index}__].id}">
-							<label class="col-md-3 control-label" for="first-name">Contact Person Full Name <span th:text="*{__${stat.index}__+1}"></span> : </label>
+							<label class="col-md-3 control-label" for="first-name">Contact Person <span th:text="*{__${stat.index}__+1}"></span> : </label>
 							<div class="col-md-3 g-m-bottom-padding-5px">
-								<input class="form-control input-sm" type="text" placeholder="Contact Person Full Name" th:field="*{contacts[__${stat.index}__].fullName}">
+								<input class="form-control input-sm" type="text" placeholder="Full Name" th:field="*{contacts[__${stat.index}__].fullName}">
 							</div>
 							<div class="col-md-3 g-m-bottom-padding-5px">
-								<select class="form-control selectpicker show-menu-arrow" th:id="contact-relation+*{__${stat.index}__+1}" title="Relationship" th:field="*{contacts[__${stat.index}__].relationshipId}">
-									<option th:each="option:*{relationshipOptions}" th:value="${option.id}" th:text="${option.relationship}" ></option>	<!-- th:selected="${option.id} == *{contacts[__${stat.index}__].relationshipId}" -->
+								<select class="form-control selectpicker show-menu-arrow" th:id="contact-relation+*{__${stat.index}__+1}" title="Relationship" th:field="*{contacts[__${stat.index}__].relationship}">
+									<option th:each="option:*{relationshipOptions}" th:value="${option.relationship}" th:text="${option.relationship}" ></option>
 								</select>
 							</div>
 							<div class="col-md-3 g-m-bottom-padding-5px">

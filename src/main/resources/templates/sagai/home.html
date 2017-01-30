@@ -67,54 +67,66 @@
 							<div class="row" style="text-align: left; padding-left: 20px;">
 								<div class="col-md-12">
 									<div class="row" style="padding-bottom: 10px;">
-										<div class="col-md-2">
+										<div class="col-md-3">
 											Full Name:
 										</div>
-										<div class="col-md-4 g-text-bold" th:text="${dashboard.fullName}">
+										<div class="col-md-3 g-text-bold" th:text="${dashboard.fullName}">
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-3">
 											Date of Birth:
 										</div>
-										<div class="col-md-4 g-text-bold" th:text="${dashboard.dateOfBirth}">
+										<div class="col-md-3 g-text-bold" th:text="${dashboard.dateOfBirth}">
 										</div>
 									</div>
 									<div class="row" style="padding-bottom: 10px;">
-										<div class="col-md-2">
-											Occupation:
+										<div class="col-md-3">
+											Native Place
 										</div>
-										<div class="col-md-4 g-text-bold" th:text="${dashboard.occupation}">
-											
+										<div class="col-md-3 g-text-bold" th:text="${dashboard.nativePlace}">
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-3">
+											Current Place:
+										</div>
+										<div class="col-md-3 g-text-bold" th:text="${dashboard.currentPlace}">
+										</div>
+									</div>
+									<div class="row" style="padding-bottom: 10px;">
+										<div class="col-md-3">
 											Education:
 										</div>
-										<div class="col-md-4 g-text-bold" th:text="${dashboard.education}">
+										<div class="col-md-3 g-text-bold" th:text="${dashboard.occupation}">
+											
+										</div>
+										<div class="col-md-3">
+											Occupation:
+										</div>
+										<div class="col-md-3 g-text-bold" th:text="${dashboard.education}">
 										</div>
 									</div>
-									<div class="row" style="padding-bottom: 10px;">
-										<div class="col-md-2">
+									<!-- <div class="row" style="padding-bottom: 10px;">
+										<div class="col-md-3">
 											Current Location:
 										</div>
-										<div class="col-md-4 g-text-bold" th:text="${dashboard.currentLocation}">
+										<div class="col-md-3 g-text-bold" th:text="${dashboard.currentLocation}">
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-3">
 											Contact:
 										</div>
-										<div class="col-md-4 g-text-bold" th:text="${dashboard.contact}">
+										<div class="col-md-3 g-text-bold" th:text="${dashboard.contact}">
 										</div>
-									</div>
-									<div class="row" style="padding-bottom: 10px;">
-										<div class="col-md-2">
+									</div> -->
+									<!-- <div class="row" style="padding-bottom: 10px;">
+										<div class="col-md-3">
 											Height:
 										</div>
-										<div class="col-md-4 g-text-bold"><span th:text="${dashboard.height}"></span> cm  <span th:if="${dashboard.heightFoot != null && dashboard.heightFoot == ''}">(<span th:text="${dashboard.heightFoot}"></span>)</span> 
+										<div class="col-md-3 g-text-bold"><span th:if="${dashboard.height != null}" th:text="${dashboard.height + ' cm'}"></span>  <span th:if="${dashboard.heightFoot != null && dashboard.heightFoot == ''}">(<span th:text="${dashboard.heightFoot}"></span>)</span> 
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-3">
 											Weight:
 										</div>
-										<div class="col-md-4 g-text-bold"><span th:text="${dashboard.weight}"></span> kg
+										<div class="col-md-3 g-text-bold"><span th:if="${dashboard.weight != null}" th:text="${dashboard.weight + ' kg'}"></span>
 										</div>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							</div>

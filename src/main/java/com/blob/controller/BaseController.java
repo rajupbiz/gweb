@@ -9,11 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
-import com.blob.dao.common.UserDao;
+import com.blob.dao.account.AccountDao;
 import com.blob.enums.SessionParamEnum;
-import com.blob.model.candidate.Candidate;
-import com.blob.model.common.User;
-import com.blob.service.sagai.CandidateService;
+import com.blob.model.account.Account;
+import com.blob.model.user.User;
+import com.blob.service.sagai.UserService;
 
 @Controller
 public class BaseController {
@@ -25,10 +25,10 @@ public class BaseController {
 	protected HttpServletResponse response;
 	
 	@Autowired
-	protected UserDao userDao;
+	protected AccountDao accountDao;
 	
 	@Resource
-	private CandidateService candidateService;
+	private UserService userService;
 	
 	public String getLoggedInUserName(){
 		
@@ -45,19 +45,19 @@ public class BaseController {
 	public Long getLoggedInUserId(){
 		
 		String userName = getLoggedInUserName();
-		User user = userDao.findByUsername(userName);
-		return user.getId();
+		Account account = accountDao.findByUsername(userName);
+		return account.getId();
+	}
+	
+	public Account getLoggedInAccount(){
+		
+		String userName = getLoggedInUserName();
+		return accountDao.findByUsername(userName);
 	}
 	
 	public User getLoggedInUser(){
 		
-		String userName = getLoggedInUserName();
-		return userDao.findByUsername(userName);
-	}
-	
-	public Candidate getLoggedInSagaiCandidate(){
-		
-		Candidate c = candidateService.getCandidateByUser(getLoggedInUser());
+		User c = userService.getUserByAccount(getLoggedInAccount());
 		return c;
 	}
 	

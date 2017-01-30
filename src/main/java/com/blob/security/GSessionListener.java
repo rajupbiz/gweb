@@ -6,13 +6,13 @@ import javax.servlet.http.HttpSessionEvent;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.stereotype.Component;
 
-import com.blob.dao.common.UserDao;
+import com.blob.dao.account.AccountDao;
 
 @Component
 public class GSessionListener extends HttpSessionEventPublisher {
 
 	@Resource
-	private UserDao userDao;
+	private AccountDao accountDao;
 	
 	@Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
@@ -37,5 +37,4 @@ public class GSessionListener extends HttpSessionEventPublisher {
     	super.sessionDestroyed(httpSessionEvent);
     	System.out.println("  session destroyed  ");
     }
-    
 }

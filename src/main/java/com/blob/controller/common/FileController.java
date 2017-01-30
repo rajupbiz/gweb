@@ -20,19 +20,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.blob.controller.BaseController;
-import com.blob.dao.common.GPhotoDao;
 import com.blob.dao.common.SystemPropertyDao;
-import com.blob.model.common.GPhoto;
-import com.blob.model.common.User;
+import com.blob.dao.user.UserPhotoDao;
 import com.blob.model.error.FileUploadError;
-import com.blob.service.sagai.CandidatePhotoService;
+import com.blob.model.user.User;
+import com.blob.model.user.UserPhoto;
+import com.blob.service.sagai.UserPhotoService;
 import com.blob.util.GConstants;
 
 @Controller
 public class FileController extends BaseController {
 
 	@Resource
-	private CandidatePhotoService candidatePhotoService;
+	private UserPhotoService userPhotoService;
 	
 	@Resource
 	private SystemPropertyDao systemPropertyDao;
@@ -41,7 +41,7 @@ public class FileController extends BaseController {
     private ResourceLoader resourceLoader;
 	
 	@Resource
-	private GPhotoDao gPhotoDao;
+	private UserPhotoDao userPhotoDao;
 	
 	/**
 	 * POST /uploadFile -> receive and locally save a file.
@@ -60,7 +60,7 @@ public class FileController extends BaseController {
 			User user = getLoggedInUser();
 			String service = getCurrentService();
 			if(StringUtils.isNotBlank(service) && service.equalsIgnoreCase(GConstants.Service_SAGAI)){
-				candidatePhotoService.uploadPhoto(request, user, uploadfile);
+				userPhotoService.uploadPhoto(request, user, uploadfile);
 			}
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -107,11 +107,12 @@ public class FileController extends BaseController {
 		String filePath = (String) request.getSession().getAttribute(GConstants.SAGAI_DEFAULT_FILE_UPLOAD_PATH);
 		System.out.println(" filename  "+fileName+"  filePath  "+filePath);
 		
-		GPhoto gPhoto = gPhotoDao.findByFileNameLikeAndStatus(fileName+"%", GConstants.Status_Active);
-		
-		//filePath.replaceAll("\\", "\\\\");
-		org.springframework.core.io.Resource r = resourceLoader.getResource("file:"+filePath+"\\"+gPhoto.getFileName());		// +".jpg"	file:C:\\Users\\RPATEL\\Google Drive\\00_biz\\gomaie\\pics\\sagai\\
-		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-	    IOUtils.copy(r.getInputStream(), response.getOutputStream());
+		UserPhoto gPhoto = userPhotoDao.findByFileNameLikeAndStatus(fileName+"%", GConstants.Status_Active);
+		if(gPhoto != null){
+			//filePath.replaceAll("\\", "\\\\");
+			org.springframework.core.io.Resource r = resourceLoader.getResource("file:"+filePath+"\\"+gPhoto.getFileName());		// +".jpg"	file:C:\\Users\\RPATEL\\Google Drive\\00_biz\\gomaie\\pics\\sagai\\
+			response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+		    IOUtils.copy(r.getInputStream(), response.getOutputStream());
+		}
 	}
 }

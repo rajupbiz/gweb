@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.blob.controller.BaseController;
-import com.blob.dao.common.UserDao;
+import com.blob.dao.user.UserDao;
 import com.blob.enums.MenuTabEnum;
-import com.blob.model.candidate.Candidate;
-import com.blob.model.common.User;
+import com.blob.model.account.Account;
+import com.blob.model.user.User;
 import com.blob.security.SessionService;
 import com.blob.security.SigninSignoutService;
-import com.blob.service.sagai.CandidateService;
-import com.blob.service.sagai.CandidateUIService;
+import com.blob.service.sagai.UserService;
+import com.blob.service.sagai.UserUIService;
 
 @Controller
 public class HomeController extends BaseController {
@@ -33,10 +33,10 @@ public class HomeController extends BaseController {
 	private UserDao userDao;
 	
 	@Resource
-	private CandidateUIService candidateUIService;
+	private UserUIService userUIService;
 	
 	@Resource
-	private CandidateService candidateService;
+	private UserService userService;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -46,10 +46,10 @@ public class HomeController extends BaseController {
 		logger.debug(" \n profile home .............  ");
 		System.out.println(" \n profile home ............. ");
 		
-		User user = getLoggedInUser();
-		Candidate c = candidateService.getCandidateByUser(user);
-		m.addAttribute("dashboard", candidateUIService.getDashboardInfoForUI(c, request.getContextPath()));
-		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.sagai_home.toString(), user);
+		Account account = getLoggedInAccount();
+		User c = userService.getUserByAccount(account);
+		m.addAttribute("dashboard", userUIService.getDashboardInfoForUI(c, request.getContextPath()));
+		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.sagai_home.toString(), account);
 		return new ModelAndView("/sagai/home", m.asMap());
 	}
 }

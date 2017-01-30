@@ -18,22 +18,22 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
-import com.blob.dao.candidate.CandidateAddressDao;
-import com.blob.dao.candidate.CandidateContactDao;
-import com.blob.dao.candidate.CandidateDao;
-import com.blob.dao.candidate.CandidateEducationDao;
-import com.blob.dao.candidate.CandidateOccupationDao;
 import com.blob.dao.common.SystemPropertyDao;
 import com.blob.dao.master.MasterDegreeDao;
-import com.blob.model.candidate.Candidate;
-import com.blob.model.candidate.CandidateAddress;
-import com.blob.model.candidate.CandidateContact;
-import com.blob.model.candidate.CandidateEducation;
-import com.blob.model.candidate.CandidateOccupation;
+import com.blob.dao.user.UserAddressDao;
+import com.blob.dao.user.UserContactDao;
+import com.blob.dao.user.UserDao;
+import com.blob.dao.user.UserEducationDao;
+import com.blob.dao.user.UserOccupationDao;
 import com.blob.model.ui.ProfileFilter;
 import com.blob.model.ui.ProfileSearchResult;
 import com.blob.model.ui.ProfileSummary;
 import com.blob.model.ui.SagaiProfile;
+import com.blob.model.user.User;
+import com.blob.model.user.UserAddress;
+import com.blob.model.user.UserContact;
+import com.blob.model.user.UserEducation;
+import com.blob.model.user.UserOccupation;
 import com.blob.util.DateUtils;
 import com.blob.util.GConstants;
 
@@ -41,79 +41,79 @@ import com.blob.util.GConstants;
 public class ProfileService {
 	
 	@Resource
-	private CandidateContactDao candidateContactDao;
+	private UserContactDao userContactDao;
 	
 	@Resource
-	private CandidateAddressDao candidateAddressDao;
+	private UserAddressDao userAddressDao;
 	
 	@Resource
-	private CandidateEducationDao candidateEducationDao;
+	private UserEducationDao userEducationDao;
 	
 	@Resource
-	private CandidateOccupationDao candidateOccupationDao;
+	private UserOccupationDao userOccupationDao;
 	
 	@Resource
-	private CandidateService candidateService;
+	private UserService userService;
 	
 	@Resource
 	private MasterDegreeDao masterDegreeDao;
 	
 	@Resource
-	private CandidateDao candidateDao;
+	private UserDao userDao;
 	
 	@Resource
 	private SystemPropertyDao systemPropertyDao;
 	
 	@Resource
-	private CandidateUIService candidateUIService;
+	private UserUIService userUIService;
 
-	public List<CandidateContact> saveCandidateContacts(List<CandidateContact> contacts, Candidate c){
+	public List<UserContact> saveUserContacts(List<UserContact> contacts, User c){
 
-		List<CandidateContact> resp = new ArrayList<>();
+		List<UserContact> resp = new ArrayList<>();
 		if(contacts != null && !contacts.isEmpty()){
-			for (CandidateContact candidateContact : contacts) {
-				candidateContact.setCandidate(c);
-				CandidateContact savedContact = candidateContactDao.save(candidateContact);
+			for (UserContact userContact : contacts) {
+				userContact.setUser(c);
+				UserContact savedContact = userContactDao.save(userContact);
 				resp.add(savedContact);
 			}
 		}
 		return resp;
 	}
 	
-	public List<CandidateAddress> saveCandidateAddress(List<CandidateAddress> addresses, Candidate c){
+	public List<UserAddress> saveUserAddress(List<UserAddress> addresses, User c){
 		
-		List<CandidateAddress> resp = new ArrayList<>();
+		List<UserAddress> resp = new ArrayList<>();
 		if(addresses != null && !addresses.isEmpty()){
-			for (CandidateAddress address : addresses) {
-				address.setCandidate(c);
-				CandidateAddress savedAddress = candidateAddressDao.save(address);
+			for (UserAddress address : addresses) {
+				address.setUser(c);
+				UserAddress savedAddress = userAddressDao.save(address);
 				resp.add(savedAddress);
 			}
 		}
 		return resp;
 	}
 	
-	public List<CandidateEducation> saveCandidateEducation(List<CandidateEducation> educations, Candidate c){
+	public List<UserEducation> saveUserEducation(List<UserEducation> educations, User c){
 
-		List<CandidateEducation> resp = new ArrayList<>();
+		List<UserEducation> resp = new ArrayList<>();
 		if(educations != null && !educations.isEmpty()){
-			for (CandidateEducation candidateEducation : educations) {
-				candidateEducation.setCandidate(c);
-				CandidateEducation savedEducation = candidateEducationDao.save(candidateEducation);
+			for (UserEducation userEducation : educations) {
+				userEducation.setUser(c);
+				UserEducation savedEducation = userEducationDao.save(userEducation);
 				resp.add(savedEducation);
 			}
 		}
 		return resp;
 	}
 	
-	public List<CandidateOccupation> saveCandidateOccupation(List<CandidateOccupation> occupations, Candidate c){
+	public List<UserOccupation> saveUserOccupation(List<UserOccupation> occupations, User c){
 
-		List<CandidateOccupation> resp = new ArrayList<>();
+		List<UserOccupation> resp = new ArrayList<>();
 		if(occupations != null && !occupations.isEmpty()){
 			
-			for (CandidateOccupation candidateOccupation : occupations) {
-				candidateOccupation.setCandidate(c);
-				CandidateOccupation savedOccupation = candidateOccupationDao.save(candidateOccupation);
+			for (UserOccupation userOccupation : occupations) {
+				userOccupation.setUser(c);
+				UserOccupation savedOccupation = userOccupationDao.save(userOccupation);
 				resp.add(savedOccupation);
 			}
 		}
@@ -124,7 +124,7 @@ public class ProfileService {
 		
 		ProfileSearchResult result = new ProfileSearchResult();
 		int pageSize = Integer.valueOf((String) request.getSession().getAttribute(GConstants.SAGAI_DEFAULT_PAGE_SIZE));
-		Long totalRecords = candidateDao.countResult(profileFilter.getLoggedInCandidateId().toString(), profileFilter.getGid(), "%"+profileFilter.getName()+"%");		//	
+		Long totalRecords = userDao.countSagaiProfileResult(profileFilter.getLoggedInUserId().toString(), profileFilter.getGid(), "%"+profileFilter.getName()+"%");		//	
 		result.setTotalRecords(totalRecords);
 		result.setPageSize(pageSize);
 		result.setTotalPages(Math.toIntExact((result.getTotalRecords() + pageSize - 1) / pageSize));
@@ -149,17 +149,17 @@ public class ProfileService {
 				    new Order(Direction.DESC, "id")
 				  )
 				);
-		List<BigInteger> candidateIdsList = candidateDao.searchCandidates(profileFilter.getLoggedInCandidateId().toString(), profileFilter.getGid(), "%"+profileFilter.getName()+"%", page2);
-		StringBuffer candidateIdsStr = new StringBuffer();
-		for (BigInteger id : candidateIdsList) {
-			candidateIdsStr.append(id+",");
+		List<BigInteger> userIdsList = userDao.searchSagaiProfiles(profileFilter.getLoggedInUserId().toString(), profileFilter.getGid(), "%"+profileFilter.getName()+"%", page2);
+		StringBuffer userIdsStr = new StringBuffer();
+		for (BigInteger id : userIdsList) {
+			userIdsStr.append(id+",");
 			//System.out.println(" id "+id);
 		}
 		List<ProfileSummary> content = new ArrayList<>(pageSize);
-		if(CollectionUtils.isNotEmpty(candidateIdsList)){
-			String candidateIds = candidateIdsStr.substring(0, candidateIdsStr.length() - 1);
-			System.out.println(" candidateIds "+candidateIds);
-			List<Object[]> rows = candidateDao.getCandidatesSummary(candidateIdsList);
+		if(CollectionUtils.isNotEmpty(userIdsList)){
+			String userIds = userIdsStr.substring(0, userIdsStr.length() - 1);
+			System.out.println(" userIds "+userIds);
+			List<Object[]> rows = userDao.getSagaiProfileSummary(userIdsList);
 			for (Object[] row : rows) {
 				ProfileSummary p = new ProfileSummary();
 				p.setId(row[0].toString());
@@ -207,15 +207,15 @@ public class ProfileService {
 		return result;
 	}
 	
-	public SagaiProfile getSagaiProfile(Long candidateId, String contextPath){
+	public SagaiProfile getSagaiProfile(Long userId, String contextPath){
 		SagaiProfile sagaiProfile = new SagaiProfile();
-		Candidate c = candidateDao.findOne(candidateId);
+		User c = userDao.findOne(userId);
 		sagaiProfile.setGid(c.getGid());
-		sagaiProfile.setPersonalInfo(candidateUIService.getPersonalInfoSectionForUI(c, true));
-		sagaiProfile.setFamilyInfo(candidateUIService.getFamilyInfoSectionForUI(c));
-		sagaiProfile.setContactInfo(candidateUIService.getContactInfoSectionForUI(c, true));
-		sagaiProfile.setEduOccInfo(candidateUIService.getEducationInfoSectionForUI(c, true));
-		sagaiProfile.setPhotos(candidateUIService.getPhotoInfoSectionForUI(c, contextPath));
+		sagaiProfile.setPersonalInfo(userUIService.getPersonalInfoSectionForUI(c, true));
+		sagaiProfile.setFamilyInfo(userUIService.getFamilyInfoSectionForUI(c));
+		sagaiProfile.setContactInfo(userUIService.getContactInfoSectionForUI(c, true));
+		sagaiProfile.setEduOccInfo(userUIService.getEducationInfoSectionForUI(c, true));
+		sagaiProfile.setPhotos(userUIService.getPhotoInfoSectionForUI(c, contextPath));
 		return sagaiProfile;
 	}
 }
