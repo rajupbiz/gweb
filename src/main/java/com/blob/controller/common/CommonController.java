@@ -2,6 +2,8 @@ package com.blob.controller.common;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
@@ -11,8 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.blob.controller.BaseController;
 import com.blob.dao.master.MasterServiceDao;
+import com.blob.enums.MenuTabEnum;
+import com.blob.model.account.Account;
 import com.blob.model.master.MasterService;
+import com.blob.model.user.User;
 import com.blob.security.SessionService;
+import com.blob.service.sagai.UserService;
 import com.blob.util.GConstants;
 
 
@@ -23,13 +29,18 @@ public class CommonController extends BaseController {
 	private SessionService sessionService;
 	
 	@Resource
+	private UserService userService;
+	
+	@Resource
 	private MasterServiceDao masterServiceDao;
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping("/register")
 	public ModelAndView register(){
 
 		Model model = new ExtendedModelMap();
-		System.out.println("Goto register");
+		log.debug("Goto register");
 		model.addAttribute("MENU_TAB", "register");
 		return new ModelAndView("/index", model.asMap());
 	}
@@ -38,7 +49,7 @@ public class CommonController extends BaseController {
 	public ModelAndView services(){
 
 		Model model = new ExtendedModelMap();
-		System.out.println("Goto services");
+		log.debug("Goto services");
 		model.addAttribute("MENU_TAB", "services");
 		return new ModelAndView("/services", model.asMap());
 	}
@@ -47,7 +58,7 @@ public class CommonController extends BaseController {
 	public ModelAndView features(){
 
 		Model model = new ExtendedModelMap();
-		System.out.println("Goto features");
+		log.debug("Goto features");
 		model.addAttribute("MENU_TAB", "features");
 		return new ModelAndView("/features", model.asMap());
 	}
@@ -56,7 +67,7 @@ public class CommonController extends BaseController {
 	public ModelAndView howItWorks(){
 
 		Model model = new ExtendedModelMap();
-		System.out.println("Goto how-it-works");
+		log.debug("Goto how-it-works");
 		model.addAttribute("MENU_TAB", "how-it-works");
 		return new ModelAndView("/how-it-works", model.asMap());
 	}
@@ -82,10 +93,24 @@ public class CommonController extends BaseController {
 			view = "job/home";
 			break;
 
+		case GConstants.Service_NA:
+			view = "account/settings";
+			break;
 		default:
 			break;
 		}
 		System.out.println("serviceId >> "+serviceId+" view >> "+view);
 		return new ModelAndView("redirect:/"+view, m.asMap());
+	}
+	
+	@RequestMapping("/account/settings")
+	public ModelAndView accountSettings(){
+
+		Model model = new ExtendedModelMap();
+		log.debug("account settings ");
+		Account account = getLoggedInAccount();
+		User c = userService.getUserByAccount(account);
+		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.common_account_settings.toString(), account);
+		return new ModelAndView("account-settings", model.asMap());
 	}
 }

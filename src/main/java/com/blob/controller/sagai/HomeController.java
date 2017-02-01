@@ -38,14 +38,12 @@ public class HomeController extends BaseController {
 	@Resource
 	private UserService userService;
 	
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping("/profile/home")
 	public ModelAndView profileHome(){
 		Model m = new ExtendedModelMap();
-		logger.debug(" \n profile home .............  ");
-		System.out.println(" \n profile home ............. ");
-		
+		log.debug("profile home ");
 		Account account = getLoggedInAccount();
 		User c = userService.getUserByAccount(account);
 		m.addAttribute("dashboard", userUIService.getDashboardInfoForUI(c, request.getContextPath()));

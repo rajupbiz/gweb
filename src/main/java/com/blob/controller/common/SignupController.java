@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
@@ -46,11 +48,13 @@ public class SignupController extends BaseController {
 	@Resource
 	private GUtils gutils;
 	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@RequestMapping(value="/signup", method=RequestMethod.POST)
 	public ModelAndView signup() throws Exception{
 
 		ModelAndView mv = new ModelAndView();
-		System.out.println(" \n\n\n signup ............. ");
+		log.debug(" signup ");
 		String userName = request.getParameter("signupUserName");
 		String password = request.getParameter("signupPassword");
 		String email = request.getParameter("signupEmail");
@@ -66,7 +70,7 @@ public class SignupController extends BaseController {
 		account.setUpdateOn(new Date());
 		GResponse resp = signupService.signup(account, fname, lname);
 		
-		System.out.println(" Signup resp  "+resp.isSuccess());
+		log.debug(" Signup resp  "+resp.isSuccess());
 		if(resp != null){
 			if(resp.isSuccess()){
 				Model m = new ExtendedModelMap();
@@ -88,6 +92,7 @@ public class SignupController extends BaseController {
 				m.addAttribute("userName", userName);
 				m.addAttribute("password", password);
 				m.addAttribute("email", email);
+				log.error(" Error occured: "+resp.getError().getErrorMsg());
 				mv = new ModelAndView("/index", m.asMap());
 			}
 		}

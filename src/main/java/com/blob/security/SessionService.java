@@ -66,20 +66,21 @@ public class SessionService {
 	}
 	
 	public void setMenuChangeCommonAttribtesInSession(HttpSession session, String tab, Account account){
-		User user = null;
-		Integer noOfShortlistedProfiles = 0;		//	noOfUnreadMessages = 0, 
-		user = commonService.getUserByAccount(account);
+		User user = commonService.getUserByAccount(account);
 		if(user != null){
 			/*List<UserMessage> messages = userService.getUserMessages(user);
 			if(CollectionUtils.isNotEmpty(messages)){
 				noOfUnreadMessages = messages.size();
 			}*/
-			if(CollectionUtils.isNotEmpty(user.getSagaiShortlistedProfiles())){
-				noOfShortlistedProfiles = user.getSagaiShortlistedProfiles().size();
+			if(StringUtils.startsWith(tab, "sagai")){
+				Integer noOfShortlistedProfiles = 0;
+				if(CollectionUtils.isNotEmpty(user.getSagaiShortlistedProfiles())){
+					noOfShortlistedProfiles = user.getSagaiShortlistedProfiles().size();
+					session.setAttribute(SessionParamEnum.NO_OF_SHORTLISTED_PROFILES.toString(), noOfShortlistedProfiles);
+				}
 			}
 		}
 		//session.setAttribute(SessionParamEnum.NO_OF_UNREAD_MESSAGES.toString(), noOfUnreadMessages);
-		session.setAttribute(SessionParamEnum.NO_OF_SHORTLISTED_PROFILES.toString(), noOfShortlistedProfiles);
 		session.setAttribute(SessionParamEnum.TAB.toString(), tab);
 	}
 	

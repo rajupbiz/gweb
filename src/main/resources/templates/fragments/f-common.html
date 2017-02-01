@@ -26,15 +26,15 @@
 										<div class="col-md-2">
 											<div class="g-header-img-div">
 												<!-- <span th:if="${session.SERVICE == 'IDENTITY'}">
-													<img alt="img" th:src="@{/assets/img/gomaie_logo.png}" width="140px;" class="img-rounded img-responsive"/>
+													<img alt="img" th:src="@{/assets/img/gomaie_logo.png}" width="140.px;" class="img-rounded img-responsive"/>
 												</span> -->
 												
 												<!-- <img alt="img" th:src="@{/assets/img/gomaie_logo.png}" width="140px;" class="img-rounded img-responsive"/> -->
 												
 												<div th:switch="${session.SERVICE}">
-												  <span th:case="IDENTITY"><img alt="img" th:src="@{/assets/img/g-id.png}" width="160px;" class="img-rounded img-responsive"/></span>
+												  <span th:case="IDENTITY"><img alt="img" th:src="@{/assets/img/g-user.png}" width="250px;" class="img-rounded img-responsive"/></span>
 												  <span th:case="JOB"><img alt="img" th:src="@{/assets/img/g-job.png}" width="160px;" class="img-rounded img-responsive"/></span>
-												  <span th:case="SAGAI"><img alt="img" th:src="@{/assets/img/g-sagai.png}" width="210px;" height="40px;" class="img-rounded img-responsive"/></span>
+												  <span th:case="SAGAI"><img alt="img" th:src="@{/assets/img/g-sagai.png}" width="300px;" height="40px;" class="img-rounded img-responsive"/></span>
 												  <span th:case="*"><img alt="img" th:src="@{/assets/img/gomaie_logo.png}" width="140px;" class="img-rounded img-responsive"/></span>
 												</div>
 												
@@ -54,12 +54,12 @@
 											                        <span class="glyphicon glyphicon-user"></span> <span class="glyphicon glyphicon-triangle-bottom"></span>
 											                    </a>
 											                    <ul class="dropdown-menu dropdown-user">
-											                    	<li><a th:href="@{/service/switch/1}"><i class="fa fa-address-book"></i>&nbsp;Identity</a></li>
+											                    	<li><a th:href="@{/service/switch/1}"><i class="fa fa-address-book"></i>&nbsp;User</a></li>
 											                    	<li><a th:href="@{/service/switch/3}"><i class="fa fa-id-card"></i>&nbsp;Job</a></li>
 											                    	<li><a th:href="@{/service/switch/2}"><i class="fa fa-handshake-o"></i>&nbsp;Sagai</a></li>
 											                    	<!-- <li><a th:href="@{/todo/home}"><i class="fa fa-th-list"></i>&nbsp;Todo</a></li> -->
 											                        <li class="divider"></li>
-											                        <li><a th:href="@{/account-settings}"><i class="fa fa-gear fa-fw"></i>&nbsp;Account Settings</a></li>
+											                        <li><a th:href="@{/service/switch/4}"><i class="fa fa-gear fa-fw"></i>&nbsp;My Account</a></li>
 											                        <li><a th:href="@{/signout}"><i class="fa fa-sign-out fa-fw"></i>&nbsp;Sign out</a></li>
 											                    </ul>
 											                </li>
@@ -115,7 +115,13 @@
 															</ul>
 													   	 </div>
 													   	 
-													   	  <div class="collapse navbar-collapse g-menu-collapse" id="g-navbar-collapse-id" th:if="${#authentication.name != 'anonymousUser' && session.SERVICE == 'IDENTITY'}">
+													   	 <div class="collapse navbar-collapse g-menu-collapse" id="g-navbar-collapse-id" th:if="${#authentication.name != 'anonymousUser' && session.SERVICE == 'NA'}">
+														      <ul class="nav nav-justified navbar-nav navbar-right" style="padding-right: 5px;"> 
+														        <li th:classappend="${session.TAB == 'common_account_settings'}? 'active'"><a th:href="@{/account/settings}"><!-- <span class="glyphicon glyphicon-home"></span> --> My Account</a></li>
+														      </ul>
+											   			 </div>
+											   			 
+													   	 <div class="collapse navbar-collapse g-menu-collapse" id="g-navbar-collapse-id" th:if="${#authentication.name != 'anonymousUser' && session.SERVICE == 'IDENTITY'}">
 														      <ul class="nav navbar-nav navbar-right" style="padding-right: 5px;"> 
 														        <li th:classappend="${session.TAB == 'id_home'}? 'active'"><a th:href="@{/id/home}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 														        <li th:classappend="${session.TAB == 'id_search'}? 'active'"><a th:href="@{/id/search}">Search</a></li>

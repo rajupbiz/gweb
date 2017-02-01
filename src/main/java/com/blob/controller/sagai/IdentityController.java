@@ -2,6 +2,8 @@ package com.blob.controller.sagai;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
@@ -35,11 +37,13 @@ public class IdentityController extends BaseController {
 	@Resource
 	private MasterDegreeDao masterDegreeDao;
 	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@RequestMapping("/id/home")
 	public ModelAndView idHome(){
 
 		Model m = new ExtendedModelMap();
-		System.out.println("id home");
+		log.debug("id home");
 		Account account = getLoggedInAccount();
 		sessionService.setMenuChangeCommonAttribtesInSession(request.getSession(), MenuTabEnum.id_home.toString(), account);
 		return new ModelAndView("/id/id-home", m.asMap());

@@ -1,0 +1,111 @@
+<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
+<configuration scan="true" scanPeriod="10 seconds">
+
+	<appender name="G_WEB_FILE" 	class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/g/apache-tomcat-8/logs/g-web.log</file>
+		<encoder>	
+			<pattern>%d{MM-dd-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        	<level>DEBUG</level>
+    	</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>/g/apache-tomcat-8/logs/g-web.%i.log.zip</fileNamePattern>
+			<minIndex>1</minIndex>
+      		<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>64 MB</maxFileSize>
+		</triggeringPolicy>
+		<prudent>false</prudent>
+	</appender>
+
+	<appender name="G_WEB_ERROR_FILE"	class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/g/apache-tomcat-8/logs/g-web-error.log</file>
+		<encoder>	
+			<pattern>%d{MM-dd-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        	<level>ERROR</level>
+    	</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>/g/apache-tomcat-8/logs/g-web-error.%i.log.zip</fileNamePattern>
+			<minIndex>1</minIndex>
+      		<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>64 MB</maxFileSize>
+		</triggeringPolicy>
+		<prudent>false</prudent>
+	</appender>
+	
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter"> 
+			<level>WARN</level>
+		</filter>
+	</appender>
+
+	<!-- <root level="info">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="ERROR" />
+ 		<appender-ref ref="STDOUT" />
+	</root> -->
+	
+	<logger name="com.blob" additivity="false">
+		<appender-ref ref="G_WEB_FILE" />
+		<appender-ref ref="G_WEB_ERROR_FILE" />
+	</logger>
+	
+	<!-- <logger name="com.blob" level="warn" additivity="false">
+		<appender-ref ref="STDOUT" />
+	</logger> -->
+
+	<!-- For loggers in the these namespaces, log at all levels. -->
+<!-- 	<logger name="user" level="ALL" /> -->
+	<!-- To log pedestal internals, enable this and change ThresholdFilter to 
+		DEBUG <logger name="pedestal" level="ALL" /> -->
+	
+    <!-- <logger name="org.hibernate.type" level="debug" additivity="false"> 
+    	<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.hibernate.SQL" level="debug" additivity="false" >
+	    <appender-ref ref="FILE" />
+	    <appender-ref ref="ERROR" />
+    </logger> -->		
+    
+	<!-- <logger name="com.blob.security" level="debug"  additivity="false">
+	     <appender-ref ref="FILE" />
+	     <appender-ref ref="ERROR" />
+    </logger> -->
+    
+    <!-- <logger name="org.springframework.ws.client.MessageTracing" additivity="false">
+		<level value="info" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.springframework.ws.client.MessageTracing" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.springframework.ws.client.MessageTracing.sent" additivity="false">
+		<level value="info" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.springframework.ws.client.MessageTracing.received" additivity="false">
+		<level value="info" />
+		<appender-ref ref="FILE" />
+	</logger>
+	<logger name="org.springframework.security.saml" level="debug" additivity="false" >
+	     <appender-ref ref="FILE" />
+	     <appender-ref ref="ERROR" />
+    </logger>
+	<logger name="org.opensaml" level="debug" additivity="false" >
+	     <appender-ref ref="FILE" />
+	     <appender-ref ref="ERROR" />
+    </logger> -->
+
+</configuration>
