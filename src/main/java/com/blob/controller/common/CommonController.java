@@ -42,6 +42,8 @@ public class CommonController extends BaseController {
 		Model model = new ExtendedModelMap();
 		log.debug("Goto register");
 		model.addAttribute("MENU_TAB", "register");
+		
+		
 		return new ModelAndView("/index", model.asMap());
 	}
 	
